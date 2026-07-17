@@ -2,44 +2,35 @@
 
 ## Active milestone
 
-**Milestone 4 — Officer AI and Command System: integration candidate; live validation pending**
+**Milestone 5 — Mission, ROE, and After-Action Review: integration candidate; live Unity validation pending**
 
-Milestone 3 is complete and stable. Milestone 4 implementation is packaged but must pass Unity compilation, setup, validation, tests, smoke testing, earlier regressions, and a clean Console before closure.
+Milestone 4 officer movement, door traversal, automatic challenge, room-clear verification, and automatic custody passed the user's live prototype tests and are committed to `main`.
 
-Hotfix 1 fixed generated officer actions not surviving the JSON asset reimport/domain reload. The persistence fix and non-spamming exact diagnostics passed the user's live Unity test.
-
-Hotfix 2 fixed scene-only squad references not being retained as prefab-instance overrides. The save/reload verification and Play Mode squad configuration passed the user's live Unity test.
-
-Hotfix 3 fixed the doorway navigation defect. The fixed bidirectional link and physical-clearance gate passed the user's live Unity traversal test.
-
-Hotfix 4 adds bounded officer initiative. Officers automatically challenge visible suspects. Automatic custody is authorized only after a bounded room has two actionable officers, every suspect is controlled or incapacitated, and the no-threat condition remains stable for 2.5 seconds. The closest officer then uses the existing physical custody sequence while the other provides cover. Unity revalidation is pending.
+Milestone 4 Hotfix 5 is now the integration candidate for persistent follow-up challenges after first contact. Live Unity compilation and behavior validation are pending.
 
 ## Implemented in the candidate
 
-- Officer Alpha and Bravo actor identities, conditions, inventories, hit regions, NavMesh agents, visuals, and order ledgers.
-- Individual Alpha, individual Bravo, and Team selection.
-- Move, hold, follow, stack-at-door, open-door, restrain-subject, contextual, and cancellation input.
-- Immutable `OfficerOrder` facts with issuer, assigned officer, target, sequence, and issued time.
-- Pure lifecycle transitions for pending, accepted, executing, completed, cancelled, failed, and refused orders.
-- Specific outcomes including incapacity, invalid target, no navigation surface, no path, unreachable target, non-compliance, supersession, player cancellation, and timeout.
-- Physical path calculation and movement without `NavMeshAgent.Warp`.
-- Door approach, physical opening, clearance wait, and gated NavMesh traversal without teleportation.
-- Line-of-sight suspect challenges, shared challenge discipline, timed room-clear verification, cover requirements, and automatic controlled custody.
-- Separate append-only facts for player-command and officer-initiative actions.
-- Restraint assistance with physical approach, compliant-state validation, kneeling direction, settle time, cuffing time, and verified custody transition.
-- Command marker, right-side diagnostics, setup generator, validator, build gate, and tests.
+- Training mission and threat-based ROE ScriptableObject assets.
+- Four required objectives: secure suspect, protect civilian, verify north room, preserve response team.
+- Immutable evidence aggregation from actors, rooms, firearm discharges, custody, orders, and initiative ledgers.
+- Pure objective, ROE, and report evaluation.
+- Pre-impact force review with explicit compliant, review-required, serious, and critical reasoning.
+- Transparent 0–100 prototype score with required-failure and critical-violation caps.
+- `Exemplary`, `Acceptable`, `Deficient`, and `CriticalFailure` final ratings.
+- Live provisional mission HUD, automatic finalization when every required objective is terminal, and an in-world manual debrief console.
+- Early manual debrief converts unresolved objectives into documented failures instead of silently granting credit.
+- Setup generator, validator, pre-build gate, and EditMode/PlayMode tests.
 
 ## Validation pending
 
-- Unity `6000.5.2f1` compilation.
-- Milestone 4 setup and validator.
+- Unity compilation.
+- Milestone 5 setup and validator.
 - All EditMode and PlayMode tests.
-- Individual/team movement, cancellation, follow, door, non-compliant restraint refusal, and cooperative arrest smoke tests.
-- Open-door cross-threshold movement for Alpha, Bravo, and Team, plus closed-door path rejection.
-- Automatic challenge, refusal/deception handling, room-clear verification, automatic cuffing, cover-loss abort, and civilian exclusion.
-- Milestones 1–3 regression checks.
+- Peaceful-resolution 100/Exemplary scenario.
+- Non-actor review, unjustified suspect force, controlled-subject force, civilian force, and recorded deadly-threat scenarios.
+- Milestones 1–4 regression checks.
 - Clean Play Mode Console.
 
 ## Art requirement
 
-No external 3D model is required for Milestone 4 validation. Generated primitives make selection, paths, timing, and lifecycle failures visible. After the command contract is stable, the first production model package should include a rigged tactical officer body, uniform/armor variants, hands, duty belt, radio, handcuffs, and animation-ready equipment attachment points.
+No new 3D model is required for Milestone 5 validation. The evaluated Tactical Shooter Pack remains a conditional future presentation purchase and is not a project dependency.

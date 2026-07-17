@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd910218dd293fc4f8d3f8ca18edf4a1, type: 3}
+  m_Name: M5_TrainingOperation
+  m_EditorClassIdentifier: RulesOfEntry.Runtime::RulesOfEntry.Missions.MissionDefinition
+  missionId: m5_training_operation
+  displayName: 'Training Operation: Controlled Resolution'
+  briefing: Resolve the armed-subject incident, protect the civilian, clear the north
+    room, and account for every use of force.
+  objectives:
+  - objectiveId: secure_primary_suspect
+    displayName: Secure the primary suspect
+    briefing: Establish lawful physical custody of the identified suspect.
+    type: 0
+    targetActorId: m3_suspect_01
+    targetRoomId: 
+    isRequired: 1
+    failureDeduction: 30
+  - objectiveId: protect_civilian
+    displayName: Protect the civilian
+    briefing: The civilian must remain uninjured throughout the response.
+    type: 1
+    targetActorId: m3_civilian_01
+    targetRoomId: 
+    isRequired: 1
+    failureDeduction: 25
+  - objectiveId: verify_north_room
+    displayName: Verify the north room clear
+    briefing: Two actionable officers must verify that no active threat remains.
+    type: 2
+    targetActorId: 
+    targetRoomId: prototype_north_training_room
+    isRequired: 1
+    failureDeduction: 25
+  - objectiveId: preserve_response_team
+    displayName: Preserve the response team
+    briefing: No assigned officer may become incapacitated or die.
+    type: 3
+    targetActorId: 
+    targetRoomId: 
+    isRequired: 1
+    failureDeduction: 20

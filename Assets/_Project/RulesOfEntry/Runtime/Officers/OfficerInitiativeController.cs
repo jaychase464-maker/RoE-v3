@@ -30,6 +30,7 @@ namespace RulesOfEntry.Officers
         [SerializeField, Min(2f)] private float detectionDistance = 20f;
         [SerializeField, Range(30f, 180f)] private float fieldOfViewDegrees = 140f;
         [SerializeField, Min(0.5f)] private float challengeRepeatSeconds = 4f;
+        [SerializeField, Min(5f)] private float challengeFocusMemorySeconds = 20f;
         [SerializeField, Min(0.05f)] private float scanIntervalSeconds = 0.2f;
         [SerializeField] private LayerMask visibilityMask = ~0;
         [SerializeField] private bool weaponPresentedDuringChallenge = true;
@@ -40,7 +41,10 @@ namespace RulesOfEntry.Officers
         private TacticalRoomVolume[] roomVolumes = System.Array.Empty<TacticalRoomVolume>();
         private float scanTimer;
         private float roomRefreshTimer;
+        private float challengeFocusExpiresAt;
+        private float challengeActivityExpiresAt;
         private long nextInitiativeSequence = 1;
+        private HumanActorController challengeFocus;
 
         public string LastActivity { get; private set; } = "Scanning for threats";
         public bool HasCompleteConfiguration => identity != null
@@ -145,16 +149,30 @@ namespace RulesOfEntry.Officers
         {
             HumanActorController nearest = null;
             float nearestSquaredDistance = float.PositiveInfinity;
+            if (MayMaintainChallengeFocus(challengeFocus))
+            {
+                FaceChallengeFocus(challengeFocus);
+                if (CanMaintainVisualContact(challengeFocus)
+                    && IsChallengeReady(challengeFocus))
+                {
+                    nearest = challengeFocus;
+                    nearestSquaredDistance =
+                        (challengeFocus.transform.position - transform.position).sqrMagnitude;
+                }
+            }
+            else
+            {
+                challengeFocus = null;
+            }
+
             foreach (HumanActorController subject in subjects)
             {
-                if (!MayChallenge(subject))
+                if (nearest != null || !MayChallenge(subject))
                 {
                     continue;
                 }
 
-                ulong targetId = subject.Identity.RuntimeEntityId;
-                if (NextTeamChallengeTime.TryGetValue(targetId, out float nextTime)
-                    && Time.time < nextTime)
+                if (!IsChallengeReady(subject))
                 {
                     continue;
                 }
@@ -173,6 +191,10 @@ namespace RulesOfEntry.Officers
                 return;
             }
 
+            challengeFocus = nearest;
+            challengeFocusExpiresAt = Time.time + challengeFocusMemorySeconds;
+            challengeActivityExpiresAt = Time.time + 1.25f;
+            FaceChallengeFocus(nearest);
             VerbalCommandType command = nearest.State == HumanBehaviorState.Threatening
                 || nearest.State == HumanBehaviorState.Resisting
                 ? VerbalCommandType.DropWeapon
@@ -495,6 +517,66 @@ namespace RulesOfEntry.Officers
             return hit.transform.IsChildOf(subject.transform);
         }
 
+        private bool CanMaintainVisualContact(HumanActorController subject)
+        {
+            Vector3 origin = transform.position + Vector3.up * 1.55f;
+            Vector3 target = subject.transform.position + Vector3.up * 1.2f;
+            Vector3 offset = target - origin;
+            float distance = offset.magnitude;
+            if (distance <= 0.01f || distance > detectionDistance)
+            {
+                return false;
+            }
+
+            if (!Physics.Raycast(
+                    origin,
+                    offset / distance,
+                    out RaycastHit hit,
+                    distance,
+                    visibilityMask,
+                    QueryTriggerInteraction.Ignore))
+            {
+                return true;
+            }
+
+            return hit.transform.IsChildOf(subject.transform);
+        }
+
+        private bool MayMaintainChallengeFocus(HumanActorController subject)
+        {
+            return OfficerChallengeRules.MayRetainFocus(
+                MayChallenge(subject),
+                Time.time,
+                challengeFocusExpiresAt);
+        }
+
+        private static bool IsChallengeReady(HumanActorController subject)
+        {
+            ulong targetId = subject.Identity.RuntimeEntityId;
+            bool hasScheduledChallenge = NextTeamChallengeTime.TryGetValue(
+                targetId,
+                out float nextTime);
+            return OfficerChallengeRules.IsCooldownComplete(
+                Time.time,
+                hasScheduledChallenge,
+                nextTime);
+        }
+
+        private void FaceChallengeFocus(HumanActorController subject)
+        {
+            Vector3 direction = subject.transform.position - transform.position;
+            direction.y = 0f;
+            if (direction.sqrMagnitude <= 0.001f)
+            {
+                return;
+            }
+
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                Quaternion.LookRotation(direction.normalized, Vector3.up),
+                360f * scanIntervalSeconds);
+        }
+
         private TacticalRoomVolume FindContainingRoom(Vector3 position)
         {
             foreach (TacticalRoomVolume room in roomVolumes)
@@ -530,6 +612,11 @@ namespace RulesOfEntry.Officers
 
         private void UpdateClearanceActivity()
         {
+            if (Time.time < challengeActivityExpiresAt)
+            {
+                return;
+            }
+
             TacticalRoomVolume room = FindContainingRoom(transform.position);
             if (room == null)
             {
