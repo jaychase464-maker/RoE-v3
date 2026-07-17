@@ -17,18 +17,35 @@ Implemented: authored studio/warning/title/menu flow, project-supplied branding 
 
 Exit pending: Unity compilation; setup and validator; all tests; complete menu/controller/settings/load flow; Milestones 1–5 regressions; clean Console; commit and push.
 
+### Milestone 6A — Headquarters and Operation Planning — Integration Candidate
+
+Implemented: playable PD greybox; physical mission terminal; rugged tablet; mission briefing; officer assignments; explicit future-support records; three entry plans; ready-up rules; headquarters-to-operation loading; setup, validation, and tests.
+
+Exit pending: Unity compilation, setup/validator, all tests, complete front-end-to-headquarters-to-operation smoke test, prior regressions, clean Console, commit, and push.
+
+### Milestone 6B — Headquarters Functional Expansion and Mission Greybox
+
+Planned:
+
+1. Connect chosen entry IDs to authored operation spawn anchors.
+2. Build the first multi-room mission greybox and traversal graph.
+3. Add functioning PD loadout and shoot-house access points.
+4. Establish the officer-management data boundary without inventing career systems.
+5. Return completed operations to headquarters and preserve after-action context.
+
+No final environment models are required until scale, routes, doors, cover, AI navigation, and entry anchors pass in greybox.
+
 ### Milestone 6 — First Tactical Vertical Slice
 
 Goal: one short, replayable residence or storefront incident with multiple entry choices, incomplete intelligence, an uncertain armed suspect, a civilian, officer initiative, arrest/force outcomes, and complete after-action review.
 
-Planned foundations:
+Remaining foundations:
 
-1. Briefing screen driven by a mission definition rather than hard-coded front-end copy.
-2. Selectable entry point and equipment confirmation.
-3. Multi-room portal and clearance graph.
-4. Objective/event persistence for restart and replay comparison.
-5. Pause/options/restart/return-to-menu flow during an operation.
-6. First environment and character presentation pass after the gameplay contracts stabilize.
+1. Multi-room portal and clearance graph.
+2. Objective/event persistence for restart and replay comparison.
+3. Pause/options/restart/return-to-headquarters flow during an operation.
+4. Functional loadout confirmation and deployment equipment.
+5. First environment and character presentation pass after the gameplay contracts stabilize.
 
 Character-art direction for Milestone 6:
 

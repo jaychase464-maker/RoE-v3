@@ -65,19 +65,20 @@ namespace RulesOfEntry.UI.FrontEnd
         [SerializeField, Min(0.1f)] private float splashFadeOutSeconds = 0.65f;
         [SerializeField, Min(0.05f)] private float panelFadeSeconds = 0.22f;
         [SerializeField, Min(0f)] private float minimumLoadingDisplaySeconds = 0.45f;
-        [SerializeField] private string operationScenePath = ProjectInfo.PrototypeScenePath;
+        [SerializeField] private string operationScenePath = ProjectInfo.HeadquartersScenePath;
         [SerializeField] private MissionDefinition operationDefinition;
 
         private CanvasGroup activePanel;
         private Coroutine transitionRoutine;
         private bool loadingOperation;
         private string activeLoadingContext = "MISSION";
+        private string activeDestinationPath = ProjectInfo.HeadquartersScenePath;
+        private string activeDestinationName = "Calder City Police Department";
+        private string activeDestinationDetail = "CALDER CITY  •  OPERATIONS DIVISION";
 
         public FrontEndState State { get; private set; } = FrontEndState.Splash;
         public string OperationScenePath => operationScenePath;
-        public string OperationDisplayName => operationDefinition != null
-            ? operationDefinition.DisplayName
-            : string.Empty;
+        public string OperationDisplayName => "Calder City Police Department";
         public bool HasCompleteConfiguration => splashPanel != null
             && warningPanel != null
             && titlePanel != null
@@ -163,7 +164,7 @@ namespace RulesOfEntry.UI.FrontEnd
             loadingProgressFill = configuredLoadingProgressFill;
             buildLabel = configuredBuildLabel;
             operationScenePath = string.IsNullOrWhiteSpace(configuredOperationScenePath)
-                ? ProjectInfo.PrototypeScenePath
+                ? ProjectInfo.HeadquartersScenePath
                 : configuredOperationScenePath;
             operationDefinition = configuredOperationDefinition;
         }
@@ -251,26 +252,40 @@ namespace RulesOfEntry.UI.FrontEnd
 
         public void BeginOperation()
         {
-            BeginOperationLoad("MISSION");
+            BeginDestinationLoad(
+                "HEADQUARTERS",
+                operationScenePath,
+                "Calder City Police Department",
+                "CALDER CITY  •  OPERATIONS DIVISION");
         }
 
         public void BeginTraining()
         {
-            BeginOperationLoad("TRAINING");
+            BeginDestinationLoad(
+                "TRAINING",
+                ProjectInfo.PrototypeScenePath,
+                operationDefinition != null
+                    ? operationDefinition.DisplayName
+                    : "Training Facility",
+                "CALDER CITY  •  TACTICAL TRAINING COMPLEX");
         }
 
-        private void BeginOperationLoad(string loadingContext)
+        private void BeginDestinationLoad(
+            string loadingContext,
+            string destinationPath,
+            string destinationName,
+            string destinationDetail)
         {
             if (loadingOperation)
             {
                 return;
             }
 
-            if (!Application.CanStreamedLevelBeLoaded(operationScenePath))
+            if (!Application.CanStreamedLevelBeLoaded(destinationPath))
             {
                 ProjectLog.Error(
                     "Front End",
-                    $"Operation scene is not available in Build Settings: {operationScenePath}",
+                    $"Destination scene is not available in Build Settings: {destinationPath}",
                     this);
                 if (loadingStatusText != null)
                 {
@@ -288,6 +303,11 @@ namespace RulesOfEntry.UI.FrontEnd
             activeLoadingContext = string.IsNullOrWhiteSpace(loadingContext)
                 ? "DESTINATION"
                 : loadingContext.Trim().ToUpperInvariant();
+            activeDestinationPath = destinationPath;
+            activeDestinationName = string.IsNullOrWhiteSpace(destinationName)
+                ? GetSceneDisplayName(destinationPath)
+                : destinationName.Trim();
+            activeDestinationDetail = destinationDetail?.Trim() ?? string.Empty;
             loadingOperation = true;
             if (transitionRoutine != null)
             {
@@ -375,8 +395,8 @@ namespace RulesOfEntry.UI.FrontEnd
             SetPanelVisible(loadingPanel, true);
             SetPanelInteraction(loadingPanel, false);
             loadingContextText.text = activeLoadingContext;
-            loadingDestinationText.text = OperationDisplayName.ToUpperInvariant();
-            loadingDetailText.text = $"CALDER CITY  •  {GetSceneDisplayName(operationScenePath)}";
+            loadingDestinationText.text = activeDestinationName.ToUpperInvariant();
+            loadingDetailText.text = activeDestinationDetail;
             loadingProgressFill.fillAmount = 0f;
             loadingStatusText.text = "ESTABLISHING COMMAND LINK";
             loadingPercentageText.text = "LOADING  0%";
@@ -384,7 +404,7 @@ namespace RulesOfEntry.UI.FrontEnd
 
             float shownAt = Time.unscaledTime;
             AsyncOperation operation = SceneManager.LoadSceneAsync(
-                operationScenePath,
+                activeDestinationPath,
                 LoadSceneMode.Single);
             if (operation == null)
             {
@@ -393,7 +413,7 @@ namespace RulesOfEntry.UI.FrontEnd
                 loadingPercentageText.text = "ERROR";
                 ProjectLog.Error(
                     "Front End",
-                    $"Unity did not create a load operation for {operationScenePath}.",
+                    $"Unity did not create a load operation for {activeDestinationPath}.",
                     this);
                 yield break;
             }

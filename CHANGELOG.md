@@ -1,5 +1,64 @@
 # Changelog
 
+## Milestone 6A Hardware-Only Tablet Correction — 2026-07-17
+
+- Replaced the full cinematic concept plate with a purpose-built transparent rugged-tablet hardware cutout.
+- Removed all baked hands, arms, police-station background, furniture, signage, and environmental lighting from the tablet asset.
+- Reconstructed the tablet side guards and shell areas that had been hidden behind the concept hands.
+- Preserved the approved black polymer, rubber armor, fasteners, vents, sensors, side controls, blue indicator, and lower SRS hardware treatment.
+- Removed the full-screen tablet backdrop entirely so the player's actual headquarters view remains fully visible outside the hardware silhouette.
+- Remapped the authoritative live planning display to the isolated hardware's physical screen coordinates.
+
+## Milestone 6A Cinematic Tablet Concept Integration — 2026-07-17
+
+- Integrated the supplied 1672×941 rugged-tablet concept as the temporary full-screen presentation plate.
+- Preserved the concept's gloved hands, physical shell, rubber guards, hardware controls, deep bezel, and cinematic headquarters framing.
+- Covered the concept's example screen with an opaque live display so current mission, objectives, intelligence, entry, team, support, ROE, and deployment data remain authoritative and interactive.
+- Anchored the live display to the concept's physical screen coordinates and fitted the complete plate through a 1672:941 aspect-ratio container.
+- Removed the procedural fake-hardware frame because it no longer contributes to the presentation.
+- Added lossless Sprite import configuration and validation for the concept artwork dependency.
+
+## Milestone 6A Tablet Input Hotfix — 2026-07-17
+
+- Added `Tab` as the headquarters-wide planning-tablet toggle using the current Input System keyboard device.
+- Pressing `Tab` opens the authoritative headquarters briefing from anywhere in the PD; pressing it again closes the tablet and restores first-person control.
+- Retained the physical mission terminal as a secondary entry point and changed it from a 0.35-second hold to an immediate `E` press.
+- Added the default operation briefing directly to the generated tablet configuration so keyboard opening does not depend on terminal focus.
+- Extended headquarters validation to require the authoritative default briefing and immediate terminal interaction.
+
+## Milestone 6A Tablet Presentation Revision 1 — 2026-07-17
+
+- Reframed the screen-space tablet inside resolution-independent safe-area anchors so the device and footer cannot extend beyond the display.
+- Separated operation identity and incident metadata to prevent header text overlap.
+- Raised mission body, panel-heading, navigation, and status typography to a readable prototype floor.
+- Replaced translucent blue data slabs with near-black secure-display panels, restrained signal lines, and an explicit active-tab state.
+- Removed redundant standard-page navigation controls while preserving persistent Close, Back, contextual selection, and primary actions.
+- Added corner armor, a lower equipment rail, stronger bezel layering, and a device shadow to improve the temporary rugged-hardware silhouette.
+- Extended Milestone 6A validation to enforce safe framing, header separation, and body-type readability.
+
+## Milestone 6A Hotfix 2 — Headquarters Player Mode — 2026-07-17
+
+- Disabled the operation-only `OfficerSquadController` on the headquarters player instance.
+- Preserved the enabled, fully referenced Milestone 4 command layer in operational scenes.
+- Added headquarters validation that rejects an enabled or missing hub squad-command component.
+
+## Milestone 6A — Headquarters and Rugged Operation Planning — 2026-07-17
+
+- Redirected the Operations route from direct deployment into a playable Calder City Police headquarters.
+- Added a generated PD greybox with Operations, Loadout, Officer Management, Shoot House, and Support Staging zones.
+- Added a physical mission-assignment terminal using the established first-person interaction contract.
+- Added `OperationBriefingDefinition` with authoritative scene, intelligence, entry, personnel, and specialized-support data.
+- Added an approved-concept rugged handheld tablet with side hardware keys, seven top sections, two-column mission information, briefing status, and persistent deployment controls.
+- Added selectable prototype officers and three selectable entry plans.
+- Added K9, drone, tactical-medic, and negotiator planning definitions while keeping those unimplemented systems unavailable.
+- Added pure planning rules and identifier-only cross-scene deployment context.
+- Preserved the existing prototype mission evidence targets while re-presenting it as `Operation: Pressure Point`.
+- Updated loading behavior so Operations identifies headquarters and Training remains a direct prototype shortcut.
+- Updated enabled build order to Front End, Headquarters, then Prototype.
+- Added deterministic setup, validation, and EditMode tests.
+- Recorded entry-anchor integration as Milestone 6B work instead of teleporting to guessed positions.
+
+
 ## Milestone 5.5 Temporary Character Hotfix 2 — 2026-07-17
 
 - Fixed the temporary suspect model drifting or floating away from its actor root after procedural Humanoid poses were applied.

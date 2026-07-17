@@ -9,14 +9,17 @@
 - Input: Input System `1.19.0`, New Input System only
 - Navigation: AI Navigation `2.0.14`
 - Source of truth: `jaychase464-maker/RoE-v3`, branch `main`
-- Protected UI-baseline commit: `e9a3503b4a3f15abbe93d89bc10382af5c293297`
+- Protected pushed baseline commit: `c62b09d99b3ced36c386d132cba2a2b0df4297a8`
 
 ## Architecture rules
 
 - Runtime assemblies own player-visible state and navigation; editor assemblies own deterministic scene generation and validation.
-- `ROE_FrontEnd.unity` is the first enabled build scene and loads `ROE_Prototype.unity` asynchronously.
+- Enabled build order is `ROE_FrontEnd.unity`, `ROE_Headquarters.unity`, then `ROE_Prototype.unity`.
+- Campaign operation selection belongs inside the playable headquarters, never directly on the main menu.
+- The player physically selects an available operation, then uses the rugged tablet for briefing, personnel, support, entry selection, and ready-up.
+- Headquarters-to-operation state crosses scenes only through stable identifiers; it never retains scene object references.
 - Front-end panels are controlled by one explicit state machine: splash, warning, title, main menu, settings, credits, and loading.
-- Loading destinations come from the authoritative `MissionDefinition.DisplayName`; no mission name is baked into the background image.
+- Loading destinations come from the actual destination context: headquarters from the front end, and operation/location/entry data from the planning tablet.
 - UI navigation uses `InputSystemUIInputModule`; legacy `StandaloneInputModule` and legacy input calls are forbidden.
 - Settings persist through namespaced `PlayerPrefs` keys and are applied through current Unity APIs.
 - Existing gameplay UI components remain authoritative. Presentation setup changes their layout, colors, typography, and chrome without replacing their data sources.
@@ -37,4 +40,4 @@
 
 ## Presentation boundary
 
-The current visual system combines deterministic uGUI layout with supplied Trooper Studios splash/warning artwork, an original moonlit city-overlook background, oversized stacked title typography, flat text navigation, and a destination-aware lower-third loading treatment. The cinematic plate contains no baked menu or loading content. A user-supplied high-density FBX is accepted only as a reversible temporary suspect presentation. Final character assets, animation clips, sound design, accessibility options, localization, and complete remapping remain future production work.
+The current visual system combines deterministic uGUI layout with supplied Trooper Studios splash/warning artwork, an original moonlit city-overlook background, oversized stacked title typography, flat text navigation, destination-aware loading, and a rugged police mobile-data-terminal interface. Headquarters architecture remains gameplay-first greybox. A user-supplied high-density FBX is accepted only as a reversible temporary suspect presentation. Final station art, physical tablet art, character assets, animation clips, sound design, accessibility, localization, and complete remapping remain future production work.

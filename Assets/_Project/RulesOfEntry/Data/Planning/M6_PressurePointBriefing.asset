@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a40a71d24184084cac803778ab0f155, type: 3}
+  m_Name: M6_PressurePointBriefing
+  m_EditorClassIdentifier: RulesOfEntry.Runtime::RulesOfEntry.Planning.OperationBriefingDefinition
+  operationCode: OP 06-01 / PRESSURE POINT
+  mission: {fileID: 11400000, guid: ba6505951598f59459d659995313af0d, type: 2}
+  scenePath: Assets/_Project/RulesOfEntry/Scenes/Prototype/ROE_Prototype.unity
+  location: Calder City Municipal Pumping Annex
+  incidentType: Armed barricaded subject / employee unaccounted for
+  time: 22:40 local
+  conditions: Heavy rain, reduced exterior visibility, active industrial machinery
+  intelligence: Patrol established an initial perimeter after an employee reported
+    an armed former contractor inside the annex. One municipal employee has not been
+    located. The subject has access to maintenance corridors and may attempt to leave
+    through the service yard. Exact weapon status and interior barricades are unconfirmed.
+  legalAuthority: Emergency response to an armed barricaded subject, protective sweep
+    for the unaccounted employee, and lawful arrest authority based on reported violent
+    conduct. Final warrant language remains subject to mission-authoring review.
+  rulesOfEngagement: Use de-escalation and clear commands when feasible. Deadly force
+    requires an objectively reasonable belief of an imminent deadly threat. Every
+    discharge, injury, custody action, and failure to protect will be reviewed after
+    the operation.
+  entryPoints:
+  - entryPointId: entry_south_administration
+    displayName: South Administration Entrance
+    approach: Covered approach from the employee parking area into the administrative
+      corridor.
+    risk: Most direct path, but glass panels expose the team during the initial threshold
+      assessment.
+  - entryPointId: entry_west_service_yard
+    displayName: West Service Yard
+    approach: Approach through the fenced maintenance yard near the loading and pump-access
+      doors.
+    risk: Machinery noise masks movement but limits verbal-command range and sight
+      lines.
+  - entryPointId: entry_north_pipe_gallery
+    displayName: North Pipe Gallery
+    approach: Longer exterior movement to a narrow utility access beside the pipe
+      gallery.
+    risk: Confined interior route with limited room for team movement and uncertain
+      barricades.
+  officers:
+  - officerId: m4_officer_alpha
+    displayName: Officer Alpha
+    role: Element Lead
+    qualification: Team leadership / carbine / less-lethal qualified
+    available: 1
+    assignedByDefault: 1
+  - officerId: m4_officer_bravo
+    displayName: Officer Bravo
+    role: Cover Officer
+    qualification: Rear security / carbine / custody qualified
+    available: 1
+    assignedByDefault: 1
+  supportAssets:
+  - supportId: support_k9_01
+    displayName: K9 Search Team
+    type: 0
+    capability: Tracking, building search, suspect location, and evidence search.
+    implemented: 0
+    available: 0
+  - supportId: support_drone_01
+    displayName: Tactical Drone Team
+    type: 1
+    capability: Remote exterior and interior reconnaissance with live command feed.
+    implemented: 0
+    available: 0
+  - supportId: support_medic_01
+    displayName: Tactical Medic
+    type: 2
+    capability: Warm-zone casualty care and coordinated transfer to EMS.
+    implemented: 0
+    available: 0
+  - supportId: support_negotiator_01
+    displayName: Crisis Negotiation Team
+    type: 4
+    capability: Structured contact, behavioral assessment, and surrender facilitation.
+    implemented: 0
+    available: 0

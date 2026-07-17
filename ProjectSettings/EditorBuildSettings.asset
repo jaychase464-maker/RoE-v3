@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_Project/RulesOfEntry/Scenes/FrontEnd/ROE_FrontEnd.unity
     guid: f9885e742f0117448a0dfd3eabd2f3fd
   - enabled: 1
+    path: Assets/_Project/RulesOfEntry/Scenes/Headquarters/ROE_Headquarters.unity
+    guid: acff3214483651144b34e59a46e97515
+  - enabled: 1
     path: Assets/_Project/RulesOfEntry/Scenes/Prototype/ROE_Prototype.unity
     guid: b1daef712ca63bd4f8f509049ceea31b
   - enabled: 0

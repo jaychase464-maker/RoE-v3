@@ -4,9 +4,9 @@
 
 This delivery gives Rules of Entry a deliberate first impression and one coherent interface language without disturbing the gameplay systems that already pass.
 
-The authored flow is:
+The authored campaign flow is now:
 
-`Trooper Studios splash → photosensitivity/legal warning → Rules of Entry title → main menu → loading → playable prototype`
+`Trooper Studios splash → photosensitivity/legal warning → Rules of Entry title → main menu → loading → playable headquarters`
 
 ## Install
 
@@ -59,7 +59,7 @@ The setup is safe to rerun. It regenerates the front-end scene and presentation-
 - `Assets/_Project/RulesOfEntry/Scenes/FrontEnd/ROE_FrontEnd.unity`
 - `[UI_Presentation]` and presentation hint canvas inside `ROE_Prototype.unity`
 - saved visual overrides on the five existing gameplay UI roots
-- Build Settings with front end first and prototype second
+- Build Settings with front end first, headquarters second, and prototype third
 
 ## Inspector assignments
 
@@ -90,8 +90,8 @@ Unity's own legal engine splash may appear before the Trooper Studios scene depe
 10. Confirm mouse hover and keyboard/controller selection shifts the selected label slightly and reveals a narrow blue focus bar.
 11. Open Settings, change volume, toggle fullscreen, cycle quality, and return with Back or Escape/controller East.
 12. Open Credits and return.
-13. Choose Operations and confirm the loading screen identifies `TRAINING OPERATION: CONTROLLED RESOLUTION`, reports the scene destination and live percentage, reaches Destination Ready, and loads `ROE_Prototype.unity`.
-14. Repeat with Training; its context label changes to `TRAINING`, while the actual mission name remains sourced from the same Milestone 5 mission asset during Milestone 5.5.
+13. Choose Operations and confirm the loading screen identifies `CALDER CITY POLICE DEPARTMENT`, reaches Destination Ready, and loads `ROE_Headquarters.unity`.
+14. Repeat with Training and confirm it remains a direct shortcut to `ROE_Prototype.unity`.
 
 ## Persistence test
 
@@ -104,7 +104,7 @@ These prototype settings use `PlayerPrefs`; production work should later add exp
 
 ## Gameplay HUD regression
 
-After Begin Operation loads the prototype:
+After the headquarters tablet deploys into the prototype:
 
 1. Confirm normal movement, look, interaction, weapon, mission, officer, AI, surrender, custody, room-clearance, and after-action behavior still work.
 2. Confirm the tactical interaction prompt appears at the lower center when aiming at an interactable.
@@ -142,9 +142,9 @@ Run the Milestone 5 setup and validator first. Fix the first reported error, the
 
 Exit Play Mode and rerun UI Presentation setup. Confirm the front-end scene contains one `EventSystem` with `InputSystemUIInputModule` and no `StandaloneInputModule`.
 
-### Begin Operation says the scene is unavailable
+### Operations says the headquarters scene is unavailable
 
-Rerun setup and confirm Build Settings starts with enabled `ROE_FrontEnd` and enabled `ROE_Prototype`.
+Run the Milestone 6A setup and confirm Build Settings starts with enabled `ROE_FrontEnd`, `ROE_Headquarters`, and `ROE_Prototype`.
 
 ### Rules/Entry or the loading destination text is missing
 

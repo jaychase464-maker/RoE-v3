@@ -109,13 +109,17 @@ namespace RulesOfEntry.Editor.UiPresentation
             EditorBuildSettingsScene[] enabled = EditorBuildSettings.scenes
                 .Where(scene => scene.enabled)
                 .ToArray();
-            bool valid = enabled.Length >= 2
+            bool valid = enabled.Length >= 3
                 && string.Equals(
                     enabled[0].path,
                     ProjectInfo.FrontEndScenePath,
                     StringComparison.Ordinal)
                 && string.Equals(
                     enabled[1].path,
+                    ProjectInfo.HeadquartersScenePath,
+                    StringComparison.Ordinal)
+                && string.Equals(
+                    enabled[2].path,
                     ProjectInfo.PrototypeScenePath,
                     StringComparison.Ordinal);
             if (!valid)
@@ -123,14 +127,14 @@ namespace RulesOfEntry.Editor.UiPresentation
                 AddError(
                     results,
                     "UI Build Scene Order",
-                    "The enabled build scene order must start with ROE_FrontEnd followed by ROE_Prototype.");
+                    "The enabled build scene order must start with ROE_FrontEnd, ROE_Headquarters, then ROE_Prototype.");
                 return;
             }
 
             AddPass(
                 results,
                 "UI Build Scene Order",
-                "The authored splash and menu run before the playable prototype.");
+                "The authored splash and menu lead into the headquarters before training or operation scenes.");
         }
 
         private static void ValidateArtwork(
@@ -275,7 +279,7 @@ namespace RulesOfEntry.Editor.UiPresentation
                         StringComparer.Ordinal)
                     && string.Equals(
                         controller != null ? controller.OperationDisplayName : string.Empty,
-                        operationDefinition.DisplayName,
+                        "Calder City Police Department",
                         StringComparison.Ordinal);
                 bool artworkSaved = dependencies.Contains(
                         RulesOfEntryUiPresentationSetup.SplashArtworkPath,
@@ -293,7 +297,7 @@ namespace RulesOfEntry.Editor.UiPresentation
                     && controller.HasCompleteConfiguration
                     && string.Equals(
                         controller.OperationScenePath,
-                        ProjectInfo.PrototypeScenePath,
+                        ProjectInfo.HeadquartersScenePath,
                         StringComparison.Ordinal)
                     && eventSystem != null
                     && inputModule != null
@@ -310,7 +314,7 @@ namespace RulesOfEntry.Editor.UiPresentation
                     AddError(
                         results,
                         "UI Front-End Scene",
-                        "Front-end scene requires saved artwork, visible large typography, the seven-item flat menu contract, the authoritative mission destination, a complete flow controller, overlay canvas, Input System UI module, and no missing or legacy components.");
+                        "Front-end scene requires saved artwork, visible large typography, the seven-item flat menu contract, the headquarters campaign destination, a complete flow controller, overlay canvas, Input System UI module, and no missing or legacy components.");
                     return;
                 }
 

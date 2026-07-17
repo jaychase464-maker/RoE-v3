@@ -2,12 +2,27 @@
 
 ## Open
 
+### ROE-0038 — Entry plans are not yet connected to operation spawn anchors
+
+- Priority: blocker for Milestone 6B closure
+- Status: expected Milestone 6A boundary
+- Current behavior: the rugged tablet records the selected stable entry ID before loading the existing prototype scene.
+- Missing: authored entry-anchor components, spawn/formation placement, entry-specific exterior approaches, and validation that each route is traversable.
+- Boundary: do not fake entry selection by teleporting to guessed coordinates. Milestone 6B must create explicit scene anchors and validate them.
+
+### ROE-0039 — Headquarters is functional greybox, not final police-station art
+
+- Priority: medium presentation debt
+- Status: intentional
+- Missing: final station shell, operations room, armory/loadout fixtures, lockers, office furnishings, shoot-house modules, signage, and physical rugged-tablet model.
+- Boundary: gameplay layout and interaction ownership must pass before purchasing or integrating final environment models.
+
 ### ROE-0027 — Front-end and HUD presentation require live Unity validation
 
 - Priority: blocker for Milestone 5.5 closure
 - Status: integration candidate
 - Environment: Unity `6000.5.2f1`, HDRP `17.5.0`, Input System `1.19.0`, AI Navigation `2.0.14`
-- Required evidence: compilation, setup/validator, all tests, complete front-end flow, settings persistence, prototype load, F10 diagnostic toggle, prior milestone regressions, and clean Console
+- Required evidence: compilation, setup/validator, all tests, complete front-end/headquarters/tablet flow, settings persistence, prototype load, F10 diagnostic toggle, prior milestone regressions, and clean Console
 
 ### ROE-0028 — Authored splash does not replace required Unity legal branding
 
@@ -39,6 +54,11 @@
 
 ## Resolved
 
+- ROE-0044: the cinematic concept integration incorrectly included baked hands and a baked police-station background when only the rugged tablet design was requested; the current asset is a transparent hardware-only cutout over the player's real scene.
+- ROE-0043: the generated rectangle-and-panel tablet did not visually match the approved reference despite functional planning controls; the supplied cinematic concept now provides the temporary physical device and hands while an opaque live screen preserves truthful gameplay data.
+- ROE-0042: the planning tablet could only receive a briefing through the physical terminal, whose 0.35-second hold made an `E` tap appear unresponsive; the headquarters tablet now owns the authoritative briefing, toggles anywhere with `Tab`, and the terminal responds immediately to `E`.
+- ROE-0041: the first tablet presentation could extend below the visible Game view, overlap its header fields, duplicate Close Tablet through the disabled Previous control, and render mission information too small; Revision 1 adds safe-area framing, separated headers, contextual control visibility, and a readable typography floor.
+- ROE-0040: the headquarters reused the player prefab's intentionally unconfigured operation-only squad controller, causing a missing two-officer array and order-marker error on entering Play Mode; the headquarters scene now saves that component disabled while operational scenes retain their configured override.
 - ROE-0037: applying procedural Humanoid muscles could allow imported body/root translation to drift away from the suspect actor; the fitted model root and reference Humanoid body pose are now locked after every pose write.
 - ROE-0036: the temporary suspect model could be installed while its skinned renderers remained inactive or culled, leaving the actor invisible after fallback primitives were hidden; renderer ancestry, bounds, culling, and pre-hide validation are now enforced.
 - ROE-0035: oversized Rules/Entry text could be clipped away by its generated uGUI rect; title and loading-destination labels now allow vertical overflow and use corrected bounds.

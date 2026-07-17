@@ -7,8 +7,9 @@ Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation 
 ## Current state
 
 - Milestones 0–5 are the protected and pushed gameplay baseline.
-- Milestone 5.5 Visual Revision 4 cinematic front-end, destination-aware loading, and temporary suspect presentation are an integration candidate.
-- Do not call Milestone 5.5 complete until live Unity evidence passes.
+- The user confirmed and pushed the cinematic UI and temporary suspect baseline at commit `c62b09d`.
+- Milestone 6A headquarters and rugged operation planning are the current integration candidate.
+- Do not call Milestone 6A complete until live Unity evidence passes.
 
 Read in order:
 
@@ -19,11 +20,16 @@ Read in order:
 5. `BUGS.md`
 6. `UI_PRESENTATION_INSTALL.md`
 7. `TEMPORARY_CHARACTER_INSTALL.md`
+8. `MILESTONE_6A_INSTALL.md`
 
 ## Non-negotiable invariants
 
 - Do not replace existing gameplay UI data sources merely to change appearance.
-- The authored front end is build scene 0; the playable prototype is build scene 1.
+- Build order is Front End, Headquarters, then Prototype.
+- Campaign mission selection happens physically inside the PD hub, not on the main menu.
+- After selecting a mission, the rugged tablet owns briefing, officer assignment, future support planning, entry selection, and ready-up.
+- K9, drone, and other specialized units cannot become selectable until their gameplay systems actually exist.
+- Cross-scene deployment state stores stable IDs only.
 - Startup order is splash, blocking photosensitivity/legal warning, title, then menu.
 - Loading text must identify its actual destination from authoritative project data.
 - New Input System only; no legacy input or `StandaloneInputModule`.
@@ -37,4 +43,4 @@ Read in order:
 
 ## Next action
 
-Install `RulesOfEntry-Frontend-UI-6.zip`, run the UI Presentation setup tool, reapply the sample suspect through the Temporary Characters menu, execute both validation checklists, and report the first error exactly if anything fails.
+Install the Milestone 6A replacement ZIP, run `Tools > Rules of Entry > Milestone 6A > Build Headquarters and Tablet Prototype`, execute all validation and tests, then smoke-test the complete front-end-to-headquarters-to-operation flow. Report the first Console error exactly if anything fails.

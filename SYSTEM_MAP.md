@@ -11,16 +11,25 @@ flowchart TD
     Menu --> Credits[Credits]
     Settings --> Menu
     Credits --> Menu
-    Menu --> Loading[Destination-aware loading]
-    Loading --> Prototype[Playable prototype]
+    Menu --> HubLoad[Headquarters loading]
+    HubLoad --> HQ[Playable PD headquarters]
+    HQ --> Terminal[Physical mission terminal]
+    Terminal --> Tablet[Rugged planning tablet]
+    Tablet --> MissionLoad[Operation loading]
+    MissionLoad --> Prototype[Playable operation prototype]
 ```
 
 ## Responsibility map
 
 | System | Owns | Does not own |
 |---|---|---|
-| `FrontEndFlowController` | splash/warning/title/menu state, transitions, settings, scene loading | gameplay simulation or mission outcome |
-| `MissionDefinition` | authoritative operation display name shown by loading UI | scene transition timing or presentation layout |
+| `FrontEndFlowController` | splash/warning/title/menu state, settings, headquarters/training loading | mission selection, team assignment, or mission outcome |
+| `HeadquartersMissionTerminalInteractable` | physical selection of an available operation | tablet presentation or deployment loading |
+| `RuggedTabletController` | briefing navigation, officer/support/entry selections, ready-up, operation loading | AI behavior, officer careers, support-unit simulation, or scoring |
+| `OperationBriefingDefinition` | operation intelligence, scene, entry plans, available personnel, support catalog | mutable scene state or UI layout |
+| `OperationPlanningRules` | pure selection wrapping and deployability checks | Unity scene or input state |
+| `OperationDeploymentContext` | stable cross-scene mission, entry, officer, and support identifiers | GameObjects, Transforms, ScriptableObject lifetimes, or score |
+| `MissionDefinition` | objectives and operation identity evaluated by the mission system | headquarters presentation or scene transition timing |
 | `FrontEndButtonVisual` | hover, selection, press, and focus response | input bindings or navigation policy |
 | `FrontEndMenuItemVisual` | restrained focus, divider, and label motion for flat main-menu navigation | button actions or scene transitions |
 | `FrontEndRules` | pure quality-index and loading-progress rules | Unity scene state |
@@ -35,12 +44,16 @@ flowchart TD
 ## Presentation invariants
 
 - The authored front end is the first enabled build scene.
-- The playable prototype remains the second enabled build scene.
+- Headquarters is the second enabled build scene; the playable operation prototype is third.
+- Campaign mission selection is a physical interaction inside headquarters.
+- The rugged tablet may expose future support definitions, but unavailable systems cannot be selected or deployed.
+- Ready-up requires a valid operation, entry plan, and at least one available officer.
+- Cross-scene deployment state contains identifiers only.
 - The front end contains exactly one complete flow controller and an Input System UI module.
 - The warning cannot auto-advance and accepts only Enter, numpad Enter, or controller South/A.
-- Campaign placeholders remain visibly disabled; Operations is the first selectable main-menu item.
+- Campaign save placeholders remain visibly disabled; Operations is the temporary prototype route into headquarters.
 - Saved scene dependencies include the splash, warning, and tactical-menu sprites.
-- The loading destination is saved as a reference to the Milestone 5 mission definition and may not be replaced with hard-coded generic text.
+- Loading text identifies the actual headquarters or mission destination and selected entry context.
 - No legacy UI input module is permitted.
 - Existing functional HUD roots remain present in the prototype scene.
 - Developer diagnostics are hidden by default but remain inspectable with F10.

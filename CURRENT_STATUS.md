@@ -2,11 +2,31 @@
 
 ## Active milestone
 
-**Milestone 5.5 Visual Revision 4 + Temporary Character Hotfix 2 — Front-End, Destination-Aware Loading, and Temporary Suspect Presentation: integration candidate; live Unity validation pending**
+**Milestone 6A — Playable Headquarters, Physical Mission Selection, and Rugged Planning Tablet: integration candidate; live Unity validation pending**
 
-Milestones 0–5 are the protected working gameplay baseline. The user confirmed Milestone 5 tests and the persistent officer challenge/custody sequence pass, and pushed the repository before this UI work began.
+Milestones 0–5 are the protected working gameplay baseline. The user confirmed the Milestone 5 gameplay sequence, cinematic UI, and temporary suspect presentation work and pushed commit `c62b09d` before Milestone 6A began.
 
 ## Implemented in this candidate
+
+- Campaign flow is now `front end → headquarters → physical mission selection → rugged tablet → ready up → operation`.
+- New generated headquarters scene: `Assets/_Project/RulesOfEntry/Scenes/Headquarters/ROE_Headquarters.unity`.
+- Playable PD greybox with labeled Operations, Loadout, Officer Management, Shoot House, and Support Staging zones.
+- Existing `ROE_Player` and interaction prompt reused without a second controller stack.
+- The reusable player's operation-only squad-command layer is disabled in headquarters and remains enabled/configured in operation scenes.
+- Physical mission terminal implements the existing `InteractableBehaviour` contract.
+- Rugged planning tablet follows the approved handheld concept: wide hardware bezel, side function keys, seven top tabs, dual mission-data panels, and bottom deployment controls.
+- Tablet Presentation Revision 1 keeps the entire device inside a resolution-independent safe area, prevents header overlap, removes redundant standard-page actions, increases readable type, and adds explicit active-tab and layered hardware treatment.
+- `Tab` opens or closes the authoritative operation tablet anywhere in headquarters; the physical mission terminal remains available through an immediate `E` press.
+- A transparent hardware-only tablet cutout supplies the rugged shell, rubber guards, sensors, side controls, vents, fasteners, and deep bezel. It contains no hands, environment, or full-screen dimmer; the live camera view remains fully visible everywhere outside the tablet.
+- Tablet sections are Overview, Objectives, Intel, Map/Entry, Team, Loadout/Support, and ROE/Ready.
+- Two existing prototype officers can be assigned or removed from the response team.
+- Three stable entry plans can be reviewed and selected.
+- K9, drone, tactical medic, and negotiator definitions are visible but explicitly unavailable until implemented.
+- Ready-up validation requires a valid mission, entry, and at least one available officer.
+- Deployment stores only stable mission, entry, officer, and support IDs before loading the operation scene.
+- Operations enters headquarters; Training remains a direct prototype shortcut.
+- Build order is Front End, Headquarters, then Prototype.
+- Setup tool, validator, pure-rule EditMode tests, and configuration test added.
 
 - Dedicated front-end scene with Trooper Studios splash, blocking photosensitivity/legal warning, title screen, main menu, settings, credits, and loading panels.
 - Supplied 1672×941 splash and warning artwork imported losslessly as full-screen sprites.
@@ -14,8 +34,7 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 - Licensed Latin Modern Sans Demi Condensed typography with the GUST Font License included.
 - Keyboard, mouse, and gamepad-compatible uGUI navigation through Input System `1.19.0` defaults.
 - Flat, left-aligned main-menu navigation with disabled future campaign entries and functional Operations, Training, Settings, Credits, and Quit entries.
-- Operations and Training both launch the current prototype while those modes share the Milestone 5.5 test environment.
-- Loading presentation uses live mission data: the current destination is `Training Operation: Controlled Resolution`, with loading phase and normalized progress updated at runtime.
+- Front-end Operations loading identifies `Calder City Police Department`; Training identifies the tactical training prototype.
 - Persistent master-volume, fullscreen, and quality selections.
 - Trooper Studios company identity while preserving the validated `RoE v3` product name.
 - Clean charcoal, steel, and cold police-blue visual language with no menu cards, dashboard panels, decorative grids, or generic sci-fi framing.
@@ -30,16 +49,18 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 ## Validation pending
 
 - Clean Unity compilation after installation.
-- UI Presentation setup and validator pass.
+- Milestone 6A setup, UI Presentation validation, and Milestone 6A validation pass.
 - All EditMode and PlayMode tests.
 - Splash-to-warning-to-title timing, Enter/A warning acknowledgment, and menu transitions.
 - Keyboard, mouse, and controller navigation, including disabled-item skipping and the flat-menu focus response.
 - Settings persistence after Play Mode restart.
-- Begin Operation loads the unchanged playable prototype.
+- Operations loads headquarters; the player can walk to the terminal and open/close the tablet.
+- Personnel assignment, support availability, entry cycling, ready-up gating, and deployment loading.
+- Training still loads the prototype directly.
 - F10 diagnostics toggle and Milestones 1–5 regression checks.
 - Clean Console during the full flow.
 - Humanoid import, temporary-character validator, pose transitions, custody interaction, hit response, and performance warning.
 
 ## Asset boundary
 
-This delivery includes the user-supplied sample FBX locally for temporary prototype use. The model is approximately 82,000 source vertices, has no supplied textures, no LODs, no facial blendshapes, and no authored animation clips. Its raw FBX is intentionally ignored by Git; the setup, stable Unity metadata, generated materials, scripts, and documentation remain trackable. No new package, audio file, layer, tag, Input Action, or Inspector assignment is required.
+No new 3D model is required for the Tablet Presentation Revision 1 installation. The headquarters and mission terminal use generated greybox geometry, and the planning device is still a screen-space rugged-tablet interface. Matching the approved physical reference will require a separate-part rugged tablet/MDT model, emissive screen mesh, PBR materials, compatible first-person gloved arms, and tablet raise/idle/interact/lower animations. Final headquarters art will additionally need a modular police-station interior kit, operations-room furniture, armory/loadout fixtures, lockers, office props, and shoot-house modules. No new package, audio file, layer, tag, Input Action, or Inspector assignment is required for this revision.

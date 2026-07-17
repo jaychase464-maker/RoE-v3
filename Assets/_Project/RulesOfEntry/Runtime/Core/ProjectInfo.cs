@@ -10,7 +10,7 @@ namespace RulesOfEntry.Core
         public const string ProjectCode = "ROE";
         public const string ExpectedUnityVersion = "6000.5.2f1";
         public const string CurrentMilestone =
-            "Milestone 5.5 - Cinematic Front-End and UI Presentation";
+            "Milestone 5.5 / 6A - Front-End and Headquarters Planning";
         public const int FoundationSchemaVersion = 1;
 
         public const string ProjectAssetRoot = "Assets/_Project/RulesOfEntry";
@@ -18,6 +18,8 @@ namespace RulesOfEntry.Core
         public const string OriginalTemplateScenePath = "Assets/OutdoorsScene.unity";
         public const string FrontEndScenePath =
             ProjectAssetRoot + "/Scenes/FrontEnd/ROE_FrontEnd.unity";
+        public const string HeadquartersScenePath =
+            ProjectAssetRoot + "/Scenes/Headquarters/ROE_Headquarters.unity";
         public const string PrototypeScenePath =
             ProjectAssetRoot + "/Scenes/Prototype/ROE_Prototype.unity";
     }

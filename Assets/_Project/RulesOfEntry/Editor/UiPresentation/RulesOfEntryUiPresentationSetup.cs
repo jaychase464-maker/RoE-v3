@@ -253,7 +253,7 @@ namespace RulesOfEntry.Editor.UiPresentation
                 loadingPercentage,
                 loadingFill,
                 buildLabel,
-                ProjectInfo.PrototypeScenePath,
+                ProjectInfo.HeadquartersScenePath,
                 operationDefinition);
             EditorUtility.SetDirty(controller);
 
@@ -959,10 +959,15 @@ namespace RulesOfEntry.Editor.UiPresentation
             List<EditorBuildSettingsScene> scenes = new List<EditorBuildSettingsScene>
             {
                 new EditorBuildSettingsScene(FrontEndScenePath, true),
+                new EditorBuildSettingsScene(ProjectInfo.HeadquartersScenePath, true),
                 new EditorBuildSettingsScene(ProjectInfo.PrototypeScenePath, true)
             };
             scenes.AddRange(EditorBuildSettings.scenes.Where(scene =>
                 !string.Equals(scene.path, FrontEndScenePath, StringComparison.Ordinal)
+                && !string.Equals(
+                    scene.path,
+                    ProjectInfo.HeadquartersScenePath,
+                    StringComparison.Ordinal)
                 && !string.Equals(
                     scene.path,
                     ProjectInfo.PrototypeScenePath,

@@ -63,6 +63,15 @@ namespace RulesOfEntry.Player
             SetLocked(!IsLocked);
         }
 
+        /// <summary>
+        /// Allows an in-world interface such as the rugged planning tablet to
+        /// explicitly transfer control between gameplay and UI navigation.
+        /// </summary>
+        public void SetCursorLocked(bool locked)
+        {
+            SetLocked(locked);
+        }
+
         private void SetLocked(bool locked)
         {
             IsLocked = locked;
