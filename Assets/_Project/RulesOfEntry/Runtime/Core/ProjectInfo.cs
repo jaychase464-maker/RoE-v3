@@ -6,15 +6,18 @@ namespace RulesOfEntry.Core
     public static class ProjectInfo
     {
         public const string GameTitle = "Rules of Entry";
+        public const string StudioName = "Trooper Studios";
         public const string ProjectCode = "ROE";
         public const string ExpectedUnityVersion = "6000.5.2f1";
         public const string CurrentMilestone =
-            "Milestone 5 - Mission, ROE, and After-Action Review";
+            "Milestone 5.5 - Cinematic Front-End and UI Presentation";
         public const int FoundationSchemaVersion = 1;
 
         public const string ProjectAssetRoot = "Assets/_Project/RulesOfEntry";
         public const string RuntimeAssetRoot = ProjectAssetRoot + "/Runtime";
         public const string OriginalTemplateScenePath = "Assets/OutdoorsScene.unity";
+        public const string FrontEndScenePath =
+            ProjectAssetRoot + "/Scenes/FrontEnd/ROE_FrontEnd.unity";
         public const string PrototypeScenePath =
             ProjectAssetRoot + "/Scenes/Prototype/ROE_Prototype.unity";
     }
