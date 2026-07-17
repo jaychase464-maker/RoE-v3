@@ -29,6 +29,7 @@ namespace RulesOfEntry.Input
         private InputAction cycleFireSelectorAction;
         private InputAction cycleActionAction;
         private InputAction emergencyReloadModifierAction;
+        private InputAction issueCommandAction;
         private InputAction toggleCursorAction;
         private bool actionsResolved;
 
@@ -50,6 +51,7 @@ namespace RulesOfEntry.Input
         public bool CycleActionPressedThisFrame => WasPressedThisFrame(cycleActionAction);
         public bool EmergencyReloadModifierHeld =>
             IsActionPressed(emergencyReloadModifierAction);
+        public bool IssueCommandPressedThisFrame => WasPressedThisFrame(issueCommandAction);
         public bool GameplayEnabled => playerMap != null && playerMap.enabled;
         public bool IsUsingGamepad => string.Equals(
             playerInput != null ? playerInput.currentControlScheme : null,
@@ -89,6 +91,20 @@ namespace RulesOfEntry.Input
             string group = IsUsingGamepad ? "Gamepad" : "Keyboard&Mouse";
             string display = interactAction.GetBindingDisplayString(group: group);
             return string.IsNullOrWhiteSpace(display) ? (IsUsingGamepad ? "X" : "E") : display;
+        }
+
+        public string GetIssueCommandBindingDisplayString()
+        {
+            if (!EnsureActions())
+            {
+                return "F";
+            }
+
+            string group = IsUsingGamepad ? "Gamepad" : "Keyboard&Mouse";
+            string display = issueCommandAction.GetBindingDisplayString(group: group);
+            return string.IsNullOrWhiteSpace(display)
+                ? (IsUsingGamepad ? "LB" : "F")
+                : display;
         }
 
         private void Awake()
@@ -167,6 +183,7 @@ namespace RulesOfEntry.Input
             emergencyReloadModifierAction = playerMap.FindAction(
                 "EmergencyReloadModifier",
                 false);
+            issueCommandAction = playerMap.FindAction("IssueCommand", false);
             toggleCursorAction = systemMap.FindAction("ToggleCursor", false);
 
             actionsResolved = moveAction != null
@@ -182,6 +199,7 @@ namespace RulesOfEntry.Input
                 && cycleFireSelectorAction != null
                 && cycleActionAction != null
                 && emergencyReloadModifierAction != null
+                && issueCommandAction != null
                 && toggleCursorAction != null;
 
             if (!actionsResolved)

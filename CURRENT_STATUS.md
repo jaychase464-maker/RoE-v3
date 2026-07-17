@@ -2,36 +2,47 @@
 
 ## Active milestone
 
-**Milestone 2 — Weapon and Force-Event Foundation: integration candidate**
+**Milestone 3 — Suspect, Civilian, Compliance, and Arrest: complete and stable**
 
-Milestones 0 and 1 remain complete and stable. Milestone 2 implementation, setup tooling, validation, tests, and documentation are ready for live Unity integration.
+Milestone 3 completed live validation on 2026-07-16. Milestones 0–3 form the protected regression baseline for officer AI and tactical commands.
 
-## Delivered for Milestone 2 validation
+## Delivered for Milestone 3 validation
 
-- Physical per-magazine round state, chamber state, bolt state, and ordered spare-magazine pouches.
-- Safe/Semi selector and low-ready/shouldered/aimed handling.
-- Manual retained reload, manual emergency reload, and manual action cycling.
-- No automatic reload and no player-facing exact ammunition count.
-- Timed physical magazine check with qualitative estimates.
-- Semi-automatic one-shot-per-press behavior.
-- Physical muzzle-origin raycast that respects near-cover obstruction.
-- Ballistic hit contract and prototype reactive targets.
-- Immutable append-only firearm-discharge records containing no score or ROE judgment.
-- Graybox carbine, target range, status UI, editor builder, validator, build gate, and tests.
+- Actor identity, role, runtime EntityId, condition, hit regions, inventory, and custody state.
+- Human behavior profiles for an uncertain armed suspect and panicked civilian.
+- Deterministic decision generator seeded by incident and stable actor ID.
+- Stress, morale, perception, command comprehension, compliance, panic, flight, aggression, and deception inputs.
+- Explicit decisions for no perception, comply, surrender, freeze, hide, flee, resist, threaten, and deceptive surrender.
+- Immutable decision and custody ledgers.
+- Verbal command input: `F` or gamepad left shoulder.
+- Multi-step custody: surrender, kneel, restraints, search, custody confirmation.
+- Region-aware prototype ballistic condition response and bleeding progression.
+- Pre-impact actor/custody/behavior and accessible-weapon facts added to firearm force events without ROE judgment.
+- AI Navigation `2.0.14`, generated actor prefabs, baked NavMesh, developer diagnostics, validator, build gate, and automated tests.
 
-## Required validation
+## Seeded prototype behavior
 
-- zero Unity compiler errors;
-- zero Milestone 2 validation errors;
-- all Edit Mode and Play Mode tests pass;
-- complete Milestone 1 regression smoke test passes;
-- complete Milestone 2 manual realism test passes;
-- Play Mode Console remains free of errors and exceptions.
+- The civilian is configured to surrender to the first perceived command.
+- The suspect is configured to resist the first perceived command.
+- The suspect should deceptively surrender to the second command and abandon that surrender after approximately 5–8 seconds if not restrained.
+- Re-running with the same actor IDs and seeds reproduces those decision rolls.
 
-## Honesty boundary
+## Milestone 3 validation — passed 2026-07-16
 
-The current ballistic prototype is an instantaneous physical-muzzle raycast. It validates muzzle obstruction and immutable hit facts, but does not yet simulate flight time, gravity, aerodynamic drag, penetration, fragmentation, or ricochet.
+- AI Navigation package resolution completed.
+- Unity compilation completed with zero errors after the two validator hotfixes.
+- Milestone 3 setup and validation completed with zero errors.
+- All EditMode tests passed.
+- All PlayMode tests passed.
+- The seeded suspect/civilian response and deceptive-surrender sequence passed.
+- The complete kneel, restraint, search, and custody path passed.
+- Milestones 1 and 2 regression behavior passed.
+- Play Mode Console remained free of errors and exceptions.
+
+## Next milestone
+
+Milestone 4 will implement small-team officer AI and an explicit tactical command lifecycle without changing the validated actor, custody, firearm, or accountability authorities.
 
 ## Art requirement
 
-No external model is required for this integration. Use the generated primitive carbine until the mechanical contract passes live validation.
+No external 3D model is required for Milestone 3. Generated primitives deliberately expose authoritative state and interaction timing. Production human models, clothing, rigs, handcuff props, weapons, and animation are deferred until the behavior/custody contract passes.

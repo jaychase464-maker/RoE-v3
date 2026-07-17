@@ -1,51 +1,67 @@
 # Changelog
 
-## Milestone 2 Hotfix 1 — Unity 6000.5 Entity IDs — 2026-07-16
+## Milestone 3 Validation Complete — 2026-07-16
 
-- Replaced compile-blocking `Object.GetInstanceID()` calls with `Object.GetEntityId()`.
-- Changed force-event shooter and hit-collider identifiers from truncated `int` values to complete `ulong` entity IDs.
-- Added PlayMode assertions for recorded entity identity.
-- Added an EditMode regression scan that rejects deprecated `GetInstanceID()` calls in runtime code.
-- Live Unity validation remains pending.
+- AI Navigation resolution and Unity compilation passed.
+- Milestone 3 setup and validator passed with zero errors.
+- All EditMode and PlayMode tests passed.
+- Seeded civilian compliance, suspect resistance, deceptive surrender, and surrender-abandonment behavior passed.
+- Kneel, restraint, search, weapon recovery, and custody confirmation passed.
+- Milestone 1 and 2 regressions passed.
+- Play Mode Console remained clean.
+- Milestone 3 is closed and becomes the regression baseline for Milestone 4.
 
-## Milestone 0 — Project Foundation — Completed 2026-07-16
+## Milestone 3 Hotfix 2 — Score Boundary Validation — 2026-07-16
 
-- Project-owned structure, assemblies, logging, setup, validation, tests, and prototype scene.
-- Unity compilation, validator, automated tests, and smoke test passed.
+- Fixed the force-context validator false positive caused by `distancePenalty` containing the substring `Penalty`.
+- Accountability checks now match standalone prohibited identifiers only.
+- No runtime, AI decision, scene, package, or Inspector change.
 
-## Milestone 1 — First-Person and Tactical Interaction — Completed 2026-07-16
+## Milestone 3 Hotfix 1 — PackageInfo Alias — 2026-07-16
 
-- First-person movement/look, cursor handling, project input, interactions, UI, door/panel examples, graybox builder, validation, and tests.
-- Unity compilation, validator, all tests, manual smoke test, and clean Console passed.
+- Fixed `CS0104` in `RulesOfEntryMilestoneThreeValidator.cs` by explicitly selecting `UnityEditor.PackageManager.PackageInfo`.
+- No runtime, scene, package-version, or Inspector change.
 
-## Milestone 2 — Weapon and Force-Event Foundation — Integration candidate 2026-07-16
+## Milestone 3 — Human Behavior and Custody — Integration Candidate 2026-07-16
 
 ### Added
 
-- Data-driven patrol-carbine and ammunition definitions.
-- Per-magazine ammunition, separate chamber, bolt lock, selector, and physical pouch-order state.
-- Manual qualitative magazine checks with no numerical ammo HUD.
-- Manual retained and emergency reloads; no automatic reload path.
-- Manual action cycling and live-round ejection accounting.
-- Safe/Semi and low-ready/shouldered/aimed weapon handling.
-- Semi-automatic one-shot-per-trigger-press control.
-- Physical muzzle-origin shooting with near-cover obstruction.
-- Ballistic hit contract and reactive graybox targets.
-- Immutable append-only force-event facts without score or ROE evaluation.
-- Graybox weapon view, status UI, target range, setup tool, validator, build gate, and regression tests.
+- Actor identity, role, condition, inventory, hit regions, and runtime EntityId access.
+- Region-aware prototype ballistic trauma, bleeding, consciousness, and mobility.
+- Human behavior profiles, deterministic decision random, command contexts, explicit reasons, and immutable decision ledger.
+- Sight/hearing perception and last-known officer memory.
+- Suspect surrender, deceptive surrender, hide, flee, resist, and threat responses.
+- Civilian surrender, freeze, hide, flee, and panic responses.
+- Police command emitter and prototype AI diagnostics.
+- Procedural custody state machine and interaction flow.
+- Immutable custody records with actor/officer 64-bit EntityIds.
+- AI Navigation `2.0.14`, NavMesh actor movement, generated NavMesh data, actor prefabs, setup, validator, build gate, and tests.
 
 ### Changed
 
-- Project input actions now include weapon manipulation controls.
-- `TacticalPlayerInput` exposes weapon intent through the Input System.
-- `FirstPersonLook` accepts controlled recoil impulses.
-- `FirstPersonMotor` prevents sprint acceleration during magazine checks, reloads, and action cycling.
-- `ProjectInfo.CurrentMilestone` identifies Milestone 2.
+- `ROE_InputActions.inputactions` adds `IssueCommand` on keyboard `F` and gamepad left shoulder.
+- `TacticalPlayerInput` exposes command intent and binding display.
+- Player prefab receives `VerbalCommandEmitter`.
+- Force-event records now contain factual pre-impact actor role, condition, custody, behavior, and accessible-weapon state.
+- Runtime/editor assembly definitions support the navigation integration.
+- `ProjectInfo.CurrentMilestone` identifies Milestone 3.
 
 ### Packages/settings
 
-- No package, assembly-definition, or project-layer change.
+- Added `com.unity.ai.navigation 2.0.14` to `Packages/manifest.json`.
+- No render-pipeline, active-input-handler, physics-layer, or quality-setting change.
 
 ### Validation pending
 
-- Live Unity compilation, setup, validation, all automated tests, Milestone 1 regression, Milestone 2 realism test, and clean Console.
+- Live package resolution, Unity compilation, setup, validators, all tests, M1/M2/M3 smoke tests, and clean Console.
+
+## Milestone 2 Hotfix 1 — Unity 6000.5 Entity IDs — 2026-07-16
+
+- Replaced compile-blocking `Object.GetInstanceID()` with `Object.GetEntityId()`.
+- Preserved complete identifiers with `EntityId.ToULong(...)`.
+
+## Milestones 0–2
+
+- Milestone 0 established the project foundation.
+- Milestone 1 delivered first-person movement and tactical interaction.
+- Milestone 2 delivered manual firearm mechanics and immutable force events.

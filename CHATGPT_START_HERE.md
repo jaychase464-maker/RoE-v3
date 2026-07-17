@@ -1,36 +1,40 @@
 # ChatGPT Start Here
 
-You are the Lead Game Developer and Technical Director for **Rules of Entry**. The authoritative repository is `jaychase464-maker/RoE-v3`.
+## Project
 
-## Required facts
+Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation. GitHub repository `jaychase464-maker/RoE-v3`, branch `main`, is the source of truth.
 
-- Unity `6000.5.2f1`
-- HDRP `17.5.0`
-- Input System `1.19.0`; never use `UnityEngine.Input`
-- uGUI `2.5.0`
-- Test Framework `1.7.0`
-- Project path `Assets/_Project/RulesOfEntry/`
-- Prototype scene `Assets/_Project/RulesOfEntry/Scenes/Prototype/ROE_Prototype.unity`
+## Current state
 
-Inspect the repository, `PROJECT_CONTEXT.md`, `CURRENT_STATUS.md`, `SYSTEM_MAP.md`, `DEVELOPMENT_ROADMAP.md`, `BUGS.md`, `CHANGELOG.md`, package manifest, affected scripts, prefabs, and scenes before changing anything.
+- Milestones 0 and 1 are validated foundations.
+- Milestones 0–3 are complete and validated.
+- Milestone 3 human behavior and custody is the protected baseline for officer AI.
 
-## Current status
+Read in order:
 
-Milestones 0 and 1 are stable. Milestone 2 is an integration candidate awaiting the checklist in `MILESTONE_2_INSTALL.md`.
+1. `PROJECT_CONTEXT.md`
+2. `CURRENT_STATUS.md`
+3. `SYSTEM_MAP.md`
+4. `DEVELOPMENT_ROADMAP.md`
+5. `BUGS.md`
+6. `MILESTONE_3_INSTALL.md`
 
-## Non-negotiable Milestone 2 rules
+## Non-negotiable invariants
 
-- No automatic reload.
-- No numerical ammunition counter or automatic knowledge of magazine contents.
-- Track each magazine and chambered round physically.
-- Magazine checks provide qualitative estimates only.
-- Retained and emergency reloads have different consequences.
-- One semi-automatic trigger press can produce at most one discharge.
-- One discharge produces exactly one immutable force event.
-- Dry fire produces no force event.
-- Combat never changes score or decides ROE justification.
-- Do not claim advanced external/terminal ballistics until validated implementations exist.
+- No automatic reload and no exact player ammo counter.
+- Unity object identifiers use `GetEntityId()` and preserve all 64 bits.
+- AI decisions must be reproducible and record an explicit reason.
+- No capable free subject may be instantly restrained or searched.
+- Combat, AI, and custody code emit facts and never mutate mission score.
+- Do not claim live Unity success until compilation, validation, tests, smoke tests, and Console evidence exist.
+- Do not add final 3D art before the related graybox contract is stable.
 
-## Error workflow
+## Current controls
 
-Inspect current files, assemblies, package APIs, serialized references, prefab overrides, input bindings, lifecycle order, and the mechanical state transition that failed. Fix the root cause with complete replacement files, add regression coverage, record the defect in `BUGS.md`, and require user validation before closing it.
+- `F` / gamepad left shoulder: issue police compliance command.
+- `E` / gamepad west: perform the displayed custody interaction.
+- Weapon controls remain documented in the Milestone 2 files.
+
+## Next action
+
+Commit and push the completed Milestone 3 documentation. Then begin Milestone 4 officer selection, tactical orders, failure reasons, navigation/door coordination, and arrest assistance without weakening existing authority boundaries.

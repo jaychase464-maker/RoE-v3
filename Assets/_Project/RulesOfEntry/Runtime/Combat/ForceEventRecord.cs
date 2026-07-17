@@ -24,7 +24,8 @@ namespace RulesOfEntry.Combat
             ulong hitColliderEntityId,
             string hitObjectName,
             float muzzleEnergyJoules,
-            FirearmSnapshot postShotSnapshot)
+            FirearmSnapshot postShotSnapshot,
+            ForceSubjectSnapshot subjectBeforeImpact)
         {
             Sequence = sequence;
             OccurredAtSeconds = occurredAtSeconds;
@@ -43,6 +44,7 @@ namespace RulesOfEntry.Combat
             HitObjectName = hitObjectName;
             MuzzleEnergyJoules = muzzleEnergyJoules;
             PostShotSnapshot = postShotSnapshot;
+            SubjectBeforeImpact = subjectBeforeImpact;
         }
 
         public long Sequence { get; }
@@ -62,5 +64,6 @@ namespace RulesOfEntry.Combat
         public string HitObjectName { get; }
         public float MuzzleEnergyJoules { get; }
         public FirearmSnapshot PostShotSnapshot { get; }
+        public ForceSubjectSnapshot SubjectBeforeImpact { get; }
     }
 }

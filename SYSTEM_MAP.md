@@ -1,45 +1,62 @@
 # System Map
 
-## Milestone 2 authority flow
+## Milestone 3 authority flow
 
 ```mermaid
 flowchart TD
-    Input[Manual weapon input] --> Controller[FirearmController]
-    Controller --> State[FirearmStateMachine]
-    State --> Magazines[Physical magazines and chamber]
-    Controller --> Shot[Physical muzzle shot]
-    Shot --> Target[Ballistic receiver]
-    Shot --> Ledger[Immutable force-event ledger]
-    Controller --> View[Weapon view and uncertainty UI]
+    Command[Police command] --> Perception[HumanPerception]
+    Perception --> Decision[HumanDecisionModel]
+    Seed[Incident seed + actor ID] --> Decision
+    Decision --> Behavior[HumanActorController]
+    Behavior --> Navigation[NavMeshAgent]
+    Behavior --> Custody[CustodyStateMachine]
+    Custody --> Interaction[CustodyInteractable]
+    Decision --> DecisionLedger[Decision ledger]
+    Custody --> CustodyLedger[Custody ledger]
 ```
+
+## Accountability bridge
+
+```mermaid
+flowchart LR
+    Shot[Firearm discharge] --> ForceLedger[Force-event ledger]
+    Actor[Actor state before impact] --> ForceLedger
+    ForceLedger --> FutureROE[Future ROE evaluator]
+```
+
+The future evaluator is read-only. Milestone 3 does not assign penalties or points.
 
 ## Responsibility map
 
-| System | Owns | Explicitly does not own |
+| System | Owns | Does not own |
 |---|---|---|
-| `FirearmStateMachine` | selector, chamber, bolt, inserted/spare/dropped magazines, live-round ejection | input, animation, score, ROE judgment |
-| `FirearmController` | manual operation timing, input gating, physical muzzle shot, recoil request | automatic reload, ammo HUD, mission result |
-| `WeaponStatusUI` | selector/posture feedback, temporary qualitative check result, operation progress | exact round state |
-| `FirearmView` | graybox posture, reload/check/action poses, recoil motion | authoritative mechanics |
-| `UseOfForceEventLedger` | immutable ordered discharge facts | justification or penalties |
-| `PrototypeBallisticTarget` | prototype hit response | actor injury model |
+| `ActorIdentity` | stable actor ID, name, role, incident seed | behavior or score |
+| `ActorCondition` | blood volume, bleeding, consciousness, mobility, condition level | medical authenticity claims or HUD health |
+| `HumanPerception` | sight/hearing tests and last known officer position | response choice |
+| `HumanDecisionModel` | response score, response state, explicit reason, deception choice | movement or animation |
+| `HumanActorController` | stress/morale updates, state application, movement intent | custody transition validity |
+| `CustodyStateMachine` | valid procedural custody transitions | interaction timing or visuals |
+| `CustodyInteractable` | player prompt and hold duration for the next valid step | authoritative custody history |
+| `HumanDecisionLedger` | immutable ordered decision facts | ROE judgment |
+| `CustodyEventLedger` | immutable ordered custody facts | mission result |
+| `UseOfForceEventLedger` | discharge and pre-impact subject facts | justification or penalty |
 
-## Data and generated assets
+## Generated assets
 
-- `Data/Equipment/M2_PatrolCarbine.asset`
-- `Data/Equipment/M2_556_62gr.asset`
-- `Prefabs/Combat/ROE_BallisticTarget.prefab`
-- `Prefabs/UI/ROE_WeaponStatusUI.prefab`
-- nested `[Milestone2_WeaponRig]` in `ROE_Player.prefab`
-- `[Milestone2_Range]` in `ROE_Prototype.unity`
+- `Data/AI/M3_UncertainSuspect.asset`
+- `Data/AI/M3_PanickedCivilian.asset`
+- `Data/AI/M3_PrototypeNavMesh.asset`
+- `Prefabs/Actors/ROE_PrototypeSuspect.prefab`
+- `Prefabs/Actors/ROE_PrototypeCivilian.prefab`
+- `Prefabs/UI/ROE_HumanBehaviorDebugUI.prefab`
+- `[Milestone3_HumanBehavior]` in `ROE_Prototype.unity`
 
-## Key invariants
+## Invariants
 
-- Exact ammunition state exists for simulation, tests, and later accountability only.
-- Player UI cannot reference `InsertedMagazineRounds` or `RoundCount`.
-- No empty-state transition calls reload.
-- A discharge removes one chambered round and produces one force event.
-- A dry trigger produces no force event.
-- Tactical reload retains the removed magazine at the back of pouch order.
-- Emergency reload discards the removed magazine.
-- Reloading an empty closed chamber still requires cycling the action.
+- A free, capable subject cannot be instantly handcuffed or searched.
+- Restraint requires surrender/secure positioning and controlled kneeling.
+- Search requires restraints; custody confirmation requires search.
+- Restrained subjects cannot abandon surrender.
+- Every evaluated command has a recorded reason, score, and deterministic roll.
+- Force records capture actor state before injury is applied.
+- AI, combat, and custody code contain no direct mission-score mutation.

@@ -121,6 +121,15 @@
           "processors": "",
           "interactions": "",
           "initialStateCheck": false
+        },
+        {
+          "name": "IssueCommand",
+          "type": "Button",
+          "id": "a1d7b8e1-83c4-4a49-8b2d-715600000009",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "Press",
+          "initialStateCheck": false
         }
       ],
       "bindings": [
@@ -451,6 +460,28 @@
           "processors": "",
           "groups": "Gamepad",
           "action": "EmergencyReloadModifier",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "b2e8c9f2-94d5-4b5a-9c3e-826700000017",
+          "path": "<Keyboard>/f",
+          "interactions": "",
+          "processors": "",
+          "groups": "Keyboard&Mouse",
+          "action": "IssueCommand",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "b2e8c9f2-94d5-4b5a-9c3e-826700000018",
+          "path": "<Gamepad>/leftShoulder",
+          "interactions": "",
+          "processors": "",
+          "groups": "Gamepad",
+          "action": "IssueCommand",
           "isComposite": false,
           "isPartOfComposite": false
         }

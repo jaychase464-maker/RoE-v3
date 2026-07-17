@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using RulesOfEntry.Actors;
+using RulesOfEntry.AI;
 using UnityEngine;
 
 namespace RulesOfEntry.Combat
@@ -42,6 +44,7 @@ namespace RulesOfEntry.Combat
             bool hasHit = hit.HasValue;
             RaycastHit hitValue = hasHit ? hit.Value : default;
             Collider collider = hasHit ? hitValue.collider : null;
+            ForceSubjectSnapshot subjectBeforeImpact = CreateSubjectSnapshot(collider);
             ForceEventRecord record = new ForceEventRecord(
                 nextSequence++,
                 Time.timeAsDouble,
@@ -59,11 +62,41 @@ namespace RulesOfEntry.Combat
                 collider != null ? EntityId.ToULong(collider.GetEntityId()) : 0UL,
                 collider != null ? collider.gameObject.name : string.Empty,
                 ammunition.MuzzleEnergyJoules,
-                postShotSnapshot);
+                postShotSnapshot,
+                subjectBeforeImpact);
 
             records.Add(record);
             RecordAdded?.Invoke(record);
             return record;
+        }
+
+        private static ForceSubjectSnapshot CreateSubjectSnapshot(Collider collider)
+        {
+            if (collider == null)
+            {
+                return ForceSubjectSnapshot.None;
+            }
+
+            ActorIdentity identity = collider.GetComponentInParent<ActorIdentity>();
+            if (identity == null)
+            {
+                return ForceSubjectSnapshot.None;
+            }
+
+            ActorCondition condition = identity.GetComponent<ActorCondition>();
+            CustodyComponent custody = identity.GetComponent<CustodyComponent>();
+            HumanActorController behavior = identity.GetComponent<HumanActorController>();
+            ActorInventory inventory = identity.GetComponent<ActorInventory>();
+            return new ForceSubjectSnapshot(
+                true,
+                identity.ActorId,
+                identity.Role,
+                condition != null
+                    ? condition.Snapshot.Level
+                    : ActorConditionLevel.Stable,
+                custody != null ? custody.State : CustodyState.Free,
+                behavior != null ? behavior.State : HumanBehaviorState.Idle,
+                inventory != null && inventory.HasWeapon);
         }
     }
 }
