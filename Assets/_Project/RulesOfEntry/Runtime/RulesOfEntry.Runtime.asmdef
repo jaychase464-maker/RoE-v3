@@ -1,7 +1,10 @@
 {
   "name": "RulesOfEntry.Runtime",
   "rootNamespace": "RulesOfEntry",
-  "references": [],
+  "references": [
+    "Unity.InputSystem",
+    "Unity.UGUI"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

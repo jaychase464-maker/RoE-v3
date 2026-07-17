@@ -1,96 +1,59 @@
 # System Map
 
-## Project-owned structure
-
-```text
-Assets/_Project/RulesOfEntry/
-├── Art/
-├── Audio/
-├── Data/
-│   ├── Actors/
-│   ├── Equipment/
-│   ├── Missions/
-│   └── RulesOfEngagement/
-├── Editor/
-│   └── Foundation/
-├── Input/
-├── Prefabs/
-│   ├── Actors/
-│   ├── Environment/
-│   ├── Interactions/
-│   └── UI/
-├── Runtime/
-│   ├── Actors/
-│   ├── AI/
-│   ├── Combat/
-│   ├── Commands/
-│   ├── Core/
-│   ├── Input/
-│   ├── Interaction/
-│   ├── Missions/
-│   ├── Player/
-│   ├── RulesOfEngagement/
-│   ├── UI/
-│   └── World/
-├── Scenes/
-│   ├── Bootstrap/
-│   ├── Prototype/
-│   └── Tests/
-└── Tests/
-    ├── EditMode/
-    └── PlayMode/
-```
-
-Milestone 0 uses four assemblies: runtime, editor, Edit Mode tests, and Play Mode tests. Runtime is intentionally kept unified until stable dependencies justify further splits.
-
-## Implemented Milestone 0 files
-
-| File | Responsibility |
-|---|---|
-| `Runtime/Core/ProjectInfo.cs` | stable identity, version, milestone, and authoritative asset paths |
-| `Runtime/Core/ProjectLog.cs` | consistent project-owned logging |
-| `Runtime/World/SceneFoundationMarker.cs` | identifies scene purpose and serialized schema |
-| `Editor/Foundation/RulesOfEntryFoundationSetup.cs` | creates folders, prototype scene, marker, and Build Settings |
-| `Editor/Foundation/RulesOfEntryProjectValidator.cs` | reports foundation drift and missing references |
-| `Editor/Foundation/RulesOfEntryBuildValidator.cs` | blocks builds when validation errors exist |
-| `Tests/EditMode/ProjectFoundationTests.cs` | validates identity and project configuration |
-| `Tests/PlayMode/FoundationSmokeTests.cs` | validates runtime scene-marker behavior |
-
-## Runtime relationship
+## Milestone 1 flow
 
 ```mermaid
 flowchart TD
-    Core[Core contracts and events] --> Gameplay[Player, interaction, combat]
-    Core --> Actors[Actors, perception, AI]
-    Gameplay --> Mission[Mission and ROE ledger]
-    Actors --> Mission
-    Mission --> UI[HUD and after-action UI]
+    Input[ROE Input Actions] --> Intent[TacticalPlayerInput]
+    Intent --> Motor[FirstPersonMotor]
+    Intent --> Look[FirstPersonLook]
+    Intent --> Cursor[CursorStateController]
+    Intent --> Focus[PlayerInteractor]
+    Focus --> Target[InteractableBehaviour]
+    Focus --> Prompt[InteractionPromptUI]
 ```
 
-## System responsibilities
+## Implemented files
 
-| System | Owns | Does not own |
-|---|---|---|
-| Core | IDs, clocks, common contracts, event types, diagnostics | gameplay decisions |
-| Input | action references and player intent | movement physics or AI commands |
-| Player | first-person locomotion, stance, camera | mission score |
-| Interaction | focus, availability, timed interactions, prompts | target-specific state |
-| Combat | weapon state, shot events, impacts, force events | whether force was justified |
-| Actors | identity, condition, custody, shared capabilities | global mission flow |
-| AI | perception, memory, decision state, navigation intent | player input or AAR rendering |
-| Commands | officer selection, command orders, command execution state | AI perception |
-| Missions | objectives, phase, spawn plan, incident seed | low-level actor movement |
-| ROE | immutable event ledger and policy evaluation | weapon firing |
-| UI | presentation and input-mode transitions | authoritative gameplay state |
-| Editor | setup, generation, and validation | runtime dependencies |
+| File | Responsibility |
+|---|---|
+| `Input/ROE_InputActions.inputactions` | Player and System actions for keyboard/mouse and gamepad |
+| `Runtime/Input/TacticalPlayerInput.cs` | Resolves actions and exposes device-independent player intent |
+| `Runtime/Player/FirstPersonMotor.cs` | CharacterController movement, gravity, sprint, crouch, and clearance check |
+| `Runtime/Player/FirstPersonLook.cs` | Body yaw and clamped camera pitch |
+| `Runtime/Player/CursorStateController.cs` | Cursor lock and gameplay action-map state |
+| `Runtime/Interaction/InteractionContext.cs` | Actor/view/time data passed to targets |
+| `Runtime/Interaction/InteractionPrompt.cs` | Immutable prompt availability and hold-duration data |
+| `Runtime/Interaction/InteractableBehaviour.cs` | Base contract for target-specific interactions |
+| `Runtime/Interaction/PlayerInteractor.cs` | Camera focus ray, instant use, and hold progress |
+| `Runtime/Interaction/PrototypeDoor.cs` | Animated instant-interaction example |
+| `Runtime/Interaction/PrototypeControlPanel.cs` | Stateful hold-interaction example |
+| `Runtime/UI/InteractionPromptUI.cs` | Binding, action text, availability, and progress presentation |
+| `Editor/Milestone1/RulesOfEntryMilestoneOneSetup.cs` | Creates layers, assets, prefabs, and graybox scene content |
+| `Editor/Milestone1/RulesOfEntryMilestoneOneValidator.cs` | Validates the complete Milestone 0 and 1 contract |
+| `Editor/Milestone1/RulesOfEntryMilestoneOneBuildValidator.cs` | Blocks builds containing Milestone 1 errors |
+| `Tests/EditMode/MilestoneOneConfigurationTests.cs` | Enforces setup completeness |
+| `Tests/PlayMode/MilestoneOneInteractionTests.cs` | Verifies door and control-panel state behavior |
 
-## Naming conventions
+## Generated assets
 
-- Root namespace: `RulesOfEntry`
-- Runtime namespace pattern: `RulesOfEntry.<System>`
-- Editor namespace: `RulesOfEntry.Editor`
-- Test namespace: `RulesOfEntry.Tests`
-- ScriptableObject definitions end in `Definition`.
-- Runtime state types end in `State` only when they represent mutable state.
-- Interfaces describe capability, such as `IInteractable`, `IDamageable`, or `ICommandReceiver`.
-- Avoid generic manager names when a specific responsibility can be named.
+The Milestone 1 setup tool creates these assets inside the project:
+
+- `Prefabs/Actors/ROE_Player.prefab`
+- `Prefabs/Interactions/ROE_PrototypeDoor.prefab`
+- `Prefabs/Interactions/ROE_PrototypeControlPanel.prefab`
+- `Prefabs/UI/ROE_InteractionPromptUI.prefab`
+- `Art/Materials/M1_Floor.mat`
+- `Art/Materials/M1_Wall.mat`
+- `Art/Materials/M1_Accent.mat`
+- `Art/Materials/M1_Door.mat`
+
+It updates `Scenes/Prototype/ROE_Prototype.unity` and adds `Player` and `Interactable` layers without choosing fixed layer numbers.
+
+## Dependency boundaries
+
+- Runtime code depends on `Unity.InputSystem` and `Unity.UGUI`, both already installed.
+- Runtime code contains no `UnityEditor` dependency.
+- Interaction targets own their state; the player interactor owns focus and input timing.
+- UI observes interaction state and does not execute gameplay decisions.
+- Movement and interactions do not mutate future mission score or ROE state.

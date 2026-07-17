@@ -2,51 +2,41 @@
 
 ## Active milestone
 
-**Milestone 1 — First-Person and Tactical Interaction**
+**Milestone 1 — First-Person and Tactical Interaction: integration candidate**
 
-Milestone 0 is complete and stable. The project now has a verified foundation for gameplay implementation.
+Milestone 0 remains complete and stable. Milestone 1 code, setup tooling, validation, tests, and documentation have been prepared and require validation in the source-of-truth Unity project.
 
-## Milestone 0 completed and verified
+## Milestone 1 delivered for integration
 
-- Confirmed access to `jaychase464-maker/RoE-v3`.
-- Inspected the initial repository structure, settings, packages, scene, input asset, and scripts.
-- Verified Unity `6000.5.2f1`, HDRP `17.5.0`, Input System `1.19.0`, and Test Framework `1.7.0`.
-- Verified the pre-Milestone-0 Unity baseline has zero compiler errors.
-- Defined the project architecture and milestone order.
-- Added project-owned runtime, editor, Edit Mode test, and Play Mode test assemblies.
-- Added project identity, structured logging, scene metadata, foundation setup, project validation, and build validation code.
-- Created the complete project folder scaffold.
-- Created `Assets/_Project/RulesOfEntry/Scenes/Prototype/ROE_Prototype.unity` while preserving the original HDRP template scene.
-- Confirmed project validation completed with 15 passing checks, zero errors, and one expected `DefaultCompany` warning.
-- Confirmed all Edit Mode and Play Mode tests pass.
-- Confirmed Play Mode produces no Console errors or exceptions.
+- Project-owned `ROE_InputActions.inputactions` with keyboard/mouse and gamepad bindings.
+- CharacterController movement with walk, forward sprint, crouch, acceleration, gravity, and obstruction-safe standing.
+- First-person camera look with separate mouse and gamepad response.
+- Escape/Start cursor release and gameplay-map switching.
+- Raycast interaction focus with instant and hold interactions.
+- Interaction prompt UI with binding label and hold-progress display.
+- Animated training door and stateful training control panel.
+- Repeatable editor tool that builds all prefabs, HDRP materials, and the prototype graybox.
+- Milestone 1 validator and build gate.
+- Edit Mode configuration test and Play Mode interaction tests.
 
-## Not yet implemented
+## Required user validation
 
-- first-person controller;
-- tactical interaction system;
-- weapons or damage;
-- officer, suspect, or civilian actors;
-- perception, navigation, or tactical AI;
-- verbal commands, surrender, restraint, or arrest;
-- officer command system;
-- mission objectives;
-- ROE event tracking and evaluation;
-- after-action reporting;
-- gameplay UI;
-- save/load.
+1. Import the package and allow Unity to compile with zero errors.
+2. Run **Tools > Rules of Entry > Milestone 1 > Build Gameplay Prototype**.
+3. Confirm Milestone 1 validation has zero errors.
+4. Run all Edit Mode and Play Mode tests.
+5. Complete the movement, crouch tunnel, door, panel, cursor, and clean-Console smoke test.
 
-## Milestone 1 objective
+Milestone 1 is not stable until those results are recorded.
 
-Create a reliable graybox gameplay loop containing:
+## Deferred to later milestones
 
-- CharacterController-based first-person movement;
-- mouse and gamepad camera control;
-- walk, sprint, and crouch states;
-- correct cursor and input-mode handling;
-- reusable interaction targeting and execution;
-- interaction prompt UI;
-- a repeatable graybox test environment;
-- basic door and test-interactable implementations.
+- weapon handling and force-event capture — Milestone 2;
+- suspect/civilian AI, verbal compliance, surrender, restraint, and arrest — Milestone 3;
+- officer selection and commands — Milestone 4;
+- objectives, ROE tracking, and after-action scoring — Milestone 5;
+- production 3D art and animation — after graybox gameplay contracts are proven.
 
-Milestone 1 must preserve every Milestone 0 validator and test result.
+## Art requirement
+
+No external 3D models are required for Milestone 1. The setup tool uses Unity primitives so movement scale, collision, and interaction can be validated before production assets are selected.

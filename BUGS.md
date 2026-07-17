@@ -2,7 +2,7 @@
 
 ## Confirmed bugs
 
-No gameplay bugs are confirmed because gameplay systems have not yet been implemented.
+No Milestone 1 gameplay bug is confirmed. The integration candidate has not yet completed live Unity validation.
 
 ## Open validation gaps and technical debt
 
@@ -11,38 +11,40 @@ No gameplay bugs are confirmed because gameplay systems have not yet been implem
 - Type: configuration debt
 - Priority: low
 - Status: open
-- Evidence: `ProjectSettings/ProjectSettings.asset` contains `companyName: DefaultCompany`
-- Planned resolution: set an approved studio/company identity during a future project-settings pass; do not guess the legal name
-
-### ROE-0003 — Generic starter input actions are not tactical-game ready
-
-- Type: foundation debt
-- Priority: normal
-- Status: planned for Milestone 1
-- Evidence: current Player map provides Move, Look, Attack, Interact, Crouch, Jump, Previous, Next, and Sprint only
-- Planned resolution: create project-owned action maps and add aim, reload, stance/lean, command, select-team, low-ready, and pause actions with their owning systems
+- Evidence: the stable validator reports `DefaultCompany`
+- Planned resolution: set the approved studio identity before a distributable build; do not guess the legal name
 
 ### ROE-0004 — AI Navigation authoring package not declared
 
 - Type: dependency gap
 - Priority: normal
 - Status: planned for Milestone 3
-- Evidence: `com.unity.modules.ai` is present; `com.unity.ai.navigation` is absent from `Packages/manifest.json`
-- Planned resolution: resolve and install the compatible version from Unity Package Manager immediately before navigation implementation
+- Evidence: `com.unity.modules.ai` is present; `com.unity.ai.navigation` is not declared
+- Planned resolution: verify and install the Unity-compatible version immediately before navigation work
+
+### ROE-0006 — Milestone 1 live integration is not yet validated
+
+- Type: validation gap
+- Priority: blocker for closing Milestone 1
+- Status: open
+- Required evidence: zero compiler errors, zero Milestone 1 validation errors, passing Edit Mode and Play Mode tests, passing manual smoke test, and clean Play Mode Console
 
 ## Resolved validation gaps
 
 ### ROE-0001 — Live compiler status not recorded
 
-- Type: validation gap
 - Status: resolved on 2026-07-16
-- Resolution: user opened the repository project in Unity `6000.5.2f1` and confirmed the pre-Milestone-0 Console contained no errors
+- Resolution: the project opened in Unity `6000.5.2f1` with no baseline compiler errors
+
+### ROE-0003 — Generic starter input actions were not tactical-game ready
+
+- Status: implementation delivered in Milestone 1
+- Resolution: `ROE_InputActions.inputactions` now owns movement, look, sprint, crouch, interact, and cursor actions; later milestones will add weapon and command actions only when their systems exist
 
 ### ROE-0005 — Milestone 0 integration was not validated
 
-- Type: validation gap
 - Status: resolved on 2026-07-16
-- Resolution: foundation setup completed; validation reported 15 passes, zero errors, and one expected company-name warning; all Edit Mode and Play Mode tests passed; prototype Play Mode produced no errors or exceptions
+- Resolution: foundation validation reported 15 passes, zero errors, and one expected warning; all tests and the Play Mode smoke test passed
 
 ## New bug format
 
@@ -63,4 +65,4 @@ Workaround:
 Resolution and validation:
 ```
 
-Use `ROE-####` identifiers. Never delete a resolved entry; move it to a resolved section with the fixing commit and test result.
+Use `ROE-####` identifiers. Never delete a resolved entry; retain its resolution and validation evidence.

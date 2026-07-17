@@ -2,7 +2,9 @@
   "name": "RulesOfEntry.Editor",
   "rootNamespace": "RulesOfEntry.Editor",
   "references": [
-    "RulesOfEntry.Runtime"
+    "RulesOfEntry.Runtime",
+    "Unity.InputSystem",
+    "Unity.UGUI"
   ],
   "includePlatforms": [
     "Editor"

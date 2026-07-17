@@ -1,140 +1,105 @@
 # Development Roadmap
 
-Development moves one stable milestone at a time. A milestone is complete only after its implementation is committed, Unity compiles with zero errors, the test checklist passes, documentation is updated, and regressions are recorded.
+Development advances one stable milestone at a time. A milestone closes only after its implementation is committed, Unity compiles with zero errors, validation passes, automated and manual tests pass, and project documentation records the evidence.
 
 ## Prototype milestones
 
-### Milestone 0 — Project Foundation
+### Milestone 0 — Project Foundation — Complete
 
-Goal: establish project ownership, dependency boundaries, validation, and a trustworthy clean baseline.
+Established project ownership, assembly boundaries, structured logging, repeatable setup, automatic validation, tests, and a project-owned prototype scene.
 
-Deliverables:
+### Milestone 1 — First-Person and Tactical Interaction — Integration candidate
 
-- project-owned folder structure;
-- runtime/editor/test assembly definitions;
-- project identity and logging foundation;
-- editor validation report;
-- prototype scene copied from and separated from the HDRP template scene;
-- documentation synchronized with the repository.
+Goal: make a small HDRP graybox reliably playable and prove the input/interaction contracts used by later systems.
 
-Exit: fresh checkout opens in Unity `6000.5.2f1`, validator passes, and Console has zero errors.
+Delivered for validation:
 
-### Milestone 1 — First-Person and Tactical Interaction
-
-Goal: make a small graybox environment reliably playable.
-
-Deliverables:
-
-- CharacterController-based first-person movement;
-- mouse/gamepad look, walk, sprint, crouch, and stance-safe camera motion;
-- cursor/input-mode handling;
-- reusable focus and interaction contracts;
+- CharacterController first-person locomotion;
+- mouse/gamepad look, walk, forward sprint, crouch, and stance-safe camera motion;
+- cursor and gameplay-input mode handling;
+- reusable interaction context, prompt, focus, instant-use, and hold-use contracts;
 - interaction prompt UI;
-- doors, simple pickups, and a restraint test target;
-- editor tool that constructs the graybox test environment repeatably.
+- animated door and stateful hold-to-use panel examples;
+- repeatable graybox, prefab, material, and layer setup;
+- validation, build gate, and automated tests.
 
-Exit: player can traverse the environment, focus targets, and complete interactions without input, cursor, collision, or missing-reference errors.
+Exit: zero compiler and validation errors; all tests pass; movement, collision, crouch clearance, door, hold interaction, UI, and cursor pass the documented smoke test; Play Mode Console remains clean.
 
 ### Milestone 2 — Weapon and Force-Event Foundation
 
-Goal: implement basic firearm operation while capturing every use-of-force fact needed later.
+Goal: implement basic firearm operation while preserving every fact required for later accountability.
 
-Deliverables:
+Planned:
 
-- weapon and ammunition definitions;
-- equip, aim, fire, reload, safe/low-ready states;
-- hitscan prototype with validated layers and impact data;
+- weapon/ammunition definitions;
+- equip, aim, fire, reload, safe, and low-ready state;
+- validated hitscan prototype and impact data;
 - actor condition/damage foundation;
 - weapon handling UI;
 - immutable force-event emission;
-- Edit Mode tests for weapon state transitions and event creation.
+- tests for weapon transitions and exactly-once force events.
 
-Exit: weapon state cannot desynchronize, shots generate exactly one force event, and no mission score is directly changed by combat code.
+Exit: weapon state cannot desynchronize, each shot emits exactly one force event, and combat code never changes mission score directly.
 
 ### Milestone 3 — Suspect, Civilian, Compliance, and Arrest
 
-Goal: prove believable non-player behavior without treating people as simple targets.
+Goal: prove believable human behavior and a complete non-lethal custody path.
 
-Deliverables:
+Planned:
 
-- actor identities and roles;
-- perception, memory, suspicion, stress, morale, and decision context;
-- navigation authoring after the compatible AI Navigation package is verified;
-- suspect states including hide, flee, resist, fight, comply, and deceptive surrender;
-- civilian states including panic, freeze, flee, hide, and comply;
-- verbal command stimuli and response calculation;
-- surrender, approach, restrain, search, and custody interactions;
-- deterministic incident seed and AI debug overlay.
+- actor identities, roles, condition, and custody state;
+- perception, memory, stress, morale, and explicit decision reasons;
+- compatible AI Navigation package verification and navigation authoring;
+- suspect hide, flee, resist, fight, comply, and deceptive-surrender behavior;
+- civilian panic, freeze, flee, hide, and comply behavior;
+- verbal-command stimuli and response evaluation;
+- surrender, approach, restraint, search, and custody interactions;
+- deterministic incident seeds and AI diagnostics.
 
-Exit: repeated seeded tests produce explainable behavior, subjects can be arrested without force, and failed compliance has a visible reason rather than a random opaque result.
+Exit: subjects can be arrested without force and every failed compliance decision has an inspectable reason.
 
 ### Milestone 4 — Officer AI and Command System
 
-Goal: let the player coordinate a small team through explicit, interruptible orders.
+Goal: coordinate a small, interruptible team.
 
-Deliverables:
+Planned: officer selection, move/hold/cover/follow/stack/open/restrain/secure orders, explicit order lifecycle, refusal/failure reasons, world markers, and execution diagnostics.
 
-- officer actor and tactical locomotion;
-- selection of officer/fireteam;
-- move, hold, cover, follow, stack, open, restrain, and secure commands;
-- order queue with accepted, executing, completed, failed, and cancelled states;
-- officer safety checks and command refusal reasons;
-- command UI and world markers;
-- command execution diagnostics.
-
-Exit: two officers can navigate the graybox, execute and cancel orders, report failures, and assist with arrest without blocking the player.
+Exit: two officers execute and cancel orders, report failures, and assist with arrest without blocking the player.
 
 ### Milestone 5 — Mission, ROE, and After-Action Review
 
 Goal: turn the systems into an accountable tactical operation.
 
-Deliverables:
+Planned: mission definitions/phases, objectives, mission-specific ROE policy, immutable incident ledger, custody/evidence/safety/force evaluation, reasoned penalties, and deterministic after-action reporting.
 
-- mission definition and runtime controller;
-- objectives and mission phases;
-- mission-specific ROE policy definition;
-- evidence, custody, civilian safety, officer safety, and force evaluation;
-- penalties with explicit reason and evidence;
-- after-action report with timeline and performance categories;
-- tests for justified/unjustified force and objective outcomes.
-
-Exit: the same incident ledger deterministically produces the same objective result, ROE findings, and AAR.
+Exit: the same incident ledger always produces the same objective, ROE, and after-action results.
 
 ### Milestone 6 — First Tactical Vertical Slice
 
-Goal: deliver one short, replayable incident that exercises the full prototype loop.
+Goal: deliver one short replayable residence or storefront incident with two officers, one uncertain suspect, one civilian, multiple approaches, seeded placement/behavior, arrest and force outcomes, and a complete after-action report.
 
-Scenario: small residence or storefront with two officers, one uncertain suspect, one civilian, multiple entry routes, randomized subject placement/state, arrest and force outcomes, and a complete AAR.
-
-Exit:
-
-- three full runs complete without blocker defects;
-- at least three meaningfully different seeded outcomes are observed;
-- player can succeed through communication and arrest;
-- justified and unjustified force are distinguished correctly;
-- no missing references, compiler errors, or unhandled exceptions;
-- performance baseline is recorded.
+Exit: three full runs complete without blockers, seeded outcomes differ meaningfully, communication/arrest can succeed, justified and unjustified force are distinguished, and no missing references or unhandled exceptions occur.
 
 ## Expansion after the vertical slice
 
-1. Planning, briefing, floor plans, loadouts, entry selection, and intel uncertainty.
+1. Briefing, intelligence uncertainty, floor plans, loadouts, assignments, and entry planning.
 2. Negotiation and barricaded-subject behavior.
-3. Patrol perimeter, traffic control, detention, evacuation, and escape interception.
-4. Tactical medics, injury treatment, fire, and EMS handoff.
+3. Patrol perimeter, traffic, detention, evacuation, and escape interception.
+4. Tactical medicine, fire/EMS staging, treatment, and handoff.
 5. K9 search and apprehension.
 6. Drone reconnaissance and overwatch.
 7. Sniper/spotter, bomb technician, and command-post systems.
-8. Evidence, detectives, scene handoff, and investigation consequences.
-9. Career/campaign progression, personnel injuries, performance reviews, and persistent consequences.
-10. Multiplayer only after authority, determinism, and AI ownership boundaries are designed for replication.
+8. Evidence, detectives, scene security, and investigative consequences.
+9. Career progression, injuries, performance reviews, and persistent consequences.
+10. Multiplayer only after authority, determinism, and AI ownership are designed for replication.
 
 ## Regression policy
 
 Before closing every milestone:
 
-- run the project validator;
-- check the Unity Console after domain reload and Play Mode;
-- run available Edit Mode and Play Mode tests;
-- execute every earlier milestone's smoke test;
+- run the foundation and current-milestone validators;
+- check the Console after domain reload and Play Mode;
+- run all Edit Mode and Play Mode tests;
+- execute every earlier milestone smoke test;
 - update `CURRENT_STATUS.md`, `BUGS.md`, `SYSTEM_MAP.md`, and `CHANGELOG.md`;
-- record Inspector assignments, required packages, project settings, and scene changes.
+- record packages, project settings, generated assets, scene changes, and required Inspector assignments.
