@@ -2,25 +2,30 @@
 
 ## Active milestone
 
-**Milestone 0 — Project Foundation**
+**Milestone 1 — First-Person and Tactical Interaction**
 
-Repository inspection and architecture planning are complete. The Unity project scaffold, project-owned folders, assembly definitions, validation tools, and live clean-console verification are still pending.
+Milestone 0 is complete and stable. The project now has a verified foundation for gameplay implementation.
 
-## Completed
+## Milestone 0 completed and verified
 
 - Confirmed access to `jaychase464-maker/RoE-v3`.
-- Inspected the initial commit and complete committed file list.
-- Verified Unity editor version, package manifest, package lock, Player Settings, Build Settings, HDRP configuration, quality configuration, Input System asset, scene contents, scripts, and missing project documentation.
-- Confirmed that no gameplay systems or prefabs are committed.
-- Confirmed that the scene has no serialized missing-script reference.
-- Defined the foundation architecture and milestone order.
+- Inspected the initial repository structure, settings, packages, scene, input asset, and scripts.
+- Verified Unity `6000.5.2f1`, HDRP `17.5.0`, Input System `1.19.0`, and Test Framework `1.7.0`.
+- Verified the pre-Milestone-0 Unity baseline has zero compiler errors.
+- Defined the project architecture and milestone order.
+- Added project-owned runtime, editor, Edit Mode test, and Play Mode test assemblies.
+- Added project identity, structured logging, scene metadata, foundation setup, project validation, and build validation code.
+- Created the complete project folder scaffold.
+- Created `Assets/_Project/RulesOfEntry/Scenes/Prototype/ROE_Prototype.unity` while preserving the original HDRP template scene.
+- Confirmed project validation completed with 15 passing checks, zero errors, and one expected `DefaultCompany` warning.
+- Confirmed all Edit Mode and Play Mode tests pass.
+- Confirmed Play Mode produces no Console errors or exceptions.
 
 ## Not yet implemented
 
 - first-person controller;
 - tactical interaction system;
 - weapons or damage;
-- health or injury model;
 - officer, suspect, or civilian actors;
 - perception, navigation, or tactical AI;
 - verbal commands, surrender, restraint, or arrest;
@@ -29,29 +34,19 @@ Repository inspection and architecture planning are complete. The Unity project 
 - ROE event tracking and evaluation;
 - after-action reporting;
 - gameplay UI;
-- save/load;
-- gameplay tests and editor validation.
+- save/load.
 
-## Next authorized development step
+## Milestone 1 objective
 
-Implement the remainder of Milestone 0:
+Create a reliable graybox gameplay loop containing:
 
-1. Create `Assets/_Project/RulesOfEntry/` and the folder structure in `SYSTEM_MAP.md`.
-2. Add runtime, editor, and test assembly definitions without circular references.
-3. Add a project constants/identity foundation and structured logging utility.
-4. Add an editor validator for Unity version, required packages, build scene, input mode, HDRP assignment, missing scripts, and forbidden legacy input usage.
-5. Create a clean prototype scene derived from the HDRP starter scene; preserve the original scene until the replacement is verified.
-6. Open Unity `6000.5.2f1`, allow compilation/import to finish, and confirm zero Console errors.
+- CharacterController-based first-person movement;
+- mouse and gamepad camera control;
+- walk, sprint, and crouch states;
+- correct cursor and input-mode handling;
+- reusable interaction targeting and execution;
+- interaction prompt UI;
+- a repeatable graybox test environment;
+- basic door and test-interactable implementations.
 
-## Milestone 0 exit criteria
-
-- Unity opens and compiles with zero errors.
-- Project-owned assets are separated from template/third-party assets.
-- Runtime code cannot reference editor-only code.
-- Validator passes on a clean project checkout.
-- The prototype scene is present in Build Settings and opens correctly.
-- Documentation matches the committed repository state.
-
-## Current blocker
-
-The repository does not contain Unity Console logs or CI output. Compiler status must therefore be verified from the Unity Editor before Milestone 0 can be marked stable.
+Milestone 1 must preserve every Milestone 0 validator and test result.

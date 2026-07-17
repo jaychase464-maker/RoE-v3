@@ -1,6 +1,6 @@
 # System Map
 
-## Proposed project-owned structure
+## Project-owned structure
 
 ```text
 Assets/_Project/RulesOfEntry/
@@ -12,6 +12,7 @@ Assets/_Project/RulesOfEntry/
 │   ├── Missions/
 │   └── RulesOfEngagement/
 ├── Editor/
+│   └── Foundation/
 ├── Input/
 ├── Prefabs/
 │   ├── Actors/
@@ -40,7 +41,20 @@ Assets/_Project/RulesOfEntry/
     └── PlayMode/
 ```
 
-Use a small initial assembly set: runtime, editor, Edit Mode tests, and Play Mode tests. Split runtime into additional assemblies only after dependencies are proven; premature fragmentation creates access-modifier and circular-reference failures.
+Milestone 0 uses four assemblies: runtime, editor, Edit Mode tests, and Play Mode tests. Runtime is intentionally kept unified until stable dependencies justify further splits.
+
+## Implemented Milestone 0 files
+
+| File | Responsibility |
+|---|---|
+| `Runtime/Core/ProjectInfo.cs` | stable identity, version, milestone, and authoritative asset paths |
+| `Runtime/Core/ProjectLog.cs` | consistent project-owned logging |
+| `Runtime/World/SceneFoundationMarker.cs` | identifies scene purpose and serialized schema |
+| `Editor/Foundation/RulesOfEntryFoundationSetup.cs` | creates folders, prototype scene, marker, and Build Settings |
+| `Editor/Foundation/RulesOfEntryProjectValidator.cs` | reports foundation drift and missing references |
+| `Editor/Foundation/RulesOfEntryBuildValidator.cs` | blocks builds when validation errors exist |
+| `Tests/EditMode/ProjectFoundationTests.cs` | validates identity and project configuration |
+| `Tests/PlayMode/FoundationSmokeTests.cs` | validates runtime scene-marker behavior |
 
 ## Runtime relationship
 
@@ -69,39 +83,6 @@ flowchart TD
 | ROE | immutable event ledger and policy evaluation | weapon firing |
 | UI | presentation and input-mode transitions | authoritative gameplay state |
 | Editor | setup, generation, and validation | runtime dependencies |
-
-## Actor model
-
-Actors are composed from capabilities such as identity, condition, locomotion, perception, communication, inventory, compliance, custody, and role. Suspects, civilians, and officers use different brains and policies while sharing compatible capabilities.
-
-Initial suspect states:
-
-- unaware;
-- suspicious;
-- alert;
-- hiding;
-- fleeing;
-- resisting;
-- fighting;
-- compliant;
-- deceptive surrender;
-- incapacitated;
-- restrained/detained.
-
-Initial civilian states:
-
-- unaware;
-- alarmed;
-- panic;
-- freeze;
-- flee;
-- hide;
-- comply;
-- secured.
-
-## Accountability data flow
-
-Every consequential action creates a timestamped event with actor, target, location, perceived threat context, action, equipment, and outcome. Mission objectives and ROE policy evaluate those events. The after-action report reads the resulting ledger, ensuring gameplay and scoring cannot disagree about what occurred.
 
 ## Naming conventions
 

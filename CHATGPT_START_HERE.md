@@ -22,17 +22,23 @@ Then inspect every existing file that the requested change could affect.
 ## Fixed project facts
 
 - Unity version: `6000.5.2f1`
-- Render pipeline: HDRP
-- Input: current Input System; never use `UnityEngine.Input`
+- Render pipeline: HDRP `17.5.0`
+- Input: Input System `1.19.0`; never use `UnityEngine.Input`
+- Test Framework: `1.7.0`
 - Root namespace: `RulesOfEntry`
 - Project-owned path: `Assets/_Project/RulesOfEntry/`
+- Prototype scene: `Assets/_Project/RulesOfEntry/Scenes/Prototype/ROE_Prototype.unity`
 - Current prototype mode: single-player
 
 Verify these facts against the repository and update this file if the project intentionally changes.
 
+## Current status
+
+**Milestone 0 — Project Foundation is complete and stable.** Compilation, project validation, Edit Mode tests, Play Mode tests, and the prototype Play Mode smoke test all passed.
+
 ## Current next step
 
-Complete **Milestone 0 — Project Foundation**. Do not begin player movement until its exit criteria in `CURRENT_STATUS.md` pass.
+Begin **Milestone 1 — First-Person and Tactical Interaction**. Preserve the Milestone 0 validation baseline and do not add weapons or actor AI during this milestone.
 
 ## Implementation rules
 
@@ -49,18 +55,7 @@ Complete **Milestone 0 — Project Foundation**. Do not begin player movement un
 
 ## Milestone response format
 
-For each milestone, report:
-
-1. goal and scope;
-2. repository systems inspected;
-3. exact new and replaced file paths;
-4. full implementation;
-5. required packages/project settings;
-6. Inspector assignments and scene setup;
-7. test checklist and expected behavior;
-8. conflicts, regressions, and rollback notes;
-9. documentation updates;
-10. stability result and remaining blockers.
+For each milestone, report the goal, inspected systems, exact file paths, full implementation, packages/settings, Inspector and scene setup, tests, regression risks, documentation changes, and stability result.
 
 ## Error-handling workflow
 

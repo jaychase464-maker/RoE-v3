@@ -8,8 +8,20 @@ Rules of Entry is a hyper-realistic first-person tactical law-enforcement game b
 - Unity: `6000.5.2f1`
 - Render pipeline: HDRP `17.5.0`
 - Input: Unity Input System `1.19.0`; New Input System only
-- Current stage: clean HDRP starter project; gameplay development has not begun
-- Current milestone: Milestone 0 — Project Foundation
+- Test Framework: `1.7.0`
+- Milestone 0: complete and stable
+- Current milestone: Milestone 1 — First-Person and Tactical Interaction
+
+## Verified foundation
+
+- project-owned runtime, editor, and test assemblies;
+- organized `Assets/_Project/RulesOfEntry/` structure;
+- project identity and structured logging;
+- repeatable editor foundation setup;
+- automatic project and pre-build validation;
+- project-owned prototype scene;
+- passing Edit Mode and Play Mode tests;
+- clean prototype Play Mode smoke test.
 
 ## Current prototype target
 
@@ -23,8 +35,6 @@ The first playable prototype will contain:
 - verbal compliance, surrender, restraint, and arrest;
 - officer selection and basic commands;
 - mission objectives, rules-of-engagement tracking, and after-action scoring.
-
-Advanced specialties are intentionally deferred until the core actor, command, mission, and accountability systems are stable.
 
 ## Start here
 
@@ -44,17 +54,6 @@ Read these files before making changes:
 - Use Unity `6000.5.2f1`; do not silently upgrade the editor or packages.
 - Use the current Input System. Do not use `UnityEngine.Input`.
 - Keep project-owned content under `Assets/_Project/RulesOfEntry/`.
-- Keep third-party assets outside the project-owned code folders.
 - Do not add a dependency without documenting why it is needed.
 - Do not report a milestone complete until Unity opens with zero compiler errors and its exit checklist passes.
 - When replacing an existing C# file, provide the complete updated file.
-
-## Opening the project
-
-1. Clone or pull the repository.
-2. Open its root folder in Unity Hub with Unity `6000.5.2f1`.
-3. Allow Package Manager and shader imports to finish.
-4. Open `Assets/OutdoorsScene.unity`.
-5. Confirm the Console has zero compiler errors before beginning a milestone.
-
-The current scene contains only the HDRP starter camera, sun, sky/fog volume, and static-lighting sky. A controllable player does not yet exist.
