@@ -2,7 +2,8 @@
   "name": "RulesOfEntry.Tests.PlayMode",
   "rootNamespace": "RulesOfEntry.Tests.PlayMode",
   "references": [
-    "RulesOfEntry.Runtime"
+    "RulesOfEntry.Runtime",
+    "Unity.AI.Navigation"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

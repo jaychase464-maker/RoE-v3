@@ -8,7 +8,7 @@ namespace RulesOfEntry.Core
         public const string GameTitle = "Rules of Entry";
         public const string ProjectCode = "ROE";
         public const string ExpectedUnityVersion = "6000.5.2f1";
-        public const string CurrentMilestone = "Milestone 3 - Human Behavior and Custody";
+        public const string CurrentMilestone = "Milestone 4 - Officer AI and Commands";
         public const int FoundationSchemaVersion = 1;
 
         public const string ProjectAssetRoot = "Assets/_Project/RulesOfEntry";

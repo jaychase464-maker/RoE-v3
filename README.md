@@ -4,27 +4,21 @@ Unity `6000.5.2f1` HDRP tactical law-enforcement simulation.
 
 ## Current delivery
 
-Milestone 3 is complete and validated. It adds deterministic human behavior and a complete non-lethal custody path to the stable first-person and manual-firearm foundations.
+Milestone 4 is an integration candidate. It adds a two-officer tactical command foundation to the validated first-person, manual-firearm, human-behavior, and custody systems.
 
-Delivered systems:
+Added in this candidate:
 
-- suspect and civilian identity, condition, inventory, perception, stress, morale, and behavior state;
-- replayable decision rolls tied to incident seed and actor identity;
-- inspectable decision reasons and immutable decision records;
-- verbal police commands through the current Input System;
-- surrender, deceptive surrender, panic, freeze, hide, flee, resist, and threat responses;
-- procedural kneel, restraint, search, and custody interactions;
-- immutable custody history with full Unity 6 `EntityId` values;
-- region-aware prototype ballistic injury response;
-- pre-impact actor facts captured in firearm force-event records;
-- AI Navigation `2.0.14`, generated NavMesh data, graybox actors, diagnostics, validation, build gate, and tests.
+- distinct Officer Alpha and Officer Bravo identities, injury state, navigation, and command history;
+- individual/team selection and move, hold, follow, stack, open, restrain, and cancel commands;
+- immutable command facts plus a separate, testable lifecycle state machine;
+- pending, accepted, executing, completed, cancelled, failed, and refused states;
+- explicit failure causes for invalid targets, incapacity, missing NavMesh, incomplete paths, non-compliance, timeout, and supersession;
+- physical NavMesh execution with no officer teleportation;
+- multi-step assisted restraint that preserves surrender, kneeling, timed cuffing, and verified restraint;
+- automatic line-of-sight suspect challenges;
+- conservative room-clear verification requiring two actionable officers and a stable no-threat interval;
+- automatic controlled custody with partner-cover monitoring and explicit abort reasons;
+- separate immutable origin and history for player commands and officer initiative;
+- world command marker, prototype diagnostics, validator, build gate, and automated tests.
 
-## Controls added in Milestone 3
-
-- Keyboard/mouse: `F` — issue “Police! Show me your hands!”
-- Gamepad: left shoulder — issue the same command
-- Existing `E`/gamepad west interaction performs the custody step shown in the prompt.
-
-Exact physiological state, decision scores, deception, and ammunition remain simulation/debug data. They are not final player HUD information.
-
-Live validation passed on 2026-07-16: clean compilation and validator, all EditMode and PlayMode tests, seeded behavior/custody smoke test, earlier milestone regressions, and clean Play Mode Console.
+Run `Tools > Rules of Entry > Milestone 4 > Build Officer Team Prototype`, then follow `MILESTONE_4_INSTALL.md`. Live Unity validation is still required before this milestone can be called complete.

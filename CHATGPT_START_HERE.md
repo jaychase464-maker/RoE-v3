@@ -6,9 +6,9 @@ Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation.
 
 ## Current state
 
-- Milestones 0 and 1 are validated foundations.
 - Milestones 0–3 are complete and validated.
-- Milestone 3 human behavior and custody is the protected baseline for officer AI.
+- Milestone 4 officer AI and tactical commands is implemented as an integration candidate.
+- Live Milestone 4 validation is not yet recorded; do not call it complete.
 
 Read in order:
 
@@ -17,24 +17,30 @@ Read in order:
 3. `SYSTEM_MAP.md`
 4. `DEVELOPMENT_ROADMAP.md`
 5. `BUGS.md`
-6. `MILESTONE_3_INSTALL.md`
+6. `MILESTONE_4_INSTALL.md`
 
 ## Non-negotiable invariants
 
 - No automatic reload and no exact player ammo counter.
 - Unity object identifiers use `GetEntityId()` and preserve all 64 bits.
-- AI decisions must be reproducible and record an explicit reason.
+- AI decisions are reproducible and record an explicit reason.
 - No capable free subject may be instantly restrained or searched.
-- Combat, AI, and custody code emit facts and never mutate mission score.
-- Do not claim live Unity success until compilation, validation, tests, smoke tests, and Console evidence exist.
+- Officer initiative may challenge a visible suspect, but automatic custody requires a controlled or incapacitated suspect, verified room clearance, and actionable partner cover.
+- Officer movement must use physical complete paths; no navigation warp or teleport.
+- Every officer order retains lifecycle and terminal outcome facts.
+- Combat, AI, custody, and officer code emit facts and never mutate mission score.
+- Do not claim live Unity success until compilation, validation, tests, smoke tests, regressions, and Console evidence exist.
 - Do not add final 3D art before the related graybox contract is stable.
 
-## Current controls
+## Milestone 4 controls
 
-- `F` / gamepad left shoulder: issue police compliance command.
-- `E` / gamepad west: perform the displayed custody interaction.
-- Weapon controls remain documented in the Milestone 2 files.
+- `1`, `2`, `3`: select Alpha, Bravo, or Team.
+- `G`: move; `H`: hold; `J`: follow.
+- `Y`: stack at door; `U`: open door; `K`: restrain subject.
+- `Z`: cancel selected orders.
+- Gamepad B: cycle selection; D-pad right: contextual order; View/select: cancel.
+- `F` / gamepad left shoulder remains the player's police compliance command; officers also challenge visible suspects automatically.
 
 ## Next action
 
-Commit and push the completed Milestone 3 documentation. Then begin Milestone 4 officer selection, tactical orders, failure reasons, navigation/door coordination, and arrest assistance without weakening existing authority boundaries.
+Install the Milestone 4 package, run its setup and validator, then execute the full checklist in `MILESTONE_4_INSTALL.md`. Record any first compiler or validator error exactly before changing code.

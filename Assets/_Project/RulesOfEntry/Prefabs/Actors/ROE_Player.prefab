@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 5073998642996719858}
   - component: {fileID: 1472801666566579587}
   - component: {fileID: 1420474587585043024}
+  - component: {fileID: 2003913926279210941}
   m_Layer: 8
   m_Name: ROE_Player
   m_TagString: Untagged
@@ -698,6 +699,29 @@ MonoBehaviour:
   receiverMask:
     serializedVersion: 2
     m_Bits: 4294967039
+--- !u!114 &2003913926279210941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678712671749742881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ce93a000144af4b8e0459dd5c072a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RulesOfEntry.Runtime::RulesOfEntry.Officers.OfficerSquadController
+  playerInput: {fileID: 3888388700844652772}
+  commandView: {fileID: 1342959181489295769}
+  officers: []
+  orderMarker: {fileID: 0}
+  commandMask:
+    serializedVersion: 2
+    m_Bits: 4294967039
+  commandDistance: 30
+  teamSpacing: 0.72
+  doorApproachDistance: 1.05
+  subjectApproachDistance: 0.9
 --- !u!1 &4170269004708223699
 GameObject:
   m_ObjectHideFlags: 0

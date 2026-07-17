@@ -2,47 +2,44 @@
 
 ## Active milestone
 
-**Milestone 3 — Suspect, Civilian, Compliance, and Arrest: complete and stable**
+**Milestone 4 — Officer AI and Command System: integration candidate; live validation pending**
 
-Milestone 3 completed live validation on 2026-07-16. Milestones 0–3 form the protected regression baseline for officer AI and tactical commands.
+Milestone 3 is complete and stable. Milestone 4 implementation is packaged but must pass Unity compilation, setup, validation, tests, smoke testing, earlier regressions, and a clean Console before closure.
 
-## Delivered for Milestone 3 validation
+Hotfix 1 fixed generated officer actions not surviving the JSON asset reimport/domain reload. The persistence fix and non-spamming exact diagnostics passed the user's live Unity test.
 
-- Actor identity, role, runtime EntityId, condition, hit regions, inventory, and custody state.
-- Human behavior profiles for an uncertain armed suspect and panicked civilian.
-- Deterministic decision generator seeded by incident and stable actor ID.
-- Stress, morale, perception, command comprehension, compliance, panic, flight, aggression, and deception inputs.
-- Explicit decisions for no perception, comply, surrender, freeze, hide, flee, resist, threaten, and deceptive surrender.
-- Immutable decision and custody ledgers.
-- Verbal command input: `F` or gamepad left shoulder.
-- Multi-step custody: surrender, kneel, restraints, search, custody confirmation.
-- Region-aware prototype ballistic condition response and bleeding progression.
-- Pre-impact actor/custody/behavior and accessible-weapon facts added to firearm force events without ROE judgment.
-- AI Navigation `2.0.14`, generated actor prefabs, baked NavMesh, developer diagnostics, validator, build gate, and automated tests.
+Hotfix 2 fixed scene-only squad references not being retained as prefab-instance overrides. The save/reload verification and Play Mode squad configuration passed the user's live Unity test.
 
-## Seeded prototype behavior
+Hotfix 3 fixed the doorway navigation defect. The fixed bidirectional link and physical-clearance gate passed the user's live Unity traversal test.
 
-- The civilian is configured to surrender to the first perceived command.
-- The suspect is configured to resist the first perceived command.
-- The suspect should deceptively surrender to the second command and abandon that surrender after approximately 5–8 seconds if not restrained.
-- Re-running with the same actor IDs and seeds reproduces those decision rolls.
+Hotfix 4 adds bounded officer initiative. Officers automatically challenge visible suspects. Automatic custody is authorized only after a bounded room has two actionable officers, every suspect is controlled or incapacitated, and the no-threat condition remains stable for 2.5 seconds. The closest officer then uses the existing physical custody sequence while the other provides cover. Unity revalidation is pending.
 
-## Milestone 3 validation — passed 2026-07-16
+## Implemented in the candidate
 
-- AI Navigation package resolution completed.
-- Unity compilation completed with zero errors after the two validator hotfixes.
-- Milestone 3 setup and validation completed with zero errors.
-- All EditMode tests passed.
-- All PlayMode tests passed.
-- The seeded suspect/civilian response and deceptive-surrender sequence passed.
-- The complete kneel, restraint, search, and custody path passed.
-- Milestones 1 and 2 regression behavior passed.
-- Play Mode Console remained free of errors and exceptions.
+- Officer Alpha and Bravo actor identities, conditions, inventories, hit regions, NavMesh agents, visuals, and order ledgers.
+- Individual Alpha, individual Bravo, and Team selection.
+- Move, hold, follow, stack-at-door, open-door, restrain-subject, contextual, and cancellation input.
+- Immutable `OfficerOrder` facts with issuer, assigned officer, target, sequence, and issued time.
+- Pure lifecycle transitions for pending, accepted, executing, completed, cancelled, failed, and refused orders.
+- Specific outcomes including incapacity, invalid target, no navigation surface, no path, unreachable target, non-compliance, supersession, player cancellation, and timeout.
+- Physical path calculation and movement without `NavMeshAgent.Warp`.
+- Door approach, physical opening, clearance wait, and gated NavMesh traversal without teleportation.
+- Line-of-sight suspect challenges, shared challenge discipline, timed room-clear verification, cover requirements, and automatic controlled custody.
+- Separate append-only facts for player-command and officer-initiative actions.
+- Restraint assistance with physical approach, compliant-state validation, kneeling direction, settle time, cuffing time, and verified custody transition.
+- Command marker, right-side diagnostics, setup generator, validator, build gate, and tests.
 
-## Next milestone
+## Validation pending
 
-Milestone 4 will implement small-team officer AI and an explicit tactical command lifecycle without changing the validated actor, custody, firearm, or accountability authorities.
+- Unity `6000.5.2f1` compilation.
+- Milestone 4 setup and validator.
+- All EditMode and PlayMode tests.
+- Individual/team movement, cancellation, follow, door, non-compliant restraint refusal, and cooperative arrest smoke tests.
+- Open-door cross-threshold movement for Alpha, Bravo, and Team, plus closed-door path rejection.
+- Automatic challenge, refusal/deception handling, room-clear verification, automatic cuffing, cover-loss abort, and civilian exclusion.
+- Milestones 1–3 regression checks.
+- Clean Play Mode Console.
 
 ## Art requirement
 
-No external 3D model is required for Milestone 3. Generated primitives deliberately expose authoritative state and interaction timing. Production human models, clothing, rigs, handcuff props, weapons, and animation are deferred until the behavior/custody contract passes.
+No external 3D model is required for Milestone 4 validation. Generated primitives make selection, paths, timing, and lifecycle failures visible. After the command contract is stable, the first production model package should include a rigged tactical officer body, uniform/armor variants, hands, duty belt, radio, handcuffs, and animation-ready equipment attachment points.

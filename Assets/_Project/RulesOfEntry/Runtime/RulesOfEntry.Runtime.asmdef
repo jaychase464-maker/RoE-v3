@@ -3,7 +3,8 @@
   "rootNamespace": "RulesOfEntry",
   "references": [
     "Unity.InputSystem",
-    "Unity.UGUI"
+    "Unity.UGUI",
+    "Unity.AI.Navigation"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

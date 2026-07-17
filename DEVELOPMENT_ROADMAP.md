@@ -14,38 +14,25 @@ CharacterController locomotion, camera look, cursor/input modes, raycast interac
 
 ### Milestone 2 — Weapon and Force-Event Foundation — Complete
 
-Manual per-magazine ammunition, chamber/bolt state, selector, low-ready/shouldered handling, manual retained/emergency reloads, magazine checks without an ammo counter, physical muzzle raycast, reactive targets, and immutable discharge facts.
-
-Milestone 2 regression behavior and tests passed again during Milestone 3 closure.
+Manual per-magazine ammunition, chamber/bolt state, selector, low-ready/shouldered handling, retained/emergency reloads, qualitative magazine checks, physical muzzle raycast, reactive targets, and immutable discharge facts.
 
 ### Milestone 3 — Suspect, Civilian, Compliance, and Arrest — Complete
 
-Goal: prove believable, explainable human behavior and a complete non-lethal custody path.
+Deterministic human decisions, perception, stress/morale, surrender/deception, injury, custody, factual ledgers, AI Navigation, graybox actors, validation, and tests. Closed 2026-07-16.
 
-Delivered and validated:
+### Milestone 4 — Officer AI and Command System — Integration Candidate
 
-- identity, role, condition, inventory, custody, and hit-region contracts;
-- perception, memory, stress, morale, profiles, deterministic rolls, and explicit decision reasons;
-- suspect resistance, threat, flight, hiding, surrender, and deceptive surrender;
-- civilian surrender, panic, freeze, flight, and hiding;
-- verbal command stimuli and weapon-presentation context;
-- procedural kneel, restraint, search, and custody interactions;
-- immutable decision/custody events and pre-impact actor facts;
-- AI Navigation package, bake, diagnostics, setup, validation, build gate, and tests.
+Goal: coordinate a small, interruptible team through explicit and inspectable commands.
 
-Exit passed on 2026-07-16: subjects were arrested without force, invalid custody shortcuts failed, the seeded scenario reproduced, every command decision retained an inspectable reason, all automated/regression checks passed, and the Console remained clean.
+Implemented: officer identity/condition reuse; Alpha/Bravo/Team selection; move, hold, follow, stack, open, restrain, context, and cancel orders; immutable player/initiative origin; explicit lifecycle/outcome reasons; physical path execution; gated door traversal; automatic visible-suspect challenges; two-officer timed room clearance; cover-gated automatic custody; markers; diagnostics; validator; build gate; and tests.
 
-### Milestone 4 — Officer AI and Command System
-
-Goal: coordinate a small, interruptible team.
-
-Planned: officer identity/condition reuse, selection, move/hold/cover/follow/stack/open/restrain/secure orders, explicit order lifecycle, refusal/failure reasons, world markers, door/NavMesh coordination, and two-officer assistance with arrest.
+Exit pending: clean Unity compilation, setup/validator, automated tests, command/cancellation/door/arrest/initiative smoke tests, Milestones 1–3 regressions, and clean Console.
 
 ### Milestone 5 — Mission, ROE, and After-Action Review
 
 Goal: evaluate immutable facts without allowing combat or AI code to manipulate score.
 
-Planned: mission definition/phases, objectives, mission-specific ROE policy, incident ledger aggregation, custody/evidence/safety/force evaluation, reasoned findings, and deterministic after-action reports.
+Planned: mission definition/phases, objectives, mission-specific ROE policy, incident aggregation, custody/evidence/safety/force evaluation, reasoned findings, and deterministic after-action reports.
 
 ### Milestone 6 — First Tactical Vertical Slice
 
@@ -62,7 +49,7 @@ Goal: one short, replayable residence or storefront incident with two officers, 
 7. Sniper/spotter, bomb technician, and command-post systems.
 8. Evidence, detectives, scene security, and investigative consequences.
 9. Career progression, injuries, performance reviews, and persistent consequences.
-10. Multiplayer only after authority, determinism, and AI ownership are replication-ready.
+10. Multiplayer after authority, determinism, and AI ownership are replication-ready.
 
 ## Regression policy
 
@@ -70,5 +57,4 @@ Goal: one short, replayable residence or storefront incident with two officers, 
 - Check the Console after domain reload and Play Mode.
 - Run all EditMode and PlayMode tests.
 - Execute every earlier milestone smoke test.
-- Update `CURRENT_STATUS.md`, `BUGS.md`, `SYSTEM_MAP.md`, and `CHANGELOG.md`.
-- Record packages, settings, generated assets, scene changes, Inspector assignments, and exact live evidence.
+- Update status, bugs, system map, changelog, and a completion record only after live evidence.

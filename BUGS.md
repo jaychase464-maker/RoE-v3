@@ -6,22 +6,45 @@
 
 - Priority: blocker for validation
 - Status: resolved and validated on 2026-07-16
-- Actual behavior: the accountability scan treated the variable `distancePenalty` as a reference to a mission penalty system
-- Expected behavior: only standalone prohibited score identifiers trigger validation
-- Resolution: replace substring matching with culture-invariant, whole-identifier regular expressions
-- Gameplay impact: none; this was a validator-only false positive
+- Resolution: whole-identifier regular expressions replaced substring matching
 
 ### ROE-0013 — Ambiguous Unity PackageInfo blocked Milestone 3 compilation
 
 - Priority: blocker
 - Status: resolved and validated on 2026-07-16
-- Environment: Unity `6000.5.2f1`
-- Actual behavior: `RulesOfEntryMilestoneThreeValidator.cs` produced `CS0104` because both `UnityEditor.PackageManager.PackageInfo` and `UnityEditor.PackageInfo` were in scope
-- Expected behavior: the validator compiles against the Package Manager API
-- Resolution: explicitly alias `PackageInfo` to `UnityEditor.PackageManager.PackageInfo`
-- Validation required: clean Unity compilation and Milestone 3 validator execution
+- Resolution: explicit alias to `UnityEditor.PackageManager.PackageInfo`
 
 ## Open validation gaps and technical debt
+
+### ROE-0021 — Bounded officer initiative requires live Unity validation
+
+- Priority: blocker
+- Status: integration candidate; live Unity validation pending
+- Environment: Unity `6000.5.2f1`, AI Navigation `2.0.14`
+- Scope: automatic visible-suspect challenge, two-officer/timed room-clear verification, automatic controlled custody, cover-loss abort, initiative audit history, and civilian exclusion
+- Safety boundary: no free capable suspect may be automatically restrained and no action may bypass physical approach, kneeling, timed cuffing, or state verification
+- Validation required: rerun setup and validator; run all tests; exercise refusal, deception, genuine surrender, cover loss, automatic custody, and civilian exclusion; confirm a clean Console
+
+### ROE-0015 — Milestone 4 requires live Unity validation
+
+- Priority: blocker for milestone closure
+- Status: open
+- Required evidence: clean compilation; M4 setup/validator; all EditMode and PlayMode tests; movement, cancellation, follow, door, refusal, and cooperative restraint smoke tests; Milestones 1–3 regressions; clean Play Mode Console
+- Current impact: implementation is an integration candidate and must not be described as complete
+
+### ROE-0016 — Officer tactical movement is individual-path prototype logic
+
+- Priority: high tactical fidelity debt
+- Status: open
+- Current behavior: complete NavMesh paths, two-point spacing, door approach points, cancellation, timeout, and explicit failures
+- Missing: formation authority, room/portal graph, hinge and fatal-funnel analysis, collision negotiation, sector ownership, cover selection, pieing, threshold evaluation, shield handling, and coordinated entry timing
+
+### ROE-0017 — Officer arrest assistance has no production animation or equipment
+
+- Priority: high presentation debt
+- Status: open
+- Current behavior: authoritative approach, surrender/kneel checks, settle timing, timed cuffing, and verified custody transition
+- Missing: motion matching, inverse kinematics, subject/officer alignment, handcuff prop, weapon retention posture, partner cover, resistance struggle, and audio
 
 ### ROE-0002 — Default company identity remains configured
 
@@ -40,27 +63,28 @@
 
 - Priority: high realism debt
 - Status: open
-- Current behavior: hit region, muzzle-energy proxy, bleeding, blood volume, consciousness, mobility, incapacitation, and death thresholds
-- Missing: validated wound profiles, residual energy, armor, organ/vascular structures, pain, shock, airway, respiration, medical interventions, and expert review
+- Missing: validated wound profiles, armor, organ/vascular structures, pain, shock, airway, respiration, medical interventions, and expert review
 
 ### ROE-0012 — Threat behavior has no production weapon or attack execution
 
 - Priority: high
 - Status: planned for a later combat-AI slice
-- Current behavior: a suspect may choose and visibly report a threatening state
-- Missing: suspect weapon inventory presentation, draw timing, aim error, cover use, fire discipline, surrender interruption animation, and safe tactical testing
+- Missing: suspect weapon presentation, draw timing, aim error, cover use, fire discipline, animations, and safe tactical testing
 
 ## Fixed or resolved entries
 
 - `ROE-0001`: baseline compiler status recorded.
 - `ROE-0003`: project-owned tactical input implemented.
-- `ROE-0004`: AI Navigation authoring dependency declared as `com.unity.ai.navigation 2.0.14`; live install validation is covered by `ROE-0010`.
+- `ROE-0004`: AI Navigation dependency declared.
 - `ROE-0005`: Milestone 0 validated.
 - `ROE-0006`: Milestone 1 validated and stable.
-- `ROE-0007`: Milestone 2 formal regression evidence passed during Milestone 3 closure.
-- `ROE-0009`: `GetInstanceID()` replaced with full 64-bit `EntityId` storage; source regression test added.
-- `ROE-0010`: Milestone 3 package resolution, compilation, setup, validator, all tests, seeded smoke test, prior regressions, and clean Console passed on 2026-07-16.
-- `ROE-0013`: ambiguous `PackageInfo` resolved with an explicit Package Manager alias; Unity compilation passed.
-- `ROE-0014`: score-boundary false positive resolved with whole-identifier matching; validation passed.
+- `ROE-0007`: Milestone 2 regression evidence passed.
+- `ROE-0009`: obsolete instance IDs replaced with full 64-bit `EntityId` storage.
+- `ROE-0010`: Milestone 3 live validation passed.
+- `ROE-0013`: PackageInfo ambiguity resolved.
+- `ROE-0014`: score-boundary false positive resolved.
+- `ROE-0018`: generated officer actions now persist through reimport/domain reload; live user test passed.
+- `ROE-0019`: scene squad references now persist as prefab-instance overrides; live user test passed.
+- `ROE-0020`: the gated doorway NavMesh link passed the live two-officer traversal test.
 
 Never delete resolved entries. New defects use `ROE-####` and record environment, reproduction, expected/actual behavior, Console text, evidence, workaround, resolution, and validation.

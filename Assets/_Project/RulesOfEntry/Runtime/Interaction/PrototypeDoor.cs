@@ -9,11 +9,36 @@ namespace RulesOfEntry.Interaction
         [SerializeField] private Transform doorPivot;
         [SerializeField, Range(-170f, 170f)] private float openAngle = 100f;
         [SerializeField, Min(1f)] private float degreesPerSecond = 180f;
+        [SerializeField, Range(0.5f, 1f)] private float traversalClearFraction = 0.8f;
 
         private Quaternion closedRotation;
         private Quaternion openRotation;
 
         public bool IsOpen { get; private set; }
+        public float OpenFraction
+        {
+            get
+            {
+                if (doorPivot == null)
+                {
+                    return IsOpen ? 1f : 0f;
+                }
+
+                float totalAngle = Quaternion.Angle(closedRotation, openRotation);
+                if (totalAngle <= 0.01f)
+                {
+                    return IsOpen ? 1f : 0f;
+                }
+
+                float angleFromClosed = Quaternion.Angle(
+                    closedRotation,
+                    doorPivot.localRotation);
+                return Mathf.Clamp01(angleFromClosed / totalAngle);
+            }
+        }
+
+        public bool IsTraversalClear => IsOpen
+            && OpenFraction >= traversalClearFraction;
 
         public void Configure(Transform configuredPivot, float configuredOpenAngle = 100f)
         {
