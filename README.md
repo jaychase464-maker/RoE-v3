@@ -11,7 +11,8 @@ Rules of Entry is a hyper-realistic first-person tactical law-enforcement game b
 - UI: uGUI `2.5.0`
 - Test Framework: `1.7.0`
 - Milestone 0: complete and stable
-- Milestone 1: integration candidate awaiting Unity validation
+- Milestone 1: complete and stable
+- Current milestone: Milestone 2 — Weapon and Force-Event Foundation
 
 ## Implemented foundation
 
@@ -22,7 +23,7 @@ Rules of Entry is a hyper-realistic first-person tactical law-enforcement game b
 - project-owned prototype scene;
 - stable Milestone 0 Edit Mode, Play Mode, and smoke-test baseline.
 
-## Milestone 1 integration candidate
+## Stable Milestone 1 gameplay foundation
 
 - CharacterController movement with walk, sprint, and crouch;
 - mouse/gamepad camera look and cursor handling;
@@ -33,7 +34,9 @@ Rules of Entry is a hyper-realistic first-person tactical law-enforcement game b
 - repeatable HDRP graybox environment builder;
 - Milestone 1 project/build validation and tests.
 
-See `MILESTONE_1_INSTALL.md` for installation, controls, setup, and the stability checklist.
+Unity compilation, project validation, all Edit Mode and Play Mode tests, the manual gameplay smoke test, and the clean-Console check passed on 2026-07-16.
+
+See `MILESTONE_1_INSTALL.md` for installation, controls, setup, and regression testing.
 
 ## Development guardrails
 

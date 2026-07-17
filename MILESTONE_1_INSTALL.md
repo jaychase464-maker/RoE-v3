@@ -1,6 +1,6 @@
 # Milestone 1 Installation and Validation
 
-This package installs the **Milestone 1 — First-Person and Tactical Interaction** integration candidate for Rules of Entry. It requires the completed Milestone 0 project and Unity `6000.5.2f1`.
+This package installs the stable **Milestone 1 — First-Person and Tactical Interaction** implementation for Rules of Entry. It requires the completed Milestone 0 project and Unity `6000.5.2f1`.
 
 ## Scope
 
@@ -123,12 +123,12 @@ Do not manually enable the original template `Main Camera`. Rerun setup, then ru
 
 Click the Game view and press Escape once. Confirm the Console is clean and the player prefab uses `ROE_InputActions.inputactions`.
 
-## Stability gate
+## Stability result
 
-Do not mark Milestone 1 stable or push it as completed until all of these are confirmed:
+Milestone 1 passed this gate on 2026-07-16:
 
-- Unity compiles with zero errors;
-- Milestone 1 validation reports zero errors;
-- all Edit Mode and Play Mode tests pass;
-- the manual smoke test passes;
-- Play Mode produces no errors or exceptions.
+- Unity compiled with zero errors;
+- Milestone 1 validation reported zero errors;
+- all Edit Mode and Play Mode tests passed;
+- the manual smoke test passed;
+- Play Mode produced no errors or exceptions.

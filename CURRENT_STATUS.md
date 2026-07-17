@@ -2,11 +2,11 @@
 
 ## Active milestone
 
-**Milestone 1 — First-Person and Tactical Interaction: integration candidate**
+**Milestone 2 — Weapon and Force-Event Foundation: planning**
 
-Milestone 0 remains complete and stable. Milestone 1 code, setup tooling, validation, tests, and documentation have been prepared and require validation in the source-of-truth Unity project.
+Milestones 0 and 1 are complete and stable. The first-person graybox and tactical interaction foundation are now the protected regression baseline for Milestone 2.
 
-## Milestone 1 delivered for integration
+## Milestone 1 completed
 
 - Project-owned `ROE_InputActions.inputactions` with keyboard/mouse and gamepad bindings.
 - CharacterController movement with walk, forward sprint, crouch, acceleration, gravity, and obstruction-safe standing.
@@ -19,19 +19,21 @@ Milestone 0 remains complete and stable. Milestone 1 code, setup tooling, valida
 - Milestone 1 validator and build gate.
 - Edit Mode configuration test and Play Mode interaction tests.
 
-## Required user validation
+## Milestone 1 validation — passed 2026-07-16
 
-1. Import the package and allow Unity to compile with zero errors.
-2. Run **Tools > Rules of Entry > Milestone 1 > Build Gameplay Prototype**.
-3. Confirm Milestone 1 validation has zero errors.
-4. Run all Edit Mode and Play Mode tests.
-5. Complete the movement, crouch tunnel, door, panel, cursor, and clean-Console smoke test.
+- Unity compilation completed with zero errors.
+- The Milestone 1 setup and project validation completed with zero errors.
+- All Edit Mode tests passed.
+- All Play Mode tests passed.
+- Movement, sprint, crouch clearance, collision, door interaction, hold interaction, prompt UI, and cursor behavior worked correctly.
+- Play Mode completed with no Console errors or exceptions.
 
-Milestone 1 is not stable until those results are recorded.
+## Milestone 2 objective
+
+Implement basic firearm handling and immutable use-of-force event capture without coupling combat code to mission score or future ROE decisions.
 
 ## Deferred to later milestones
 
-- weapon handling and force-event capture — Milestone 2;
 - suspect/civilian AI, verbal compliance, surrender, restraint, and arrest — Milestone 3;
 - officer selection and commands — Milestone 4;
 - objectives, ROE tracking, and after-action scoring — Milestone 5;
@@ -39,4 +41,4 @@ Milestone 1 is not stable until those results are recorded.
 
 ## Art requirement
 
-No external 3D models are required for Milestone 1. The setup tool uses Unity primitives so movement scale, collision, and interaction can be validated before production assets are selected.
+No external 3D models were required for Milestone 1. Before Milestone 2 weapon presentation begins, the approved temporary weapon model requirements will be documented separately; gameplay state and force-event logic should be implemented before final art is required.

@@ -16,7 +16,7 @@ All notable project changes are documented here. The project is pre-release and 
 - Foundation validation completed with 15 passes, zero errors, and one expected `DefaultCompany` warning.
 - All Edit Mode and Play Mode tests and the Play Mode smoke test passed.
 
-## Milestone 1 — First-Person and Tactical Interaction — Integration candidate 2026-07-16
+## Milestone 1 — First-Person and Tactical Interaction — Completed 2026-07-16
 
 ### Added
 
@@ -40,6 +40,10 @@ All notable project changes are documented here. The project is pre-release and 
 - No package manifest change.
 - Setup adds `Player` and `Interactable` layers using available user-layer slots.
 
-### Validation pending
+### Validated
 
-- Live Unity compilation, setup validation, automated tests, and manual smoke testing in the source-of-truth project.
+- Unity compilation completed with zero errors.
+- Milestone 1 setup and validation completed with zero errors.
+- All Edit Mode and Play Mode tests passed.
+- Movement, sprint, crouch clearance, collision, interaction prompts, door operation, hold interaction, and cursor behavior passed manual testing.
+- Play Mode produced no Console errors or exceptions.

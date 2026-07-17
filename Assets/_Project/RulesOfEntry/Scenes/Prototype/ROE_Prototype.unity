@@ -410,6 +410,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ROE_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8534254759312231469, guid: d18fd00c4cf1d5b4882c8fd2bdd44443, type: 3}
+      propertyPath: obstructionMask.m_Bits
+      value: 567
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

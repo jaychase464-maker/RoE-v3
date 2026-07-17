@@ -8,11 +8,11 @@ Development advances one stable milestone at a time. A milestone closes only aft
 
 Established project ownership, assembly boundaries, structured logging, repeatable setup, automatic validation, tests, and a project-owned prototype scene.
 
-### Milestone 1 — First-Person and Tactical Interaction — Integration candidate
+### Milestone 1 — First-Person and Tactical Interaction — Complete
 
 Goal: make a small HDRP graybox reliably playable and prove the input/interaction contracts used by later systems.
 
-Delivered for validation:
+Delivered and validated:
 
 - CharacterController first-person locomotion;
 - mouse/gamepad look, walk, forward sprint, crouch, and stance-safe camera motion;
@@ -23,7 +23,7 @@ Delivered for validation:
 - repeatable graybox, prefab, material, and layer setup;
 - validation, build gate, and automated tests.
 
-Exit: zero compiler and validation errors; all tests pass; movement, collision, crouch clearance, door, hold interaction, UI, and cursor pass the documented smoke test; Play Mode Console remains clean.
+Exit passed on 2026-07-16: zero compiler and validation errors; all tests passed; movement, collision, crouch clearance, door, hold interaction, UI, and cursor passed the documented smoke test; Play Mode Console remained clean.
 
 ### Milestone 2 — Weapon and Force-Event Foundation
 

@@ -33,13 +33,11 @@ Then inspect every existing file affected by the requested change.
 
 ## Current status
 
-Milestone 0 is complete and stable. Milestone 1 is an integration candidate and must not be called stable until Unity compilation, Milestone 1 validation, all automated tests, and its manual smoke test pass.
+Milestones 0 and 1 are complete and stable. Milestone 1 passed Unity compilation, validation, all Edit Mode and Play Mode tests, its manual gameplay smoke test, and the clean-Console check on 2026-07-16.
 
 ## Current next step
 
-Integrate and validate Milestone 1 using `MILESTONE_1_INSTALL.md`. If it passes, update `CURRENT_STATUS.md`, `BUGS.md`, and `CHANGELOG.md` with the exact results before beginning Milestone 2.
-
-Milestone 2 is the weapon and force-event foundation. Do not start suspect/civilian AI or officer commands early.
+Begin **Milestone 2 — Weapon and Force-Event Foundation**. Preserve every Milestone 0 and 1 validator, automated test, and smoke-test result. Implement authoritative weapon state and immutable force-event facts before adding scoring or ROE judgment. Do not start suspect/civilian AI or officer commands early.
 
 ## Implementation rules
 

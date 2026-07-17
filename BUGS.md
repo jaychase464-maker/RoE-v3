@@ -2,7 +2,7 @@
 
 ## Confirmed bugs
 
-No Milestone 1 gameplay bug is confirmed. The integration candidate has not yet completed live Unity validation.
+No Milestone 1 gameplay bug was found during live Unity validation.
 
 ## Open validation gaps and technical debt
 
@@ -22,13 +22,6 @@ No Milestone 1 gameplay bug is confirmed. The integration candidate has not yet 
 - Evidence: `com.unity.modules.ai` is present; `com.unity.ai.navigation` is not declared
 - Planned resolution: verify and install the Unity-compatible version immediately before navigation work
 
-### ROE-0006 — Milestone 1 live integration is not yet validated
-
-- Type: validation gap
-- Priority: blocker for closing Milestone 1
-- Status: open
-- Required evidence: zero compiler errors, zero Milestone 1 validation errors, passing Edit Mode and Play Mode tests, passing manual smoke test, and clean Play Mode Console
-
 ## Resolved validation gaps
 
 ### ROE-0001 — Live compiler status not recorded
@@ -45,6 +38,11 @@ No Milestone 1 gameplay bug is confirmed. The integration candidate has not yet 
 
 - Status: resolved on 2026-07-16
 - Resolution: foundation validation reported 15 passes, zero errors, and one expected warning; all tests and the Play Mode smoke test passed
+
+### ROE-0006 — Milestone 1 live integration was not validated
+
+- Status: resolved on 2026-07-16
+- Resolution: Unity compiled with zero errors; Milestone 1 setup and validation completed without errors; all Edit Mode and Play Mode tests passed; the complete manual gameplay smoke test passed; Play Mode produced no Console errors or exceptions
 
 ## New bug format
 
