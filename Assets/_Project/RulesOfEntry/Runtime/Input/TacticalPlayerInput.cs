@@ -21,6 +21,14 @@ namespace RulesOfEntry.Input
         private InputAction sprintAction;
         private InputAction crouchAction;
         private InputAction interactAction;
+        private InputAction fireAction;
+        private InputAction aimAction;
+        private InputAction reloadAction;
+        private InputAction checkMagazineAction;
+        private InputAction toggleReadyAction;
+        private InputAction cycleFireSelectorAction;
+        private InputAction cycleActionAction;
+        private InputAction emergencyReloadModifierAction;
         private InputAction toggleCursorAction;
         private bool actionsResolved;
 
@@ -32,6 +40,16 @@ namespace RulesOfEntry.Input
         public bool CrouchPressedThisFrame => WasPressedThisFrame(crouchAction);
         public bool InteractPressedThisFrame => WasPressedThisFrame(interactAction);
         public bool InteractHeld => IsActionPressed(interactAction);
+        public bool FirePressedThisFrame => WasPressedThisFrame(fireAction);
+        public bool AimHeld => IsActionPressed(aimAction);
+        public bool ReloadPressedThisFrame => WasPressedThisFrame(reloadAction);
+        public bool CheckMagazinePressedThisFrame => WasPressedThisFrame(checkMagazineAction);
+        public bool ToggleReadyPressedThisFrame => WasPressedThisFrame(toggleReadyAction);
+        public bool CycleFireSelectorPressedThisFrame =>
+            WasPressedThisFrame(cycleFireSelectorAction);
+        public bool CycleActionPressedThisFrame => WasPressedThisFrame(cycleActionAction);
+        public bool EmergencyReloadModifierHeld =>
+            IsActionPressed(emergencyReloadModifierAction);
         public bool GameplayEnabled => playerMap != null && playerMap.enabled;
         public bool IsUsingGamepad => string.Equals(
             playerInput != null ? playerInput.currentControlScheme : null,
@@ -118,7 +136,7 @@ namespace RulesOfEntry.Input
             {
                 ProjectLog.Error(
                     "Input",
-                    "PlayerInput or its InputActionAsset is missing. Run the Milestone 1 setup tool.",
+                    "PlayerInput or its InputActionAsset is missing. Run the current milestone setup tool.",
                     this);
                 return false;
             }
@@ -139,6 +157,16 @@ namespace RulesOfEntry.Input
             sprintAction = playerMap.FindAction("Sprint", false);
             crouchAction = playerMap.FindAction("Crouch", false);
             interactAction = playerMap.FindAction("Interact", false);
+            fireAction = playerMap.FindAction("Fire", false);
+            aimAction = playerMap.FindAction("Aim", false);
+            reloadAction = playerMap.FindAction("Reload", false);
+            checkMagazineAction = playerMap.FindAction("CheckMagazine", false);
+            toggleReadyAction = playerMap.FindAction("ToggleReady", false);
+            cycleFireSelectorAction = playerMap.FindAction("CycleFireSelector", false);
+            cycleActionAction = playerMap.FindAction("CycleAction", false);
+            emergencyReloadModifierAction = playerMap.FindAction(
+                "EmergencyReloadModifier",
+                false);
             toggleCursorAction = systemMap.FindAction("ToggleCursor", false);
 
             actionsResolved = moveAction != null
@@ -146,13 +174,21 @@ namespace RulesOfEntry.Input
                 && sprintAction != null
                 && crouchAction != null
                 && interactAction != null
+                && fireAction != null
+                && aimAction != null
+                && reloadAction != null
+                && checkMagazineAction != null
+                && toggleReadyAction != null
+                && cycleFireSelectorAction != null
+                && cycleActionAction != null
+                && emergencyReloadModifierAction != null
                 && toggleCursorAction != null;
 
             if (!actionsResolved)
             {
                 ProjectLog.Error(
                     "Input",
-                    "One or more required Milestone 1 input actions are missing.",
+                    "One or more required Rules of Entry input actions are missing.",
                     this);
             }
 

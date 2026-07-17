@@ -2,65 +2,50 @@
 
 ## Confirmed bugs
 
-No Milestone 1 gameplay bug was found during live Unity validation.
+### ROE-0009 — Deprecated Unity object identifier blocked compilation
+
+- Priority: blocker
+- Status: fixed; awaiting Unity validation
+- Reproduction: import the original Milestone 2 package in Unity 6000.5.2f1
+- Actual behavior: `UseOfForceEventLedger.cs` failed with `CS0619` because `Object.GetInstanceID()` is obsolete with errors enabled
+- Expected behavior: Milestone 2 compiles on the project's locked Unity version
+- Resolution: use `Object.GetEntityId()` and preserve the complete identifier with `EntityId.ToULong(...)`
+- Regression coverage: EditMode source scan plus PlayMode ledger identifier assertions
+- Validation required: clean Unity compilation, EditMode and PlayMode tests, Milestone 2 validator, and clean Console
 
 ## Open validation gaps and technical debt
 
 ### ROE-0002 — Default company identity remains configured
 
-- Type: configuration debt
 - Priority: low
 - Status: open
-- Evidence: the stable validator reports `DefaultCompany`
-- Planned resolution: set the approved studio identity before a distributable build; do not guess the legal name
+- Resolution condition: approved studio identity is supplied before a distributable build
 
 ### ROE-0004 — AI Navigation authoring package not declared
 
-- Type: dependency gap
 - Priority: normal
 - Status: planned for Milestone 3
-- Evidence: `com.unity.modules.ai` is present; `com.unity.ai.navigation` is not declared
-- Planned resolution: verify and install the Unity-compatible version immediately before navigation work
+- Resolution condition: verify and install the Unity-compatible package immediately before navigation work
+
+### ROE-0007 — Milestone 2 live integration not yet validated
+
+- Priority: blocker for closing Milestone 2
+- Status: open
+- Required evidence: clean compilation, zero validator errors, all tests passed, both milestone smoke tests passed, and clean Play Mode Console
+
+### ROE-0008 — External ballistics and terminal material response are simplified
+
+- Priority: high realism debt
+- Status: open
+- Current behavior: instantaneous physical-muzzle raycast with muzzle obstruction and factual hit capture
+- Missing: time of flight, gravity, drag, zeroing, material penetration, fragmentation, and ricochet
+- Resolution condition: dedicated solver and material database validated against documented ammunition, barrel, distance, and barrier test cases
 
 ## Resolved validation gaps
 
-### ROE-0001 — Live compiler status not recorded
+- `ROE-0001`: baseline compiler status recorded.
+- `ROE-0003`: project-owned tactical input implemented.
+- `ROE-0005`: Milestone 0 validated.
+- `ROE-0006`: Milestone 1 validated and stable.
 
-- Status: resolved on 2026-07-16
-- Resolution: the project opened in Unity `6000.5.2f1` with no baseline compiler errors
-
-### ROE-0003 — Generic starter input actions were not tactical-game ready
-
-- Status: implementation delivered in Milestone 1
-- Resolution: `ROE_InputActions.inputactions` now owns movement, look, sprint, crouch, interact, and cursor actions; later milestones will add weapon and command actions only when their systems exist
-
-### ROE-0005 — Milestone 0 integration was not validated
-
-- Status: resolved on 2026-07-16
-- Resolution: foundation validation reported 15 passes, zero errors, and one expected warning; all tests and the Play Mode smoke test passed
-
-### ROE-0006 — Milestone 1 live integration was not validated
-
-- Status: resolved on 2026-07-16
-- Resolution: Unity compiled with zero errors; Milestone 1 setup and validation completed without errors; all Edit Mode and Play Mode tests passed; the complete manual gameplay smoke test passed; Play Mode produced no Console errors or exceptions
-
-## New bug format
-
-```text
-ID:
-Title:
-Milestone/version:
-Severity:
-Status:
-Environment:
-Reproduction steps:
-Expected:
-Actual:
-Console/error text:
-Evidence:
-Suspected system:
-Workaround:
-Resolution and validation:
-```
-
-Use `ROE-####` identifiers. Never delete a resolved entry; retain its resolution and validation evidence.
+Never delete resolved entries from repository history. New defects use the `ROE-####` format and include reproduction steps, expected/actual behavior, Console text, suspected system, workaround, resolution, and validation evidence.

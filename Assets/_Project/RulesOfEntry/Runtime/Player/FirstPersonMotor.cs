@@ -1,3 +1,4 @@
+using RulesOfEntry.Combat;
 using RulesOfEntry.Core;
 using RulesOfEntry.Input;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace RulesOfEntry.Player
         [SerializeField] private CharacterController characterController;
         [SerializeField] private TacticalPlayerInput playerInput;
         [SerializeField] private Transform cameraAnchor;
+        [SerializeField] private FirearmController firearmController;
 
         [Header("Movement")]
         [SerializeField, Min(0.1f)] private float walkSpeed = 2.2f;
@@ -80,6 +82,11 @@ namespace RulesOfEntry.Player
                 playerInput = GetComponent<TacticalPlayerInput>();
             }
 
+            if (firearmController == null)
+            {
+                firearmController = GetComponent<FirearmController>();
+            }
+
             initialized = characterController != null && playerInput != null && cameraAnchor != null;
             if (!initialized)
             {
@@ -143,9 +150,15 @@ namespace RulesOfEntry.Player
                 desiredDirection.Normalize();
             }
 
+            bool firearmOperationAllowsSprint = firearmController == null
+                || firearmController.Operation == FirearmOperation.Idle;
+            bool sprinting = !isCrouched
+                && firearmOperationAllowsSprint
+                && playerInput.SprintHeld
+                && moveInput.y > 0.1f;
             float targetSpeed = isCrouched
                 ? crouchSpeed
-                : playerInput.SprintHeld && moveInput.y > 0.1f
+                : sprinting
                     ? sprintSpeed
                     : walkSpeed;
 

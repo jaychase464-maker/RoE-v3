@@ -29,6 +29,20 @@ namespace RulesOfEntry.Player
             initialized = false;
         }
 
+        public void ApplyRecoil(float verticalDegrees, float horizontalDegrees)
+        {
+            if ((!initialized && !Initialize()) || Cursor.lockState != CursorLockMode.Locked)
+            {
+                return;
+            }
+
+            pitch = Mathf.Clamp(
+                pitch - Mathf.Max(0f, verticalDegrees),
+                -verticalLimit,
+                verticalLimit);
+            body.Rotate(Vector3.up, horizontalDegrees, Space.World);
+        }
+
         private void Awake()
         {
             Initialize();

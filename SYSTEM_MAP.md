@@ -1,59 +1,45 @@
 # System Map
 
-## Milestone 1 flow
+## Milestone 2 authority flow
 
 ```mermaid
 flowchart TD
-    Input[ROE Input Actions] --> Intent[TacticalPlayerInput]
-    Intent --> Motor[FirstPersonMotor]
-    Intent --> Look[FirstPersonLook]
-    Intent --> Cursor[CursorStateController]
-    Intent --> Focus[PlayerInteractor]
-    Focus --> Target[InteractableBehaviour]
-    Focus --> Prompt[InteractionPromptUI]
+    Input[Manual weapon input] --> Controller[FirearmController]
+    Controller --> State[FirearmStateMachine]
+    State --> Magazines[Physical magazines and chamber]
+    Controller --> Shot[Physical muzzle shot]
+    Shot --> Target[Ballistic receiver]
+    Shot --> Ledger[Immutable force-event ledger]
+    Controller --> View[Weapon view and uncertainty UI]
 ```
 
-## Implemented files
+## Responsibility map
 
-| File | Responsibility |
-|---|---|
-| `Input/ROE_InputActions.inputactions` | Player and System actions for keyboard/mouse and gamepad |
-| `Runtime/Input/TacticalPlayerInput.cs` | Resolves actions and exposes device-independent player intent |
-| `Runtime/Player/FirstPersonMotor.cs` | CharacterController movement, gravity, sprint, crouch, and clearance check |
-| `Runtime/Player/FirstPersonLook.cs` | Body yaw and clamped camera pitch |
-| `Runtime/Player/CursorStateController.cs` | Cursor lock and gameplay action-map state |
-| `Runtime/Interaction/InteractionContext.cs` | Actor/view/time data passed to targets |
-| `Runtime/Interaction/InteractionPrompt.cs` | Immutable prompt availability and hold-duration data |
-| `Runtime/Interaction/InteractableBehaviour.cs` | Base contract for target-specific interactions |
-| `Runtime/Interaction/PlayerInteractor.cs` | Camera focus ray, instant use, and hold progress |
-| `Runtime/Interaction/PrototypeDoor.cs` | Animated instant-interaction example |
-| `Runtime/Interaction/PrototypeControlPanel.cs` | Stateful hold-interaction example |
-| `Runtime/UI/InteractionPromptUI.cs` | Binding, action text, availability, and progress presentation |
-| `Editor/Milestone1/RulesOfEntryMilestoneOneSetup.cs` | Creates layers, assets, prefabs, and graybox scene content |
-| `Editor/Milestone1/RulesOfEntryMilestoneOneValidator.cs` | Validates the complete Milestone 0 and 1 contract |
-| `Editor/Milestone1/RulesOfEntryMilestoneOneBuildValidator.cs` | Blocks builds containing Milestone 1 errors |
-| `Tests/EditMode/MilestoneOneConfigurationTests.cs` | Enforces setup completeness |
-| `Tests/PlayMode/MilestoneOneInteractionTests.cs` | Verifies door and control-panel state behavior |
+| System | Owns | Explicitly does not own |
+|---|---|---|
+| `FirearmStateMachine` | selector, chamber, bolt, inserted/spare/dropped magazines, live-round ejection | input, animation, score, ROE judgment |
+| `FirearmController` | manual operation timing, input gating, physical muzzle shot, recoil request | automatic reload, ammo HUD, mission result |
+| `WeaponStatusUI` | selector/posture feedback, temporary qualitative check result, operation progress | exact round state |
+| `FirearmView` | graybox posture, reload/check/action poses, recoil motion | authoritative mechanics |
+| `UseOfForceEventLedger` | immutable ordered discharge facts | justification or penalties |
+| `PrototypeBallisticTarget` | prototype hit response | actor injury model |
 
-## Generated assets
+## Data and generated assets
 
-The Milestone 1 setup tool creates these assets inside the project:
+- `Data/Equipment/M2_PatrolCarbine.asset`
+- `Data/Equipment/M2_556_62gr.asset`
+- `Prefabs/Combat/ROE_BallisticTarget.prefab`
+- `Prefabs/UI/ROE_WeaponStatusUI.prefab`
+- nested `[Milestone2_WeaponRig]` in `ROE_Player.prefab`
+- `[Milestone2_Range]` in `ROE_Prototype.unity`
 
-- `Prefabs/Actors/ROE_Player.prefab`
-- `Prefabs/Interactions/ROE_PrototypeDoor.prefab`
-- `Prefabs/Interactions/ROE_PrototypeControlPanel.prefab`
-- `Prefabs/UI/ROE_InteractionPromptUI.prefab`
-- `Art/Materials/M1_Floor.mat`
-- `Art/Materials/M1_Wall.mat`
-- `Art/Materials/M1_Accent.mat`
-- `Art/Materials/M1_Door.mat`
+## Key invariants
 
-It updates `Scenes/Prototype/ROE_Prototype.unity` and adds `Player` and `Interactable` layers without choosing fixed layer numbers.
-
-## Dependency boundaries
-
-- Runtime code depends on `Unity.InputSystem` and `Unity.UGUI`, both already installed.
-- Runtime code contains no `UnityEditor` dependency.
-- Interaction targets own their state; the player interactor owns focus and input timing.
-- UI observes interaction state and does not execute gameplay decisions.
-- Movement and interactions do not mutate future mission score or ROE state.
+- Exact ammunition state exists for simulation, tests, and later accountability only.
+- Player UI cannot reference `InsertedMagazineRounds` or `RoundCount`.
+- No empty-state transition calls reload.
+- A discharge removes one chambered round and produces one force event.
+- A dry trigger produces no force event.
+- Tactical reload retains the removed magazine at the back of pouch order.
+- Emergency reload discards the removed magazine.
+- Reloading an empty closed chamber still requires cycling the action.

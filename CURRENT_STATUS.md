@@ -2,43 +2,36 @@
 
 ## Active milestone
 
-**Milestone 2 — Weapon and Force-Event Foundation: planning**
+**Milestone 2 — Weapon and Force-Event Foundation: integration candidate**
 
-Milestones 0 and 1 are complete and stable. The first-person graybox and tactical interaction foundation are now the protected regression baseline for Milestone 2.
+Milestones 0 and 1 remain complete and stable. Milestone 2 implementation, setup tooling, validation, tests, and documentation are ready for live Unity integration.
 
-## Milestone 1 completed
+## Delivered for Milestone 2 validation
 
-- Project-owned `ROE_InputActions.inputactions` with keyboard/mouse and gamepad bindings.
-- CharacterController movement with walk, forward sprint, crouch, acceleration, gravity, and obstruction-safe standing.
-- First-person camera look with separate mouse and gamepad response.
-- Escape/Start cursor release and gameplay-map switching.
-- Raycast interaction focus with instant and hold interactions.
-- Interaction prompt UI with binding label and hold-progress display.
-- Animated training door and stateful training control panel.
-- Repeatable editor tool that builds all prefabs, HDRP materials, and the prototype graybox.
-- Milestone 1 validator and build gate.
-- Edit Mode configuration test and Play Mode interaction tests.
+- Physical per-magazine round state, chamber state, bolt state, and ordered spare-magazine pouches.
+- Safe/Semi selector and low-ready/shouldered/aimed handling.
+- Manual retained reload, manual emergency reload, and manual action cycling.
+- No automatic reload and no player-facing exact ammunition count.
+- Timed physical magazine check with qualitative estimates.
+- Semi-automatic one-shot-per-press behavior.
+- Physical muzzle-origin raycast that respects near-cover obstruction.
+- Ballistic hit contract and prototype reactive targets.
+- Immutable append-only firearm-discharge records containing no score or ROE judgment.
+- Graybox carbine, target range, status UI, editor builder, validator, build gate, and tests.
 
-## Milestone 1 validation — passed 2026-07-16
+## Required validation
 
-- Unity compilation completed with zero errors.
-- The Milestone 1 setup and project validation completed with zero errors.
-- All Edit Mode tests passed.
-- All Play Mode tests passed.
-- Movement, sprint, crouch clearance, collision, door interaction, hold interaction, prompt UI, and cursor behavior worked correctly.
-- Play Mode completed with no Console errors or exceptions.
+- zero Unity compiler errors;
+- zero Milestone 2 validation errors;
+- all Edit Mode and Play Mode tests pass;
+- complete Milestone 1 regression smoke test passes;
+- complete Milestone 2 manual realism test passes;
+- Play Mode Console remains free of errors and exceptions.
 
-## Milestone 2 objective
+## Honesty boundary
 
-Implement basic firearm handling and immutable use-of-force event capture without coupling combat code to mission score or future ROE decisions.
-
-## Deferred to later milestones
-
-- suspect/civilian AI, verbal compliance, surrender, restraint, and arrest — Milestone 3;
-- officer selection and commands — Milestone 4;
-- objectives, ROE tracking, and after-action scoring — Milestone 5;
-- production 3D art and animation — after graybox gameplay contracts are proven.
+The current ballistic prototype is an instantaneous physical-muzzle raycast. It validates muzzle obstruction and immutable hit facts, but does not yet simulate flight time, gravity, aerodynamic drag, penetration, fragmentation, or ricochet.
 
 ## Art requirement
 
-No external 3D models were required for Milestone 1. Before Milestone 2 weapon presentation begins, the approved temporary weapon model requirements will be documented separately; gameplay state and force-event logic should be implemented before final art is required.
+No external model is required for this integration. Use the generated primitive carbine until the mechanical contract passes live validation.

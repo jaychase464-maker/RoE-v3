@@ -1,105 +1,36 @@
 # Development Roadmap
 
-Development advances one stable milestone at a time. A milestone closes only after its implementation is committed, Unity compiles with zero errors, validation passes, automated and manual tests pass, and project documentation records the evidence.
+## Stable baseline
 
-## Prototype milestones
+- Milestone 0 — Project Foundation: complete.
+- Milestone 1 — First-Person and Tactical Interaction: complete.
 
-### Milestone 0 — Project Foundation — Complete
+## Milestone 2 — Weapon and Force-Event Foundation — Integration candidate
 
-Established project ownership, assembly boundaries, structured logging, repeatable setup, automatic validation, tests, and a project-owned prototype scene.
+Current scope:
 
-### Milestone 1 — First-Person and Tactical Interaction — Complete
+- physical magazine/chamber/bolt/selector state;
+- manual checks, retained reloads, emergency reloads, and action cycling;
+- safe, low-ready, shouldered, aimed, semi-automatic handling;
+- no automatic reload and no exact ammunition HUD;
+- physical-muzzle raycast, hit facts, and immutable force events;
+- graybox view/range, validation, and tests.
 
-Goal: make a small HDRP graybox reliably playable and prove the input/interaction contracts used by later systems.
+Exit: state cannot desynchronize; empty weapons never reload themselves; ammunition uncertainty remains player-facing; every discharge creates exactly one factual event; no dry action creates a discharge event; all Milestone 0–2 tests and smoke tests pass.
 
-Delivered and validated:
+## Realism work following the mechanical foundation
 
-- CharacterController first-person locomotion;
-- mouse/gamepad look, walk, forward sprint, crouch, and stance-safe camera motion;
-- cursor and gameplay-input mode handling;
-- reusable interaction context, prompt, focus, instant-use, and hold-use contracts;
-- interaction prompt UI;
-- animated door and stateful hold-to-use panel examples;
-- repeatable graybox, prefab, material, and layer setup;
-- validation, build gate, and automated tests.
+1. Validated projectile flight time, gravity, drag, sight/bore zeroing, and deterministic environmental inputs.
+2. Material definitions and documented penetration/deflection test cases.
+3. Production first-person weapon/arms rig with correct movable-part pivots and procedural interruption handling.
+4. Weapon audio propagation, hearing effects, muzzle flash, smoke, casing, and indoor pressure response.
+5. Malfunction and maintenance modeling only after failure data and gameplay recovery controls are defined.
 
-Exit passed on 2026-07-16: zero compiler and validation errors; all tests passed; movement, collision, crouch clearance, door, hold interaction, UI, and cursor passed the documented smoke test; Play Mode Console remained clean.
+## Later prototype milestones
 
-### Milestone 2 — Weapon and Force-Event Foundation
+- Milestone 3: suspects, civilians, compliance, surrender, restraint, arrest, and actor condition.
+- Milestone 4: officer AI, selection, and tactical command execution.
+- Milestone 5: mission objectives, ROE policy evaluation, evidence, and after-action reporting.
+- Milestone 6: first seeded tactical vertical slice.
 
-Goal: implement basic firearm operation while preserving every fact required for later accountability.
-
-Planned:
-
-- weapon/ammunition definitions;
-- equip, aim, fire, reload, safe, and low-ready state;
-- validated hitscan prototype and impact data;
-- actor condition/damage foundation;
-- weapon handling UI;
-- immutable force-event emission;
-- tests for weapon transitions and exactly-once force events.
-
-Exit: weapon state cannot desynchronize, each shot emits exactly one force event, and combat code never changes mission score directly.
-
-### Milestone 3 — Suspect, Civilian, Compliance, and Arrest
-
-Goal: prove believable human behavior and a complete non-lethal custody path.
-
-Planned:
-
-- actor identities, roles, condition, and custody state;
-- perception, memory, stress, morale, and explicit decision reasons;
-- compatible AI Navigation package verification and navigation authoring;
-- suspect hide, flee, resist, fight, comply, and deceptive-surrender behavior;
-- civilian panic, freeze, flee, hide, and comply behavior;
-- verbal-command stimuli and response evaluation;
-- surrender, approach, restraint, search, and custody interactions;
-- deterministic incident seeds and AI diagnostics.
-
-Exit: subjects can be arrested without force and every failed compliance decision has an inspectable reason.
-
-### Milestone 4 — Officer AI and Command System
-
-Goal: coordinate a small, interruptible team.
-
-Planned: officer selection, move/hold/cover/follow/stack/open/restrain/secure orders, explicit order lifecycle, refusal/failure reasons, world markers, and execution diagnostics.
-
-Exit: two officers execute and cancel orders, report failures, and assist with arrest without blocking the player.
-
-### Milestone 5 — Mission, ROE, and After-Action Review
-
-Goal: turn the systems into an accountable tactical operation.
-
-Planned: mission definitions/phases, objectives, mission-specific ROE policy, immutable incident ledger, custody/evidence/safety/force evaluation, reasoned penalties, and deterministic after-action reporting.
-
-Exit: the same incident ledger always produces the same objective, ROE, and after-action results.
-
-### Milestone 6 — First Tactical Vertical Slice
-
-Goal: deliver one short replayable residence or storefront incident with two officers, one uncertain suspect, one civilian, multiple approaches, seeded placement/behavior, arrest and force outcomes, and a complete after-action report.
-
-Exit: three full runs complete without blockers, seeded outcomes differ meaningfully, communication/arrest can succeed, justified and unjustified force are distinguished, and no missing references or unhandled exceptions occur.
-
-## Expansion after the vertical slice
-
-1. Briefing, intelligence uncertainty, floor plans, loadouts, assignments, and entry planning.
-2. Negotiation and barricaded-subject behavior.
-3. Patrol perimeter, traffic, detention, evacuation, and escape interception.
-4. Tactical medicine, fire/EMS staging, treatment, and handoff.
-5. K9 search and apprehension.
-6. Drone reconnaissance and overwatch.
-7. Sniper/spotter, bomb technician, and command-post systems.
-8. Evidence, detectives, scene security, and investigative consequences.
-9. Career progression, injuries, performance reviews, and persistent consequences.
-10. Multiplayer only after authority, determinism, and AI ownership are designed for replication.
-
-## Regression policy
-
-Before closing every milestone:
-
-- run the foundation and current-milestone validators;
-- check the Console after domain reload and Play Mode;
-- run all Edit Mode and Play Mode tests;
-- execute every earlier milestone smoke test;
-- update `CURRENT_STATUS.md`, `BUGS.md`, `SYSTEM_MAP.md`, and `CHANGELOG.md`;
-- record packages, project settings, generated assets, scene changes, and required Inspector assignments.
+Every milestone requires zero compiler/validator errors, all automated tests, all earlier smoke tests, current manual tests, clean Console results, updated documentation, and a source-control commit before advancing.
