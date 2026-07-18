@@ -14,12 +14,18 @@ namespace RulesOfEntry.Missions
         [SerializeField, TextArea(3, 8)] private string briefing = string.Empty;
         [SerializeField] private MissionObjectiveDefinition[] objectives =
             Array.Empty<MissionObjectiveDefinition>();
+        [SerializeField, Min(1f)] private float targetCompletionSeconds = 600f;
+        [SerializeField, Min(1f)] private float maximumScoredCompletionSeconds = 1200f;
 
         public string MissionId => missionId;
         public string DisplayName => displayName;
         public string Briefing => briefing;
         public MissionObjectiveDefinition[] Objectives => objectives?.ToArray()
             ?? Array.Empty<MissionObjectiveDefinition>();
+        public float TargetCompletionSeconds => Mathf.Max(1f, targetCompletionSeconds);
+        public float MaximumScoredCompletionSeconds => Mathf.Max(
+            TargetCompletionSeconds,
+            maximumScoredCompletionSeconds);
         public bool HasValidConfiguration => !string.IsNullOrWhiteSpace(missionId)
             && objectives != null
             && objectives.Length > 0
@@ -49,6 +55,16 @@ namespace RulesOfEntry.Missions
             objectives = configuredObjectives?
                 .Where(objective => objective != null)
                 .ToArray() ?? Array.Empty<MissionObjectiveDefinition>();
+        }
+
+        public void ConfigurePerformanceTiming(
+            float configuredTargetCompletionSeconds,
+            float configuredMaximumScoredCompletionSeconds)
+        {
+            targetCompletionSeconds = Mathf.Max(1f, configuredTargetCompletionSeconds);
+            maximumScoredCompletionSeconds = Mathf.Max(
+                targetCompletionSeconds,
+                configuredMaximumScoredCompletionSeconds);
         }
     }
 }

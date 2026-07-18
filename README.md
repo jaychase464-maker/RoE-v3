@@ -1,12 +1,12 @@
 # Rules of Entry
 
-Current integration candidate: Milestone 7A Pressure Point Multi-Room Mission Greybox. After Milestone 6C passes, run `Tools > Rules of Entry > Milestone 7A > Build Pressure Point Mission Greybox`, then `Tools > Rules of Entry > Milestone 7A > Validate Pressure Point Mission Greybox`. See `MILESTONE_7A_INSTALL.md` for the complete test checklist.
+Current integration candidate: Milestone 7B Automatic Mission Completion and After-Action Tiers. On the confirmed Milestone 7A baseline, run `Tools > Rules of Entry > Milestone 7B > Build Automatic After-Action Tier System`, then its validator. See `MILESTONE_7B_INSTALL.md` for the complete test checklist.
 
 Unity `6000.5.2f1` HDRP tactical law-enforcement simulation by Trooper Studios.
 
 ## Current delivery
 
-Milestone 7A is the first mission-greybox integration candidate built on the Milestones 0–6C gameplay, planning, deployment, HUD, and tablet foundations.
+Milestone 7B adds evidence-driven automatic operation closure and a final S-through-F performance report to the confirmed Pressure Point mission baseline.
 
 The current project includes the cinematic front end, temporary suspect presentation, headquarters planning, tactical HUD, deployment, and operational tablet foundations. The cumulative delivery adds:
 
@@ -37,7 +37,10 @@ The current project includes the cinematic front end, temporary suspect presenta
 - twelve weighted suspect/civilian locations selected by a logged incident seed without changing actor identity;
 - a pump-hall clearance objective bound to an authored room ID instead of the former training-room placeholder;
 - a Milestone 7A scene generator, validator, and EditMode topology/scenario tests.
+- automatic completion only after every required objective is terminal and every authored tactical room is verified clear;
+- a 100-point factual grade across objectives, civilian safety, suspect custody, officer safety, ROE, evidence, and time;
+- S/A/B/C/D/F tiers, casualty and critical-policy caps, a full-screen final report, validation, and EditMode coverage.
 
-Follow `MILESTONE_6A_INSTALL.md` for headquarters, `TACTICAL_HUD_INSTALL.md` for the operation HUD, `MILESTONE_6C_INSTALL.md` for deployment/body cameras, and `MILESTONE_7A_INSTALL.md` for the first mission greybox. No manual Inspector wiring or new package is required.
+Follow `MILESTONE_6A_INSTALL.md` for headquarters, `TACTICAL_HUD_INSTALL.md` for the operation HUD, `MILESTONE_6C_INSTALL.md` for deployment/body cameras, `MILESTONE_7A_INSTALL.md` for the mission greybox, and `MILESTONE_7B_INSTALL.md` for automatic completion and scoring. No manual Inspector wiring or new package is required.
 
 The main-menu Operations shortcut enters headquarters. Continue Campaign and New Campaign remain disabled until campaign/save ownership is implemented. The headquarters is intentionally greybox: final police-station architecture, furniture, lockers, armory assets, and a physical rugged-tablet model are not required for this milestone.

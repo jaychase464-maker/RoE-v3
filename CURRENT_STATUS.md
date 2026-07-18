@@ -2,11 +2,23 @@
 
 ## Active milestone
 
-**Milestone 7A — Pressure Point Multi-Room Mission Greybox: integration candidate; live Unity validation pending**
+**Milestone 7B — Automatic Mission Completion and After-Action Tiers: integration candidate; live Unity validation pending**
 
-Milestones 0–5 are the protected working gameplay baseline. The user confirmed the Milestone 5 gameplay sequence, cinematic UI, and temporary suspect presentation work and pushed commit `c62b09d` before Milestone 6A began. The user subsequently confirmed the Milestone 6C deployment and in-mission body-camera tablet behavior and pushed a checkpoint before Milestone 7A began.
+Milestones 0–7A are the protected working baseline. The user confirmed clean compilation, the Milestone 7A validator, all EditMode tests, and the live Pressure Point traversal/AI/tablet/debrief checks, then pushed the checkpoint before Milestone 7B began.
 
-## Milestone 7A candidate
+## Milestone 7B candidate
+
+- Missions automatically lock their final evidence after every required objective reaches a terminal state and every authored tactical room is verified clear.
+- A three-second confirmation window prevents a one-frame all-clear from prematurely ending the operation.
+- Final reports score Objectives (30), Civilian Safety (20), Suspect Custody (15), Officer Safety (10), Rules of Engagement (10), Evidence (10), and Time (5).
+- Final tiers are S, A, B, C, D, or F. A required-objective failure or officer death caps the tier at D; a civilian death or critical ROE violation caps it at F.
+- Evidence scoring reads actual suspect searches, secured weapons, and reportable items from the immutable evidence snapshot.
+- Mission time uses authored target and maximum-scored durations instead of a universal hidden timer.
+- A dedicated final report presentation displays the tier, total score, score cap, category breakdown, outcome metrics, objective results, and policy findings.
+- Manual debrief remains available for deliberately ending an unresolved operation; pending objectives become failed in the final report.
+- Setup, validator, and EditMode scoring/completion coverage are included.
+
+## Milestone 7A confirmed baseline
 
 - Operation Pressure Point is now authored as a municipal pumping-annex greybox rather than the former single training room.
 - Nine topology nodes connect three exterior staging approaches, three south-side work areas, a central corridor, the pump hall, and the control room.
@@ -87,6 +99,15 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Validation pending
 
+- Clean compilation after the Milestone 7B package is installed.
+- Run the Milestone 7B setup and validator, then all EditMode tests.
+- Complete every required objective and clear all six authored rooms; confirm the report appears automatically after the stable three-second all-clear.
+- Confirm the report matches live civilian, suspect, officer, ROE, evidence, and elapsed-time facts.
+- Manually end one unresolved run and confirm pending required objectives fail rather than being silently credited.
+- Run the Milestone 7A validator and prior gameplay regressions with a clean Console.
+
+## Historical regression checklist
+
 - Clean compilation after the Milestone 7A package is installed.
 - Run the Milestone 7A setup and validator, then all EditMode tests.
 - Deploy from headquarters through all three entries with one and two selected officers.
@@ -122,4 +143,4 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Asset boundary
 
-No new 3D model is required for Milestone 7A. Greybox dimensions, routes, doors, cover, sight lines, spawn fairness, and navigation must pass before environment art is integrated. After layout lock, the first environment-art request will be a modular municipal/industrial interior-exterior kit with functional separate-part doors, frames, windows, fencing, wet-service-yard surfaces, pumps/pipes/control equipment, office/maintenance props, collision meshes, LODs, and HDRP PBR materials. Officer body cameras, rugged tablet hardware, first-person gloved arms, and their animations remain separate future character/equipment needs.
+No new 3D model or package is required for Milestone 7B. The after-action system consumes existing gameplay evidence and uses generated uGUI presentation. The first environment-art request remains a modular municipal/industrial interior-exterior kit after greybox layout lock.

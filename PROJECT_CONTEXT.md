@@ -2,7 +2,7 @@
 
 Current UI direction: the operation HUD must remain sparse and realistic. It exposes qualitative squad condition and ammunition, never player hit points or exact ammunition counts. Campaign identity and the mission clock drive the RoE body-camera overlay. Squad commands are contextual and appear while middle mouse is held.
 
-Current mission direction: Milestone 7A authors Operation Pressure Point as a compact municipal pumping-annex greybox. Layout truth is a stable room/portal topology; scene variation may move existing subjects among compatible points but cannot invent actors, roles, objectives, or outcomes.
+Current mission direction: the confirmed Milestone 7A Pressure Point topology feeds Milestone 7B automatic completion and after-action tiers. Completion requires required-objective terminality plus factual all-room clearance. Scores are read-only interpretations of objective, actor, custody, force, inventory, room, and time evidence.
 
 ## Identity
 
@@ -13,7 +13,7 @@ Current mission direction: Milestone 7A authors Operation Pressure Point as a co
 - Input: Input System `1.19.0`, New Input System only
 - Navigation: AI Navigation `2.0.14`
 - Source of truth: `jaychase464-maker/RoE-v3`, branch `main`
-- Protected pushed baseline: user-confirmed Milestone 6C checkpoint on `main`; do not infer its hash without reading the repository.
+- Protected pushed baseline: user-confirmed Milestone 7A checkpoint on `main`; do not infer its hash without reading the repository.
 
 ## Architecture rules
 
@@ -35,6 +35,8 @@ Current mission direction: Milestone 7A authors Operation Pressure Point as a co
 - Existing gameplay UI components remain authoritative. Presentation setup changes their layout, colors, typography, and chrome without replacing their data sources.
 - Developer diagnostics remain accessible but are hidden by default.
 - Mission evaluation remains a one-way consumer of factual combat, AI, custody, room, order, and initiative evidence.
+- Automatic completion may observe objective and room evidence but cannot force room state, custody, injury, or AI behavior.
+- Final tiers must expose category scores and score caps; they cannot hide casualty, ROE, incomplete-objective, evidence, or time deductions.
 - No automatic reload, exact ammunition HUD, navigation warp, instant arrest, or direct score mutation is allowed.
 - Unity object identity uses full 64-bit `EntityId` values.
 - Character art is a replaceable presentation layer. Actor AI, navigation, injury, custody, evidence, and hit regions remain on the protected actor prefab root.
@@ -48,7 +50,8 @@ Current mission direction: Milestone 7A authors Operation Pressure Point as a co
 - Milestone 4: officer commands, door traversal, persistent challenges, room clearance, and bounded custody initiative.
 - Milestone 5: mission objectives, ROE review, evidence aggregation, and after-action scoring.
 - Milestones 5.5–6C: cinematic UI, headquarters planning, scalable tactical HUD, deployment, operational tablet, and live officer body-camera feeds.
-- Milestone 7A candidate: first multi-room mission topology, entry approaches, room evidence, door links, scenario variation, and persisted mission NavMesh.
+- Milestone 7A confirmed: first multi-room mission topology, entry approaches, room evidence, door links, scenario variation, and persisted mission NavMesh.
+- Milestone 7B candidate: automatic all-clear completion, factual category scoring, S-through-F tiers, casualty/policy caps, and final report presentation.
 
 ## Presentation boundary
 

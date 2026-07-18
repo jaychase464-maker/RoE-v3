@@ -91,7 +91,16 @@ namespace RulesOfEntry.UI
                 .Append(report.Score);
             if (report.Final)
             {
-                builder.Append(" • ").Append(report.Rating);
+                builder.Append(" • TIER ")
+                    .Append(report.Tier)
+                    .Append(" • ")
+                    .Append(report.Rating);
+            }
+            else if (missionController.AutoCompletionPending)
+            {
+                builder.Append(" • AUTO-COMPLETE IN ")
+                    .Append(missionController.AutoCompletionSecondsRemaining.ToString("0.0"))
+                    .Append('S');
             }
 
             builder.AppendLine();

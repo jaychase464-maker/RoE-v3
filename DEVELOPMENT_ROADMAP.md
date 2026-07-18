@@ -46,19 +46,27 @@ Exit pending: Unity compilation; setup and validator; all tests; all three entry
 
 Milestone 7A reauthors the three temporary entry anchors against the first mission map. Body-camera mounts remain temporary gameplay-authoring points, not final art.
 
-### Milestone 7A — Pressure Point Multi-Room Mission Greybox — Integration Candidate
+### Milestone 7A — Pressure Point Multi-Room Mission Greybox — Confirmed and Pushed
 
 Implemented: a compact municipal pumping-annex layout; three exterior staging approaches; six bounded interior clearance spaces; nine connected operation areas; seven door-gated traversal links; two open passages; a validated entry-to-room topology; role-aware weighted suspect/civilian placement; updated pump-hall objective evidence; persistent NavMesh data; setup, validation, and EditMode tests.
 
-Exit pending: clean Unity compilation; Milestone 7A setup and validator; all EditMode tests; all three deployment approaches; every physical doorway; direct-play and headquarters deployment; suspect/civilian location variation; room-clear revocation; officer challenge/custody initiative; operational tablet body-camera continuity; Milestones 1–6C regressions; clean Console; commit and push.
+Exit confirmed by the user: clean compilation; validator and EditMode tests; all entry/threshold traversal; direct and headquarters deployment; scenario variation; room-clear behavior; officer challenge/custody; tablet body-camera continuity; prior regressions; clean Console; GitHub push.
 
 This milestone deliberately uses authored primitives. Final environment art is blocked until dimensions, door swings, routes, sight lines, cover, spawn fairness, officer navigation, and performance pass in the greybox.
+
+### Milestone 7B — Automatic Mission Completion and After-Action Tiers — Integration Candidate
+
+Implemented: stable all-room/required-objective completion gate; confirmation window; seven factual score categories; S-through-F tiers; civilian, officer, objective, and critical-ROE caps; evidence/search metrics; mission time targets; final report presentation; setup, validator, and EditMode tests.
+
+Exit pending: clean Unity compilation; Milestone 7B setup and validator; all EditMode tests; automatic all-clear completion in Pressure Point; accurate arrest/civilian/officer/evidence/ROE/time reporting; unresolved manual-debrief behavior; Milestone 7A and prior regressions; clean Console; commit and push.
+
+No new 3D model or package is required.
 
 ### Milestone 6 — First Tactical Vertical Slice
 
 Goal: one short, replayable residence or storefront incident with multiple entry choices, incomplete intelligence, an uncertain armed suspect, a civilian, officer initiative, arrest/force outcomes, and complete after-action review.
 
-Remaining foundations after Milestone 7A:
+Remaining foundations after Milestone 7B:
 
 1. Objective/event persistence for restart and replay comparison.
 2. Pause/options/restart/return-to-headquarters flow during an operation.

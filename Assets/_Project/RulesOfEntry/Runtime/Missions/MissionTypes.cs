@@ -52,6 +52,28 @@ namespace RulesOfEntry.Missions
         CriticalFailure = 4
     }
 
+    public enum MissionPerformanceTier
+    {
+        NotRated = 0,
+        S = 1,
+        A = 2,
+        B = 3,
+        C = 4,
+        D = 5,
+        F = 6
+    }
+
+    public enum MissionScoreCategoryType
+    {
+        Objectives = 0,
+        CivilianSafety = 1,
+        SuspectCustody = 2,
+        OfficerSafety = 3,
+        RulesOfEngagement = 4,
+        Evidence = 5,
+        Time = 6
+    }
+
     public readonly struct ActorEvidenceSnapshot
     {
         public ActorEvidenceSnapshot(
@@ -62,6 +84,33 @@ namespace RulesOfEntry.Missions
             CustodyState custody,
             HumanBehaviorState behavior,
             bool weaponAccessible)
+            : this(
+                actorId,
+                entityId,
+                role,
+                condition,
+                custody,
+                behavior,
+                weaponAccessible,
+                weaponAccessible,
+                false,
+                false,
+                0)
+        {
+        }
+
+        public ActorEvidenceSnapshot(
+            string actorId,
+            ulong entityId,
+            ActorRole role,
+            ActorConditionLevel condition,
+            CustodyState custody,
+            HumanBehaviorState behavior,
+            bool weaponAccessible,
+            bool hadWeapon,
+            bool searched,
+            bool weaponSecured,
+            int reportableItemCount)
         {
             ActorId = actorId ?? string.Empty;
             EntityId = entityId;
@@ -70,6 +119,10 @@ namespace RulesOfEntry.Missions
             Custody = custody;
             Behavior = behavior;
             WeaponAccessible = weaponAccessible;
+            HadWeapon = hadWeapon;
+            Searched = searched;
+            WeaponSecured = weaponSecured;
+            ReportableItemCount = Math.Max(0, reportableItemCount);
         }
 
         public string ActorId { get; }
@@ -79,6 +132,10 @@ namespace RulesOfEntry.Missions
         public CustodyState Custody { get; }
         public HumanBehaviorState Behavior { get; }
         public bool WeaponAccessible { get; }
+        public bool HadWeapon { get; }
+        public bool Searched { get; }
+        public bool WeaponSecured { get; }
+        public int ReportableItemCount { get; }
     }
 
     public readonly struct RoomEvidenceSnapshot
@@ -225,6 +282,83 @@ namespace RulesOfEntry.Missions
         public string Rationale { get; }
     }
 
+    public sealed class MissionScoreCategory
+    {
+        public MissionScoreCategory(
+            MissionScoreCategoryType type,
+            string displayName,
+            int earnedScore,
+            int maximumScore,
+            string summary)
+        {
+            Type = type;
+            DisplayName = displayName ?? string.Empty;
+            MaximumScore = Math.Max(0, maximumScore);
+            EarnedScore = Math.Max(0, Math.Min(MaximumScore, earnedScore));
+            Summary = summary ?? string.Empty;
+        }
+
+        public MissionScoreCategoryType Type { get; }
+        public string DisplayName { get; }
+        public int EarnedScore { get; }
+        public int MaximumScore { get; }
+        public int LostScore => MaximumScore - EarnedScore;
+        public string Summary { get; }
+    }
+
+    public sealed class MissionOutcomeMetrics
+    {
+        public MissionOutcomeMetrics(
+            int civiliansTotal,
+            int civiliansSaved,
+            int civiliansWounded,
+            int civiliansIncapacitated,
+            int civiliansKilled,
+            int suspectsTotal,
+            int suspectsArrested,
+            int suspectsIncapacitated,
+            int suspectsKilled,
+            int officersTotal,
+            int officersWounded,
+            int officersIncapacitated,
+            int officersKilled,
+            int evidenceOpportunities,
+            int evidenceItemsSecured)
+        {
+            CiviliansTotal = Math.Max(0, civiliansTotal);
+            CiviliansSaved = Math.Max(0, civiliansSaved);
+            CiviliansWounded = Math.Max(0, civiliansWounded);
+            CiviliansIncapacitated = Math.Max(0, civiliansIncapacitated);
+            CiviliansKilled = Math.Max(0, civiliansKilled);
+            SuspectsTotal = Math.Max(0, suspectsTotal);
+            SuspectsArrested = Math.Max(0, suspectsArrested);
+            SuspectsIncapacitated = Math.Max(0, suspectsIncapacitated);
+            SuspectsKilled = Math.Max(0, suspectsKilled);
+            OfficersTotal = Math.Max(0, officersTotal);
+            OfficersWounded = Math.Max(0, officersWounded);
+            OfficersIncapacitated = Math.Max(0, officersIncapacitated);
+            OfficersKilled = Math.Max(0, officersKilled);
+            EvidenceOpportunities = Math.Max(0, evidenceOpportunities);
+            EvidenceItemsSecured = Math.Max(0, evidenceItemsSecured);
+        }
+
+        public int CiviliansTotal { get; }
+        public int CiviliansSaved { get; }
+        public int CiviliansWounded { get; }
+        public int CiviliansIncapacitated { get; }
+        public int CiviliansKilled { get; }
+        public int SuspectsTotal { get; }
+        public int SuspectsArrested { get; }
+        public int SuspectsIncapacitated { get; }
+        public int SuspectsKilled { get; }
+        public int OfficersTotal { get; }
+        public int OfficersWounded { get; }
+        public int OfficersIncapacitated { get; }
+        public int OfficersKilled { get; }
+        public int EvidenceOpportunities { get; }
+        public int EvidenceItemsSecured { get; }
+    }
+
     public sealed class AfterActionReport
     {
         public AfterActionReport(
@@ -238,6 +372,39 @@ namespace RulesOfEntry.Missions
             MissionObjectiveEvaluation[] objectives,
             RoeFinding[] roeFindings,
             string summary)
+            : this(
+                missionId,
+                missionName,
+                generatedAtSeconds,
+                elapsedSeconds,
+                final,
+                score,
+                rating,
+                GetLegacyTier(final, score),
+                100,
+                objectives,
+                roeFindings,
+                Array.Empty<MissionScoreCategory>(),
+                new MissionOutcomeMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                summary)
+        {
+        }
+
+        public AfterActionReport(
+            string missionId,
+            string missionName,
+            double generatedAtSeconds,
+            double elapsedSeconds,
+            bool final,
+            int score,
+            OperationalRating rating,
+            MissionPerformanceTier tier,
+            int scoreCap,
+            MissionObjectiveEvaluation[] objectives,
+            RoeFinding[] roeFindings,
+            MissionScoreCategory[] categories,
+            MissionOutcomeMetrics metrics,
+            string summary)
         {
             MissionId = missionId ?? string.Empty;
             MissionName = missionName ?? string.Empty;
@@ -246,12 +413,19 @@ namespace RulesOfEntry.Missions
             Final = final;
             Score = Math.Max(0, Math.Min(100, score));
             Rating = rating;
+            Tier = final ? tier : MissionPerformanceTier.NotRated;
+            ScoreCap = Math.Max(0, Math.Min(100, scoreCap));
             Objectives = Array.AsReadOnly(objectives != null
                 ? (MissionObjectiveEvaluation[])objectives.Clone()
                 : Array.Empty<MissionObjectiveEvaluation>());
             RoeFindings = Array.AsReadOnly(roeFindings != null
                 ? (RoeFinding[])roeFindings.Clone()
                 : Array.Empty<RoeFinding>());
+            Categories = Array.AsReadOnly(categories != null
+                ? (MissionScoreCategory[])categories.Clone()
+                : Array.Empty<MissionScoreCategory>());
+            Metrics = metrics ?? new MissionOutcomeMetrics(
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             Summary = summary ?? string.Empty;
         }
 
@@ -262,8 +436,48 @@ namespace RulesOfEntry.Missions
         public bool Final { get; }
         public int Score { get; }
         public OperationalRating Rating { get; }
+        public MissionPerformanceTier Tier { get; }
+        public int ScoreCap { get; }
         public IReadOnlyList<MissionObjectiveEvaluation> Objectives { get; }
         public IReadOnlyList<RoeFinding> RoeFindings { get; }
+        public IReadOnlyList<MissionScoreCategory> Categories { get; }
+        public MissionOutcomeMetrics Metrics { get; }
         public string Summary { get; }
+
+        private static MissionPerformanceTier GetLegacyTier(bool final, int score)
+        {
+            if (!final)
+            {
+                return MissionPerformanceTier.NotRated;
+            }
+
+            int clamped = Math.Max(0, Math.Min(100, score));
+            if (clamped >= 95)
+            {
+                return MissionPerformanceTier.S;
+            }
+
+            if (clamped >= 90)
+            {
+                return MissionPerformanceTier.A;
+            }
+
+            if (clamped >= 80)
+            {
+                return MissionPerformanceTier.B;
+            }
+
+            if (clamped >= 75)
+            {
+                return MissionPerformanceTier.C;
+            }
+
+            if (clamped >= 60)
+            {
+                return MissionPerformanceTier.D;
+            }
+
+            return MissionPerformanceTier.F;
+        }
     }
 }

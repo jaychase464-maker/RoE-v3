@@ -2,12 +2,19 @@
 
 ## Open
 
-### ROE-0053 — Pressure Point greybox requires live traversal validation
+### ROE-0056 — Milestone 7B live integration pending
 
-- Priority: blocker for Milestone 7A closure
+- Priority: blocker for Milestone 7B closure
 - Status: integration candidate
-- Required evidence: clean compilation, Milestone 7A setup/validator, all tests, three entry deployments, seven door crossings in both directions, two open passages, room-clear/revocation behavior, scenario variation, prior regressions, and clean Console
-- Regression focus: full-team door traversal, automatic challenges/custody, mission objective completion, MMB commands, and operational-tablet body-camera continuity
+- Scope: automatic all-room mission completion, final evidence lock, seven-category score, S-through-F tier, casualty/policy caps, and final report presentation
+- Required evidence: clean compilation; Milestone 7B validator; all EditMode tests; automatic completion after all six Pressure Point rooms clear; accurate civilian/suspect/officer/ROE/evidence/time results; unresolved manual debrief; Milestone 7A regressions; clean Console
+- No code defect is currently claimed; this record prevents unverified implementation from being called complete.
+
+### ROE-0057 — Legacy M3 validator required superseded NavMesh asset
+
+- Status: code fixed; Unity rerun pending
+- Test evidence: the 2026-07-18 EditMode report passed 108/113 tests; all five failures inherited the same `M3_PrototypeNavMesh.asset` dependency error while every Milestone 7B evaluator/completion test passed.
+- Fix: validate the scene's actual loadable `NavMeshData` dependency so the legacy M3 bake and current M7A Pressure Point bake both satisfy the protected navigation contract.
 
 ### ROE-0054 — Incident seed is logged but not yet campaign-persisted
 
@@ -83,6 +90,8 @@
 - Final campaign/menu sound, production motion, accessibility, localization, and complete brand typography review remain outstanding.
 
 ## Resolved
+
+- ROE-0053: the user confirmed clean Milestone 7A compilation, validator/tests, all entry and threshold traversal, AI/custody, room-clear behavior, tablet/body-camera continuity, debrief, prior regressions, and a clean Console, then pushed the checkpoint.
 
 - ROE-0052: the three temporary single-room entry anchors were reauthored as south, west, and north exterior approaches on the Pressure Point multi-room greybox; live traversal validation remains tracked by ROE-0053.
 - ROE-0038: headquarters entry plans now resolve through stable authored anchors, and Milestone 7A connects those anchors to validated operation topology and baked exterior formations.

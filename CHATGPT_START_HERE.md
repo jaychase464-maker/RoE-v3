@@ -2,7 +2,7 @@
 
 ## Current integration task
 
-Milestone 7A Pressure Point is the newest candidate. The first operation now has nine connected areas, six clearance spaces, three reauthored deployment approaches, seven door links, two open passages, and seed-driven placement of the existing suspect/civilian. Read `MILESTONE_7A_INSTALL.md`, `MILESTONE_6C_INSTALL.md`, `TACTICAL_HUD_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing mission topology, navigation, deployment, scenario placement, cameras, squad behavior, or evidence.
+Milestone 7B automatic completion and after-action tiers is the newest candidate on the user-confirmed Milestone 7A Pressure Point baseline. Read `MILESTONE_7B_INSTALL.md`, `MILESTONE_7A_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing mission completion, objectives, room clearance, scoring, evidence, casualty rules, or final presentation.
 
 ## Project
 
@@ -12,8 +12,9 @@ Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation 
 
 - Milestones 0–5 are the protected and pushed gameplay baseline.
 - The user confirmed and pushed the Milestone 6C deployment and operational body-camera tablet checkpoint before Milestone 7A began.
-- Milestone 7A is the current integration candidate built on the user-confirmed Milestone 6C operation-tablet behavior.
-- Do not call Milestone 7A complete until live Unity evidence passes.
+- The user confirmed and pushed Milestone 7A after clean compilation, validation, tests, traversal, AI, tablet, and debrief checks.
+- Milestone 7B is the current integration candidate.
+- Do not call Milestone 7B complete until live Unity evidence passes.
 
 Read in order:
 
@@ -27,6 +28,7 @@ Read in order:
 8. `MILESTONE_6A_INSTALL.md`
 9. `MILESTONE_6C_INSTALL.md`
 10. `MILESTONE_7A_INSTALL.md`
+11. `MILESTONE_7B_INSTALL.md`
 
 ## Non-negotiable invariants
 
@@ -45,6 +47,8 @@ Read in order:
 - No automatic reload or exact player ammunition counter.
 - No navigation warp, instant arrest, or direct custody forcing.
 - Mission evaluation consumes facts but cannot mutate their producers.
+- Automatic completion requires every required objective to be terminal and every authored tactical room to be clear.
+- Final grades must show category deductions and caps; casualty or policy facts cannot be hidden or rewritten by UI.
 - Ambiguous evidence requires review instead of invented certainty.
 - Unity identity uses `GetEntityId()` with all 64 bits preserved.
 - Temporary or final character visuals may not replace actor-root gameplay and hit-region components.
@@ -52,4 +56,4 @@ Read in order:
 
 ## Next action
 
-Install the Milestone 7A replacement ZIP after the Milestone 6C setup passes. Run `Tools > Rules of Entry > Milestone 7A > Build Pressure Point Mission Greybox`, run its validator and all EditMode tests, then smoke-test all three entries and every threshold. Report the first Console error exactly if anything fails.
+Install the Milestone 7B replacement ZIP on the confirmed Milestone 7A checkpoint. Run `Tools > Rules of Entry > Milestone 7B > Build Automatic After-Action Tier System`, run its validator and all EditMode tests, then complete Pressure Point and verify the automatic final report. Report the first Console error exactly if anything fails.

@@ -1,5 +1,17 @@
 # System Map
 
+## Milestone 7B completion and after-action evaluation
+
+- `MissionCompletionRules` — pure gate requiring all required objectives to be terminal and every captured tactical room to be verified clear.
+- `MissionController` — observes the gate, holds a stable confirmation window, captures one final snapshot, and changes phase to After Action.
+- `ActorEvidenceSnapshot` — immutable actor, condition, custody, behavior, original/accessible/secured weapon, search, and reportable-item facts.
+- `AfterActionEvaluator` — deterministic 100-point evaluator for objectives, civilians, suspects, officers, ROE, evidence, and time.
+- `MissionScoreCategory` — immutable earned/maximum/category explanation used by UI and future persistence.
+- `MissionOutcomeMetrics` — factual civilian, suspect, officer, and evidence totals attached to the report.
+- `AfterActionReport` — immutable final score, S-through-F tier, operational rating, score cap, categories, metrics, objectives, and ROE findings.
+- `MissionAfterActionPresentation` — read-only full-screen final report; disables gameplay input only after final evidence lock.
+- `RulesOfEntryMilestoneSevenBSetup` / `Validator` — configures timing/auto-completion, installs the presentation, and validates the saved contract.
+
 ## Milestone 7A mission topology and scenario authoring
 
 - `OperationRoomNode` — stable operational-area identity and optional authoritative clearance-volume binding.
@@ -72,6 +84,9 @@ flowchart TD
 | `OfficerBodyCameraSource` | officer-mounted viewpoint and on-demand stream state | tablet navigation, commands, recording evidence, or hidden AI state |
 | `InMissionTabletController` | read-only situation/objective/body-camera presentation and tablet control transfer | deployment planning, mission mutation, officer control, or pausing the operation |
 | `MissionDefinition` | objectives and operation identity evaluated by the mission system | headquarters presentation or scene transition timing |
+| `MissionCompletionRules` | required-objective and all-room readiness decision | custody, AI commands, room state mutation, or scoring |
+| `AfterActionEvaluator` | deterministic categories, metrics, caps, score, tier, and rating from one evidence snapshot | combat, injury, custody, inventory, AI, or room mutation |
+| `MissionAfterActionPresentation` | final report layout and post-lock gameplay-input suppression | evidence capture, score calculation, or campaign consequences |
 | `FrontEndButtonVisual` | hover, selection, press, and focus response | input bindings or navigation policy |
 | `FrontEndMenuItemVisual` | restrained focus, divider, and label motion for flat main-menu navigation | button actions or scene transitions |
 | `FrontEndRules` | pure quality-index and loading-progress rules | Unity scene state |
@@ -96,6 +111,9 @@ flowchart TD
 - Every topology area is reachable from at least one authored entry, and planning entry IDs match topology bindings exactly.
 - Door portals become navigable only when physical door clearance activates their fixed link; open passages never invent door state.
 - Scenario variation repositions existing actors only; it cannot add threats, change roles, decide behavior, or mutate mission outcomes.
+- Automatic completion requires every required objective to be terminal and every captured tactical room to be `Clear` with zero active threats for the confirmation window.
+- Evidence opportunities affect the final score but never silently prevent automatic completion.
+- A required-objective failure or officer death caps the tier at D; a civilian death or critical ROE violation caps it at F.
 - The applied incident seed is logged so a placement can be reproduced during debugging.
 - Unassigned officers are removed from the deployed squad before HUD and body-camera lists rebuild.
 - Raising the in-mission tablet disables player gameplay input but never pauses AI or mission time.

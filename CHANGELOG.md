@@ -1,5 +1,34 @@
 # Changelog
 
+## Milestone 7B — Automatic Mission Completion and After-Action Tiers — 2026-07-17
+
+### Test hotfix 1
+
+- Generalized the Milestone 3 regression validator to accept the current prototype scene's valid baked `NavMeshData` dependency instead of requiring the superseded `M3_PrototypeNavMesh.asset` path.
+- This repairs the single inherited validation error that caused five configuration tests to fail after Pressure Point replaced the training-room navigation bake.
+
+### Added
+
+- Added a pure automatic-completion gate requiring every required objective to be terminal and every authored tactical room to be verified clear.
+- Added a stable confirmation window before final evidence lock.
+- Added seven transparent scoring categories totaling 100 points: objectives, civilian safety, suspect custody, officer safety, ROE, evidence, and time.
+- Added S/A/B/C/D/F tiers and explicit score caps for required-objective failures, officer deaths, civilian deaths, and critical ROE violations.
+- Added factual outcome metrics for civilians saved/killed, suspects arrested/killed, officer casualties, and secured evidence.
+- Extended actor evidence with search, original-weapon, secured-weapon, and reportable-item facts.
+- Added a generated full-screen final report presentation plus Milestone 7B setup, validator, and EditMode tests.
+
+### Changed
+
+- Automatic mission closure now considers every authored tactical room instead of only required objective terminality.
+- Mission definitions now own target and maximum-scored completion times.
+- After-action logging and prototype diagnostics now identify the final tier and score cap.
+
+### Boundaries
+
+- Scoring remains a read-only interpretation of immutable evidence; AI, combat, custody, room, and inventory systems never mutate score.
+- Recoverable evidence affects grade but does not become an invisible automatic-completion blocker.
+- No campaign persistence, career consequences, leaderboard, networking, new package, or 3D model is introduced.
+
 ## Milestone 7A — Pressure Point Multi-Room Mission Greybox — 2026-07-17
 
 ### Added

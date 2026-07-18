@@ -233,18 +233,22 @@ namespace RulesOfEntry.Editor.Milestone3
         private static void ValidateNavigationData(
             ICollection<ProjectValidationResult> results)
         {
-            NavMeshData data = AssetDatabase.LoadAssetAtPath<NavMeshData>(
-                RulesOfEntryMilestoneThreeSetup.NavMeshDataPath);
-            if (data == null)
+            string[] navigationDependencies = GetPrototypeNavigationDependencies();
+            if (navigationDependencies.Length == 0)
             {
                 AddError(
                     results,
                     "M3 Baked Navigation",
-                    $"Missing {RulesOfEntryMilestoneThreeSetup.NavMeshDataPath}. Run the Milestone 3 setup tool.");
+                    "The prototype scene has no valid baked NavMeshData dependency. "
+                        + "Run the current mission setup tool.");
                 return;
             }
 
-            AddPass(results, "M3 Baked Navigation", "Prototype NavMesh data exists.");
+            AddPass(
+                results,
+                "M3 Baked Navigation",
+                "Prototype NavMesh data exists: "
+                    + string.Join(", ", navigationDependencies) + ".");
         }
 
         private static void ValidatePrototypeScene(
@@ -264,21 +268,24 @@ namespace RulesOfEntry.Editor.Milestone3
                 RulesOfEntryMilestoneThreeSetup.CivilianPrefabPath,
                 RulesOfEntryMilestoneThreeSetup.SuspectProfilePath,
                 RulesOfEntryMilestoneThreeSetup.CivilianProfilePath,
-                RulesOfEntryMilestoneThreeSetup.DebugUiPrefabPath,
-                RulesOfEntryMilestoneThreeSetup.NavMeshDataPath
+                RulesOfEntryMilestoneThreeSetup.DebugUiPrefabPath
             };
             string[] missing = required
                 .Where(path => !dependencies.Contains(path, StringComparer.Ordinal))
                 .ToArray();
+            bool navigationMissing = !dependencies.Any(path =>
+                AssetDatabase.LoadAssetAtPath<NavMeshData>(path) != null);
             string sceneText = File.ReadAllText(scenePath);
             bool rootMissing = sceneText.IndexOf(GeneratedRootName, StringComparison.Ordinal) < 0;
-            if (missing.Length > 0 || rootMissing)
+            if (missing.Length > 0 || navigationMissing || rootMissing)
             {
                 AddError(
                     results,
                     "M3 Prototype Scene",
                     missing.Length > 0
                         ? "Missing dependencies: " + string.Join(", ", missing) + "."
+                        : navigationMissing
+                            ? "The scene has no valid baked NavMeshData dependency."
                         : $"Missing generated root {GeneratedRootName}.");
                 return;
             }
@@ -287,6 +294,20 @@ namespace RulesOfEntry.Editor.Milestone3
                 results,
                 "M3 Prototype Scene",
                 "Suspect, civilian, diagnostics, behavior data, and baked navigation are wired into the prototype scene.");
+        }
+
+        private static string[] GetPrototypeNavigationDependencies()
+        {
+            if (!File.Exists(ProjectInfo.PrototypeScenePath))
+            {
+                return Array.Empty<string>();
+            }
+
+            return AssetDatabase.GetDependencies(ProjectInfo.PrototypeScenePath, true)
+                .Where(path => AssetDatabase.LoadAssetAtPath<NavMeshData>(path) != null)
+                .Distinct(StringComparer.Ordinal)
+                .OrderBy(path => path, StringComparer.Ordinal)
+                .ToArray();
         }
 
         private static void ValidateAccountabilityBoundary(

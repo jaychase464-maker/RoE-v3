@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using RulesOfEntry.Core;
 using UnityEngine;
 
@@ -12,8 +11,11 @@ namespace RulesOfEntry.Missions
         [SerializeField] private RulesOfEngagementPolicy roePolicy;
         [SerializeField] private bool beginOnStart = true;
         [SerializeField, Min(0.1f)] private float evaluationIntervalSeconds = 0.25f;
+        [SerializeField] private bool autoCompleteWhenResolved = true;
+        [SerializeField, Min(0f)] private float autoCompletionConfirmationSeconds = 3f;
 
         private double missionStartedAtSeconds;
+        private double autoCompletionReadyAtSeconds = -1d;
         private float evaluationTimer;
 
         public event Action<AfterActionReport> ReportUpdated;
@@ -25,6 +27,16 @@ namespace RulesOfEntry.Missions
         public MissionEvidenceSnapshot CurrentEvidence { get; private set; } =
             MissionEvidenceSnapshot.Empty;
         public AfterActionReport CurrentReport { get; private set; }
+        public bool AutoCompleteWhenResolved => autoCompleteWhenResolved;
+        public float AutoCompletionConfirmationSeconds => autoCompletionConfirmationSeconds;
+        public bool AutoCompletionPending => autoCompletionReadyAtSeconds >= 0d
+            && Phase == MissionPhase.Active;
+        public float AutoCompletionSecondsRemaining => !AutoCompletionPending
+            ? 0f
+            : Mathf.Max(
+                0f,
+                autoCompletionConfirmationSeconds
+                    - (float)(Time.timeAsDouble - autoCompletionReadyAtSeconds));
         public bool HasCompleteConfiguration => definition != null
             && definition.HasValidConfiguration
             && roePolicy != null
@@ -44,6 +56,16 @@ namespace RulesOfEntry.Missions
                 configuredEvaluationIntervalSeconds);
         }
 
+        public void ConfigureAutomaticCompletion(
+            bool configuredAutoCompleteWhenResolved,
+            float configuredConfirmationSeconds)
+        {
+            autoCompleteWhenResolved = configuredAutoCompleteWhenResolved;
+            autoCompletionConfirmationSeconds = Mathf.Max(
+                0f,
+                configuredConfirmationSeconds);
+        }
+
         public bool BeginMission()
         {
             if (!HasCompleteConfiguration || Phase != MissionPhase.Briefing)
@@ -54,6 +76,7 @@ namespace RulesOfEntry.Missions
             missionStartedAtSeconds = Time.timeAsDouble;
             Phase = MissionPhase.Active;
             evaluationTimer = 0f;
+            autoCompletionReadyAtSeconds = -1d;
             PhaseChanged?.Invoke(Phase);
             ProjectLog.Info(
                 "Mission",
@@ -82,7 +105,7 @@ namespace RulesOfEntry.Missions
                 ProjectLog.Error(
                     "Mission",
                     $"{name} is missing a valid mission definition or ROE policy. "
-                        + "Run the Milestone 5 setup tool.",
+                        + "Run the current mission setup tool outside Play Mode.",
                     this);
                 return;
             }
@@ -120,13 +143,26 @@ namespace RulesOfEntry.Missions
                 false);
             CurrentReport = provisional;
 
-            bool allRequiredTerminal = provisional.Objectives
-                .Where(objective => objective.Required)
-                .All(objective => objective.Status != MissionObjectiveStatus.Pending);
-            if (allowFinalization && allRequiredTerminal)
+            MissionCompletionDecision completion = MissionCompletionRules.Evaluate(
+                provisional,
+                CurrentEvidence);
+            if (!completion.Ready)
             {
-                FinalizeCurrentEvidence("All required objectives reached a terminal state.");
-                return;
+                autoCompletionReadyAtSeconds = -1d;
+            }
+            else if (allowFinalization && autoCompleteWhenResolved)
+            {
+                if (autoCompletionReadyAtSeconds < 0d)
+                {
+                    autoCompletionReadyAtSeconds = Time.timeAsDouble;
+                }
+
+                if (Time.timeAsDouble - autoCompletionReadyAtSeconds
+                    >= autoCompletionConfirmationSeconds)
+                {
+                    FinalizeCurrentEvidence(completion.Reason);
+                    return;
+                }
             }
 
             ReportUpdated?.Invoke(CurrentReport);
@@ -140,12 +176,14 @@ namespace RulesOfEntry.Missions
                 CurrentEvidence,
                 true);
             Phase = MissionPhase.AfterAction;
+            autoCompletionReadyAtSeconds = -1d;
             PhaseChanged?.Invoke(Phase);
             ReportUpdated?.Invoke(CurrentReport);
             ProjectLog.Info(
                 "After Action",
-                $"{definition.DisplayName}: {CurrentReport.Rating}, "
-                    + $"score {CurrentReport.Score}. {CurrentReport.Summary} {reason}",
+                $"{definition.DisplayName}: Tier {CurrentReport.Tier}, "
+                    + $"score {CurrentReport.Score}/100. "
+                    + $"{CurrentReport.Summary} {reason}",
                 this);
         }
     }

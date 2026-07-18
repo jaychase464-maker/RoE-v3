@@ -88,7 +88,11 @@ namespace RulesOfEntry.Missions
                     : ActorConditionLevel.Stable,
                 custody != null ? custody.State : CustodyState.Free,
                 behavior != null ? behavior.State : HumanBehaviorState.Idle,
-                inventory != null && inventory.HasWeapon);
+                inventory != null && inventory.HasWeapon,
+                inventory != null && inventory.HadWeapon,
+                inventory != null && inventory.Searched,
+                inventory != null && inventory.WeaponSecured,
+                inventory != null ? inventory.ReportableItemCount : 0);
         }
     }
 }

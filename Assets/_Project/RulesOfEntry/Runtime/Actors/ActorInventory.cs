@@ -33,8 +33,10 @@ namespace RulesOfEntry.Actors
         [SerializeField] private string[] reportableItems = Array.Empty<string>();
 
         public bool HasWeapon => hasWeapon && !weaponSecured;
+        public bool HadWeapon => hasWeapon;
         public bool WeaponSecured => weaponSecured;
         public bool Searched => searched;
+        public int ReportableItemCount => reportableItems?.Length ?? 0;
 
         public void Configure(bool configuredHasWeapon, string[] configuredReportableItems)
         {

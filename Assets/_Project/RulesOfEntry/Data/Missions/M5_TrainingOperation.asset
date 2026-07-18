@@ -51,3 +51,5 @@ MonoBehaviour:
     targetRoomId: 
     isRequired: 1
     failureDeduction: 20
+  targetCompletionSeconds: 600
+  maximumScoredCompletionSeconds: 1200
