@@ -1,5 +1,14 @@
 # System Map
 
+## Milestone 7C operation closure and headquarters review
+
+- `CompletedOperationRecord` — immutable final report plus stable operation, entry, officer, and support identifiers; owns no scene references.
+- `CompletedOperationContext` — latest-completed-operation application-session boundary; deliberately not a disk save or campaign history.
+- `MissionAfterActionPresentation` — final report presentation and Continue control; captures the completed record, consumes deployment context, and asynchronously returns to headquarters.
+- `HeadquartersAfterActionReviewController` — renders the stored final report without recalculating it and owns review-time cursor/gameplay transfer.
+- `HeadquartersAfterActionTerminalInteractable` — physical headquarters entry point for reopening the latest session report.
+- `RulesOfEntryMilestoneSevenCSetup` / `Validator` — rebuilds report/HQ presentation, installs Input System UI support, and validates both saved scenes and the scene-free boundary.
+
 ## Milestone 7B completion and after-action evaluation
 
 - `MissionCompletionRules` — pure gate requiring all required objectives to be terminal and every captured tactical room to be verified clear.
@@ -65,6 +74,10 @@ flowchart TD
     MissionLoad --> Deploy[Apply entry and assigned team]
     Deploy --> Prototype[Pressure Point mission greybox]
     Prototype --> OpTablet[In-mission tablet and body cameras]
+    OpTablet --> FinalReport[Final after-action report]
+    FinalReport --> Record[Capture completed-operation record]
+    Record --> HQReturn[Return to headquarters]
+    HQReturn --> Archive[Latest report review and archive terminal]
 ```
 
 ## Responsibility map
@@ -87,6 +100,9 @@ flowchart TD
 | `MissionCompletionRules` | required-objective and all-room readiness decision | custody, AI commands, room state mutation, or scoring |
 | `AfterActionEvaluator` | deterministic categories, metrics, caps, score, tier, and rating from one evidence snapshot | combat, injury, custody, inventory, AI, or room mutation |
 | `MissionAfterActionPresentation` | final report layout and post-lock gameplay-input suppression | evidence capture, score calculation, or campaign consequences |
+| `CompletedOperationContext` | latest immutable final report and stable deployment identifiers across the return transition | Unity scene objects, report recalculation, disk persistence, or career progression |
+| `HeadquartersAfterActionReviewController` | latest-report rendering and review-time input ownership | mission evaluation, report mutation, or multi-operation history |
+| `HeadquartersAfterActionTerminalInteractable` | physical reopening of the current session's latest report | evidence ownership or campaign save data |
 | `FrontEndButtonVisual` | hover, selection, press, and focus response | input bindings or navigation policy |
 | `FrontEndMenuItemVisual` | restrained focus, divider, and label motion for flat main-menu navigation | button actions or scene transitions |
 | `FrontEndRules` | pure quality-index and loading-progress rules | Unity scene state |
@@ -114,6 +130,9 @@ flowchart TD
 - Automatic completion requires every required objective to be terminal and every captured tactical room to be `Clear` with zero active threats for the confirmation window.
 - Evidence opportunities affect the final score but never silently prevent automatic completion.
 - A required-objective failure or officer death caps the tier at D; a civilian death or critical ROE violation caps it at F.
+- Final report Continue captures the immutable result before consuming deployment state and loading headquarters.
+- Headquarters review renders the captured result unchanged; it never reruns evaluation.
+- The current archive is session-only and holds one latest report; persistence may not be inferred.
 - The applied incident seed is logged so a placement can be reproduced during debugging.
 - Unassigned officers are removed from the deployed squad before HUD and body-camera lists rebuild.
 - Raising the in-mission tablet disables player gameplay input but never pauses AI or mission time.

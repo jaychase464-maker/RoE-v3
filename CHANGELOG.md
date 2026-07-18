@@ -1,5 +1,27 @@
 # Changelog
 
+## Milestone 7C — Operation Closure and Headquarters Return — 2026-07-17
+
+### Added
+
+- Added an immutable, scene-reference-free `CompletedOperationRecord` session boundary for the latest final report and stable deployment IDs.
+- Added a functional final-report Continue control with mouse, Enter/numpad Enter, and gamepad South/A support.
+- Added asynchronous return to the playable headquarters after the final report is secured.
+- Added an automatic headquarters latest-operation review and an in-world After-Action Archive terminal.
+- Added Milestone 7C setup, saved-scene validation, and EditMode context tests.
+
+### Changed
+
+- The final after-action canvas now accepts UI pointer input while visible and restores gameplay ownership through the existing cursor controller.
+- Deployment context is cleared only after its stable IDs and final report are safely captured.
+- Direct operation launches use the report mission ID when no planning operation code exists.
+
+### Boundaries
+
+- The archive retains only the latest completed operation for the running application session.
+- Disk saves, campaign history, career consequences, replay records, and multi-report browsing remain future work.
+- No new Unity package, input action, project setting, or 3D model is required.
+
 ## Milestone 7B — Automatic Mission Completion and After-Action Tiers — 2026-07-17
 
 ### Test hotfix 1

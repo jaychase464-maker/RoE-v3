@@ -2,7 +2,7 @@
 
 ## Current integration task
 
-Milestone 7B automatic completion and after-action tiers is the newest candidate on the user-confirmed Milestone 7A Pressure Point baseline. Read `MILESTONE_7B_INSTALL.md`, `MILESTONE_7A_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing mission completion, objectives, room clearance, scoring, evidence, casualty rules, or final presentation.
+Milestone 7C operation closure and headquarters return is the newest candidate on the user-confirmed and pushed Milestone 7B baseline. Read `MILESTONE_7C_INSTALL.md`, `MILESTONE_7B_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing final report presentation, scene return, deployment cleanup, or completed-operation context.
 
 ## Project
 
@@ -13,8 +13,9 @@ Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation 
 - Milestones 0–5 are the protected and pushed gameplay baseline.
 - The user confirmed and pushed the Milestone 6C deployment and operational body-camera tablet checkpoint before Milestone 7A began.
 - The user confirmed and pushed Milestone 7A after clean compilation, validation, tests, traversal, AI, tablet, and debrief checks.
-- Milestone 7B is the current integration candidate.
-- Do not call Milestone 7B complete until live Unity evidence passes.
+- The user confirmed and pushed Milestone 7B after compilation, validators, automated tests, automatic completion, and live factual report checks.
+- Milestone 7C is the current integration candidate.
+- Do not call Milestone 7C complete until live Unity operation-to-headquarters evidence passes.
 
 Read in order:
 
@@ -29,6 +30,7 @@ Read in order:
 9. `MILESTONE_6C_INSTALL.md`
 10. `MILESTONE_7A_INSTALL.md`
 11. `MILESTONE_7B_INSTALL.md`
+12. `MILESTONE_7C_INSTALL.md`
 
 ## Non-negotiable invariants
 
@@ -38,6 +40,8 @@ Read in order:
 - After selecting a mission, the rugged tablet owns briefing, officer assignment, future support planning, entry selection, and ready-up.
 - K9, drone, and other specialized units cannot become selectable until their gameplay systems actually exist.
 - Cross-scene deployment state stores stable IDs only.
+- Completed-operation session state stores the immutable final report and stable IDs only; it owns no Unity scene references.
+- Deployment context is cleared only after successful completed-operation capture.
 - Every operation area and portal uses a stable unique ID, and all authored areas must be reachable from a planning entry.
 - Physical-door navigation links activate only after actual door clearance; open passages do not invent door state.
 - Scenario placement may move existing actors to compatible authored points but cannot create actors, change roles, decide behavior, or mutate objectives/evidence.
@@ -56,4 +60,4 @@ Read in order:
 
 ## Next action
 
-Install the Milestone 7B replacement ZIP on the confirmed Milestone 7A checkpoint. Run `Tools > Rules of Entry > Milestone 7B > Build Automatic After-Action Tier System`, run its validator and all EditMode tests, then complete Pressure Point and verify the automatic final report. Report the first Console error exactly if anything fails.
+Install the Milestone 7C replacement ZIP on the confirmed Milestone 7B checkpoint. Run `Tools > Rules of Entry > Milestone 7C > Build Operation Closure and Headquarters Return`, run its validator and all EditMode tests, then complete Pressure Point and verify Continue returns to headquarters with the same report. Report the first Console error exactly if anything fails.

@@ -2,19 +2,13 @@
 
 ## Open
 
-### ROE-0056 — Milestone 7B live integration pending
+### ROE-0058 — Milestone 7C live operation-return validation pending
 
-- Priority: blocker for Milestone 7B closure
+- Priority: blocker for Milestone 7C closure
 - Status: integration candidate
-- Scope: automatic all-room mission completion, final evidence lock, seven-category score, S-through-F tier, casualty/policy caps, and final report presentation
-- Required evidence: clean compilation; Milestone 7B validator; all EditMode tests; automatic completion after all six Pressure Point rooms clear; accurate civilian/suspect/officer/ROE/evidence/time results; unresolved manual debrief; Milestone 7A regressions; clean Console
-- No code defect is currently claimed; this record prevents unverified implementation from being called complete.
-
-### ROE-0057 — Legacy M3 validator required superseded NavMesh asset
-
-- Status: code fixed; Unity rerun pending
-- Test evidence: the 2026-07-18 EditMode report passed 108/113 tests; all five failures inherited the same `M3_PrototypeNavMesh.asset` dependency error while every Milestone 7B evaluator/completion test passed.
-- Fix: validate the scene's actual loadable `NavMeshData` dependency so the legacy M3 bake and current M7A Pressure Point bake both satisfy the protected navigation contract.
+- Scope: final-report Continue control, record capture, deployment cleanup, headquarters scene return, automatic report review, archive-terminal reopening, and gameplay-control restoration
+- Required evidence: clean compilation; Milestone 7C validator; all EditMode tests; mouse/Enter/A return paths; identical report facts in headquarters; close/reopen behavior; new-operation regression; clean Console
+- No code defect is currently claimed; this record prevents unverified scene-transition behavior from being called complete.
 
 ### ROE-0054 — Incident seed is logged but not yet campaign-persisted
 
@@ -90,6 +84,9 @@
 - Final campaign/menu sound, production motion, accessibility, localization, and complete brand typography review remain outstanding.
 
 ## Resolved
+
+- ROE-0057: the legacy M3 validator now accepts the current scene's valid baked `NavMeshData`; the user confirmed the rerun passes.
+- ROE-0056: the user confirmed Milestone 7B compilation, validation, tests, automatic completion, factual report behavior, clean operation, and GitHub push.
 
 - ROE-0053: the user confirmed clean Milestone 7A compilation, validator/tests, all entry and threshold traversal, AI/custody, room-clear behavior, tablet/body-camera continuity, debrief, prior regressions, and a clean Console, then pushed the checkpoint.
 

@@ -54,11 +54,19 @@ Exit confirmed by the user: clean compilation; validator and EditMode tests; all
 
 This milestone deliberately uses authored primitives. Final environment art is blocked until dimensions, door swings, routes, sight lines, cover, spawn fairness, officer navigation, and performance pass in the greybox.
 
-### Milestone 7B — Automatic Mission Completion and After-Action Tiers — Integration Candidate
+### Milestone 7B — Automatic Mission Completion and After-Action Tiers — Confirmed and Pushed
 
 Implemented: stable all-room/required-objective completion gate; confirmation window; seven factual score categories; S-through-F tiers; civilian, officer, objective, and critical-ROE caps; evidence/search metrics; mission time targets; final report presentation; setup, validator, and EditMode tests.
 
-Exit pending: clean Unity compilation; Milestone 7B setup and validator; all EditMode tests; automatic all-clear completion in Pressure Point; accurate arrest/civilian/officer/evidence/ROE/time reporting; unresolved manual-debrief behavior; Milestone 7A and prior regressions; clean Console; commit and push.
+Exit confirmed by the user: clean compilation, validators, automated tests, live automatic completion and factual result behavior, clean operation, and GitHub push.
+
+No new 3D model or package is required.
+
+### Milestone 7C — Operation Closure and Headquarters Return — Integration Candidate
+
+Implemented: final-report Continue interaction; immutable cross-scene completed-operation record; safe deployment-context consumption; asynchronous headquarters return; automatic latest-report presentation; physical archive terminal; setup, validator, and EditMode tests.
+
+Exit pending: clean Unity compilation; Milestone 7C setup and validator; all EditMode tests; mouse/keyboard/gamepad Continue; same factual report after headquarters load; review close/control restoration; archive-terminal reopen; fresh-operation regression; clean Console; commit and push.
 
 No new 3D model or package is required.
 
@@ -66,10 +74,10 @@ No new 3D model or package is required.
 
 Goal: one short, replayable residence or storefront incident with multiple entry choices, incomplete intelligence, an uncertain armed suspect, a civilian, officer initiative, arrest/force outcomes, and complete after-action review.
 
-Remaining foundations after Milestone 7B:
+Remaining foundations after Milestone 7C:
 
 1. Objective/event persistence for restart and replay comparison.
-2. Pause/options/restart/return-to-headquarters flow during an operation.
+2. Pause/options/restart and authorized early-return flow during an active operation.
 3. Functional loadout confirmation and deployment equipment.
 4. Door assessment, threshold sectors, coordinated entry timing, and cover selection.
 5. First environment and character presentation pass after the gameplay contracts stabilize.

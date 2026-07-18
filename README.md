@@ -1,12 +1,12 @@
 # Rules of Entry
 
-Current integration candidate: Milestone 7B Automatic Mission Completion and After-Action Tiers. On the confirmed Milestone 7A baseline, run `Tools > Rules of Entry > Milestone 7B > Build Automatic After-Action Tier System`, then its validator. See `MILESTONE_7B_INSTALL.md` for the complete test checklist.
+Current integration candidate: Milestone 7C Operation Closure and Headquarters Return. On the user-confirmed and pushed Milestone 7B baseline, run `Tools > Rules of Entry > Milestone 7C > Build Operation Closure and Headquarters Return`, then its validator. See `MILESTONE_7C_INSTALL.md` for the complete test checklist.
 
 Unity `6000.5.2f1` HDRP tactical law-enforcement simulation by Trooper Studios.
 
 ## Current delivery
 
-Milestone 7B adds evidence-driven automatic operation closure and a final S-through-F performance report to the confirmed Pressure Point mission baseline.
+Milestone 7C closes the playable operation loop: the final report has a mouse/keyboard/gamepad Continue control, preserves its immutable result across the scene transition, returns to headquarters, and opens the latest report for review. An in-world archive terminal can reopen that session report.
 
 The current project includes the cinematic front end, temporary suspect presentation, headquarters planning, tactical HUD, deployment, and operational tablet foundations. The cumulative delivery adds:
 
@@ -40,7 +40,10 @@ The current project includes the cinematic front end, temporary suspect presenta
 - automatic completion only after every required objective is terminal and every authored tactical room is verified clear;
 - a 100-point factual grade across objectives, civilian safety, suspect custody, officer safety, ROE, evidence, and time;
 - S/A/B/C/D/F tiers, casualty and critical-policy caps, a full-screen final report, validation, and EditMode coverage.
+- a safe final-report Continue flow that captures the report and stable deployment IDs before clearing deployment state;
+- automatic return to the playable PD and a headquarters after-action archive terminal for reviewing the latest completed session;
+- Input System mouse, Enter/A, Tab/Escape/B review controls plus validator and EditMode coverage.
 
-Follow `MILESTONE_6A_INSTALL.md` for headquarters, `TACTICAL_HUD_INSTALL.md` for the operation HUD, `MILESTONE_6C_INSTALL.md` for deployment/body cameras, `MILESTONE_7A_INSTALL.md` for the mission greybox, and `MILESTONE_7B_INSTALL.md` for automatic completion and scoring. No manual Inspector wiring or new package is required.
+Follow `MILESTONE_6A_INSTALL.md` for headquarters, `TACTICAL_HUD_INSTALL.md` for the operation HUD, `MILESTONE_6C_INSTALL.md` for deployment/body cameras, `MILESTONE_7A_INSTALL.md` for the mission greybox, `MILESTONE_7B_INSTALL.md` for scoring, and `MILESTONE_7C_INSTALL.md` for operation closure and headquarters return. No manual Inspector wiring or new package is required.
 
 The main-menu Operations shortcut enters headquarters. Continue Campaign and New Campaign remain disabled until campaign/save ownership is implemented. The headquarters is intentionally greybox: final police-station architecture, furniture, lockers, armory assets, and a physical rugged-tablet model are not required for this milestone.

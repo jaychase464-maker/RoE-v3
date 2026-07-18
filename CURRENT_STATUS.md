@@ -2,11 +2,22 @@
 
 ## Active milestone
 
-**Milestone 7B — Automatic Mission Completion and After-Action Tiers: integration candidate; live Unity validation pending**
+**Milestone 7C — Operation Closure and Headquarters Return: integration candidate; live Unity validation pending**
 
-Milestones 0–7A are the protected working baseline. The user confirmed clean compilation, the Milestone 7A validator, all EditMode tests, and the live Pressure Point traversal/AI/tablet/debrief checks, then pushed the checkpoint before Milestone 7B began.
+Milestones 0–7B are the protected working baseline. The user confirmed Milestone 7B compilation, validators, automated tests, automatic completion, factual tier presentation, and live behavior, then pushed the checkpoint before Milestone 7C began.
 
-## Milestone 7B candidate
+## Milestone 7C candidate
+
+- The final report exposes one functional Continue control for mouse, Enter/numpad Enter, or gamepad South/A.
+- Continue captures the immutable final report plus stable operation, entry, officer, and support IDs before deployment state is cleared.
+- The operation asynchronously returns to the enabled headquarters scene and reports load progress.
+- Headquarters automatically opens the most recently completed operation report and restores player control when the review closes.
+- An in-world After-Action Archive terminal reopens the latest completed report during the current application session.
+- The cross-scene record owns no GameObject, Component, Transform, or ScriptableObject reference.
+- Session history and disk/campaign persistence remain explicitly deferred.
+- Setup, validator, and EditMode record-boundary tests are included.
+
+## Milestone 7B confirmed baseline
 
 - Missions automatically lock their final evidence after every required objective reaches a terminal state and every authored tactical room is verified clear.
 - A three-second confirmation window prevents a one-frame all-clear from prematurely ending the operation.
@@ -99,12 +110,13 @@ Milestones 0–7A are the protected working baseline. The user confirmed clean c
 
 ## Validation pending
 
-- Clean compilation after the Milestone 7B package is installed.
-- Run the Milestone 7B setup and validator, then all EditMode tests.
-- Complete every required objective and clear all six authored rooms; confirm the report appears automatically after the stable three-second all-clear.
-- Confirm the report matches live civilian, suspect, officer, ROE, evidence, and elapsed-time facts.
-- Manually end one unresolved run and confirm pending required objectives fail rather than being silently credited.
-- Run the Milestone 7A validator and prior gameplay regressions with a clean Console.
+- Clean compilation after the Milestone 7C package is installed.
+- Run the Milestone 7C setup and validator, then all EditMode tests.
+- Complete Pressure Point and use the report's Continue button, Enter, and gamepad A routes.
+- Confirm headquarters loads, the same operation name/tier/score/facts open automatically, and player control is suppressed only while review is open.
+- Close with mouse, Tab, Escape, and gamepad B; then use `E` at the archive terminal to reopen the same report.
+- Start a new operation and confirm old deployment IDs were cleared while the latest completed report remains reviewable.
+- Run the Milestone 7B validator and prior gameplay regressions with a clean Console.
 
 ## Historical regression checklist
 
@@ -143,4 +155,4 @@ Milestones 0–7A are the protected working baseline. The user confirmed clean c
 
 ## Asset boundary
 
-No new 3D model or package is required for Milestone 7B. The after-action system consumes existing gameplay evidence and uses generated uGUI presentation. The first environment-art request remains a modular municipal/industrial interior-exterior kit after greybox layout lock.
+No new 3D model or package is required for Milestone 7C. The operation-return and headquarters-review systems use existing scenes and generated uGUI. The first environment-art request remains a modular municipal/industrial interior-exterior kit after greybox layout lock.

@@ -3,10 +3,13 @@ using System.Linq;
 using RulesOfEntry.Core;
 using RulesOfEntry.Input;
 using RulesOfEntry.Missions;
+using RulesOfEntry.Player;
 using RulesOfEntry.UI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -57,16 +60,17 @@ namespace RulesOfEntry.Editor.Milestone7B
                 SceneManager.SetActiveScene(scene);
                 MissionController controller = FindInScene<MissionController>(scene);
                 TacticalPlayerInput input = FindInScene<TacticalPlayerInput>(scene);
+                CursorStateController cursor = FindInScene<CursorStateController>(scene);
                 if (controller == null || !controller.HasCompleteConfiguration)
                 {
                     throw new InvalidOperationException(
                         "A configured mission controller is required. Run Milestone 7A setup first.");
                 }
 
-                if (input == null)
+                if (input == null || cursor == null)
                 {
                     throw new InvalidOperationException(
-                        "Tactical player input is missing. Rebuild the current gameplay foundation first.");
+                        "Tactical player input or cursor control is missing. Rebuild the current gameplay foundation first.");
                 }
 
                 controller.ConfigureAutomaticCompletion(
@@ -77,6 +81,7 @@ namespace RulesOfEntry.Editor.Milestone7B
                     MaximumScoredCompletionSeconds);
                 EditorUtility.SetDirty(controller.Definition);
                 RemovePreviousPresentation(scene);
+                EnsureEventSystem(scene);
 
                 GameObject instance = PrefabUtility.InstantiatePrefab(prefab, scene) as GameObject;
                 if (instance == null)
@@ -88,7 +93,7 @@ namespace RulesOfEntry.Editor.Milestone7B
                 instance.name = PresentationRootName;
                 MissionAfterActionPresentation presentation =
                     instance.GetComponent<MissionAfterActionPresentation>();
-                presentation.ConfigureSources(controller, input);
+                presentation.ConfigureSources(controller, input, cursor);
                 foreach (MissionAfterActionDebugUI debugUi in scene.GetRootGameObjects()
                     .SelectMany(root => root.GetComponentsInChildren<MissionAfterActionDebugUI>(true)))
                 {
@@ -125,7 +130,7 @@ namespace RulesOfEntry.Editor.Milestone7B
             }
         }
 
-        private static GameObject CreatePresentationPrefab()
+        internal static GameObject CreatePresentationPrefab()
         {
             Font font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             GameObject root = new GameObject(
@@ -241,11 +246,35 @@ namespace RulesOfEntry.Editor.Milestone7B
                 TextAnchor.MiddleLeft,
                 Secondary,
                 "FINAL EVIDENCE LOCK");
-            Anchor(footer.rectTransform, new Vector2(0.06f, 0.055f), new Vector2(0.94f, 0.1f));
+            Anchor(footer.rectTransform, new Vector2(0.06f, 0.055f), new Vector2(0.67f, 0.1f));
+            Button continueButton = CreateButton(
+                "ContinueToHeadquarters",
+                root.transform,
+                font,
+                "CONTINUE TO HEADQUARTERS  →",
+                out Text continueButtonText);
+            Anchor(
+                continueButton.GetComponent<RectTransform>(),
+                new Vector2(0.71f, 0.045f),
+                new Vector2(0.94f, 0.11f));
+            Text returnStatus = CreateText(
+                "ReturnStatus",
+                root.transform,
+                font,
+                14,
+                FontStyle.Bold,
+                TextAnchor.MiddleRight,
+                Secondary,
+                "ENTER / A  //  MOUSE SELECT");
+            Anchor(
+                returnStatus.rectTransform,
+                new Vector2(0.56f, 0.112f),
+                new Vector2(0.94f, 0.145f));
             Image bottomRule = CreateImage("BottomRule", root.transform, Accent);
-            Anchor(bottomRule.rectTransform, new Vector2(0.06f, 0.047f), new Vector2(0.94f, 0.05f));
+            Anchor(bottomRule.rectTransform, new Vector2(0.06f, 0.047f), new Vector2(0.67f, 0.05f));
 
             root.GetComponent<MissionAfterActionPresentation>().Configure(
+                null,
                 null,
                 null,
                 group,
@@ -256,7 +285,10 @@ namespace RulesOfEntry.Editor.Milestone7B
                 metrics,
                 objectives,
                 findings,
-                footer);
+                footer,
+                continueButton,
+                continueButtonText,
+                returnStatus);
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(root, PresentationPrefabPath);
             UnityEngine.Object.DestroyImmediate(root);
             if (prefab == null)
@@ -299,6 +331,42 @@ namespace RulesOfEntry.Editor.Milestone7B
             image.color = color;
             image.raycastTarget = false;
             return image;
+        }
+
+        private static Button CreateButton(
+            string name,
+            Transform parent,
+            Font font,
+            string label,
+            out Text labelText)
+        {
+            GameObject result = new GameObject(
+                name,
+                typeof(RectTransform),
+                typeof(Image),
+                typeof(Button));
+            result.transform.SetParent(parent, false);
+            Image image = result.GetComponent<Image>();
+            image.color = new Color(0.015f, 0.22f, 0.34f, 0.98f);
+            Button button = result.GetComponent<Button>();
+            button.targetGraphic = image;
+            ColorBlock colors = button.colors;
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(1.15f, 1.15f, 1.15f, 1f);
+            colors.pressedColor = new Color(0.72f, 0.82f, 0.88f, 1f);
+            colors.selectedColor = colors.highlightedColor;
+            button.colors = colors;
+            labelText = CreateText(
+                "Label",
+                result.transform,
+                font,
+                18,
+                FontStyle.Bold,
+                TextAnchor.MiddleCenter,
+                Primary,
+                label);
+            Stretch(labelText.rectTransform, new Vector2(12f, 4f), new Vector2(-12f, -4f));
+            return button;
         }
 
         private static Text CreateText(
@@ -354,6 +422,26 @@ namespace RulesOfEntry.Editor.Milestone7B
             return scene.GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<T>(true))
                 .FirstOrDefault();
+        }
+
+        private static void EnsureEventSystem(Scene scene)
+        {
+            EventSystem existing = FindInScene<EventSystem>(scene);
+            if (existing != null)
+            {
+                if (existing.GetComponent<InputSystemUIInputModule>() == null)
+                {
+                    existing.gameObject.AddComponent<InputSystemUIInputModule>();
+                }
+
+                return;
+            }
+
+            GameObject eventSystem = new GameObject(
+                "M7B_EventSystem",
+                typeof(EventSystem),
+                typeof(InputSystemUIInputModule));
+            SceneManager.MoveGameObjectToScene(eventSystem, scene);
         }
 
         private static void RemovePreviousPresentation(Scene scene)
