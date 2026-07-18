@@ -2,9 +2,21 @@
 
 ## Active milestone
 
-**Milestone 6B — Scalable Tactical HUD and MMB Squad Commands: integration candidate; live Unity validation pending**
+**Milestone 6C — Deployment and In-Mission Operational Tablet: integration candidate; live Unity validation pending**
 
 Milestones 0–5 are the protected working gameplay baseline. The user confirmed the Milestone 5 gameplay sequence, cinematic UI, and temporary suspect presentation work and pushed commit `c62b09d` before Milestone 6A began.
+
+## Milestone 6C candidate
+
+- Headquarters entry IDs now resolve to three authored operation-scene anchors.
+- Confirmed officer IDs filter the scene-owned squad; a valid deployment may contain one or more officers.
+- Each operation officer prefab owns a disabled-by-default chest body-camera source.
+- `Tab` opens a separate in-mission rugged tablet without clearing deployment context.
+- Situation and Objectives pages read the existing mission controller without mutating evidence.
+- Body Cameras opens by default and switches among active deployed officers with `Q` / `E`, arrows, buttons, or gamepad shoulders.
+- Only the selected camera renders into one shared runtime RenderTexture.
+- Raising the tablet disables player gameplay control but does not pause officers, suspects, civilians, mission evaluation, or the operation clock.
+- Feed metadata remains qualitative and exposes no exact officer rounds or hit points.
 
 ## Tactical HUD candidate
 
@@ -62,6 +74,11 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Validation pending
 
+- Clean compilation after the Milestone 6C package is installed.
+- Run the Milestone 6C setup and validator.
+- Verify all three selected entry IDs resolve to baked NavMesh positions.
+- Verify one- and two-officer deployments, live feed switching, tablet close/control restoration, and clean Console.
+- Verify AI initiative continues while the operational tablet is raised.
 - Clean compilation after the Tactical HUD package is installed.
 - Run `Rules of Entry > Milestone 6B > Build Tactical HUD` and pass the Tactical HUD validator.
 - Confirm the roster, body-camera data, target focus, MMB visibility, and numbered commands at 1920×1080 and ultrawide-safe resolutions.
@@ -82,4 +99,4 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Asset boundary
 
-No new 3D model is required for the Tablet Presentation Revision 1 installation. The headquarters and mission terminal use generated greybox geometry, and the planning device is still a screen-space rugged-tablet interface. Matching the approved physical reference will require a separate-part rugged tablet/MDT model, emissive screen mesh, PBR materials, compatible first-person gloved arms, and tablet raise/idle/interact/lower animations. Final headquarters art will additionally need a modular police-station interior kit, operations-room furniture, armory/loadout fixtures, lockers, office props, and shoot-house modules. No new package, audio file, layer, tag, Input Action, or Inspector assignment is required for this revision.
+No new 3D model is required for Milestone 6C. Officer cameras use temporary root-relative chest mounts and the in-mission interface reuses the transparent rugged-tablet cutout. Final presentation will require a modeled body-camera device attached to the officer vest, a separate-part rugged tablet/MDT model, emissive screen mesh, PBR materials, compatible first-person gloved arms, and tablet raise/idle/interact/lower animations. Entry anchors must be reauthored after the first mission greybox is locked.

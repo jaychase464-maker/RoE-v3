@@ -1,5 +1,15 @@
 # System Map
 
+## Milestone 6C deployment and operation tablet
+
+- `OperationEntryAnchor` — authored stable-ID player and officer spawn contract inside an operation scene.
+- `OperationDeploymentCoordinator` — applies identifier-only headquarters selection to scene-owned player, NavMesh agents, and squad roster.
+- `OfficerBodyCameraSource` — owns a disabled-by-default physical camera viewpoint and grants one selected live stream target at a time.
+- `InMissionTabletController` — separate operational tablet; presents situation, objectives, and selected deployed-officer camera without mutating gameplay evidence.
+- `OperationTabletRules` — pure feed-index wrapping and explicit signal presentation rules.
+- `RulesOfEntryMilestoneSixCSetup` — configures officer camera prefabs, creates the operational tablet prefab, authors entry anchors, and installs scene references.
+- `RulesOfEntryMilestoneSixCValidator` — validates camera defaults, tablet structure, stable entry mappings, deployed squad feeds, and the identifier-only boundary.
+
 ## Milestone 6B tactical HUD
 
 - `TacticalHudController` — operation HUD coordinator; refreshes squad rows, body-camera metadata, command visibility, and command focus.
@@ -29,7 +39,9 @@ flowchart TD
     HQ --> Terminal[Physical mission terminal]
     Terminal --> Tablet[Rugged planning tablet]
     Tablet --> MissionLoad[Operation loading]
-    MissionLoad --> Prototype[Playable operation prototype]
+    MissionLoad --> Deploy[Apply entry and assigned team]
+    Deploy --> Prototype[Playable operation prototype]
+    Prototype --> OpTablet[In-mission tablet and body cameras]
 ```
 
 ## Responsibility map
@@ -42,6 +54,9 @@ flowchart TD
 | `OperationBriefingDefinition` | operation intelligence, scene, entry plans, available personnel, support catalog | mutable scene state or UI layout |
 | `OperationPlanningRules` | pure selection wrapping and deployability checks | Unity scene or input state |
 | `OperationDeploymentContext` | stable cross-scene mission, entry, officer, and support identifiers | GameObjects, Transforms, ScriptableObject lifetimes, or score |
+| `OperationDeploymentCoordinator` | selected entry placement and scene-owned deployed roster | headquarters selections, mission scoring, or AI decisions |
+| `OfficerBodyCameraSource` | officer-mounted viewpoint and on-demand stream state | tablet navigation, commands, recording evidence, or hidden AI state |
+| `InMissionTabletController` | read-only situation/objective/body-camera presentation and tablet control transfer | deployment planning, mission mutation, officer control, or pausing the operation |
 | `MissionDefinition` | objectives and operation identity evaluated by the mission system | headquarters presentation or scene transition timing |
 | `FrontEndButtonVisual` | hover, selection, press, and focus response | input bindings or navigation policy |
 | `FrontEndMenuItemVisual` | restrained focus, divider, and label motion for flat main-menu navigation | button actions or scene transitions |
@@ -62,6 +77,10 @@ flowchart TD
 - The rugged tablet may expose future support definitions, but unavailable systems cannot be selected or deployed.
 - Ready-up requires a valid operation, entry plan, and at least one available officer.
 - Cross-scene deployment state contains identifiers only.
+- Operational deployment resolves only through authored, unique scene entry anchors.
+- Unassigned officers are removed from the deployed squad before HUD and body-camera lists rebuild.
+- Raising the in-mission tablet disables player gameplay input but never pauses AI or mission time.
+- Only the selected officer camera may render; other officer cameras remain disabled with no target texture.
 - The front end contains exactly one complete flow controller and an Input System UI module.
 - The warning cannot auto-advance and accepts only Enter, numpad Enter, or controller South/A.
 - Campaign save placeholders remain visibly disabled; Operations is the temporary prototype route into headquarters.

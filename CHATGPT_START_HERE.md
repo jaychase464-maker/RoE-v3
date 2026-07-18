@@ -2,7 +2,7 @@
 
 ## Current integration task
 
-Milestone 6B Tactical HUD is the newest candidate. Its approved screen layout is an upper-left narrow/transparent two-line element roster, upper-right RoE body-camera metadata, and a low-center command panel visible only while MMB is held. Read `TACTICAL_HUD_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing input, squad selection, officer status, or gameplay UI.
+Milestone 6C deployment and the in-mission operational tablet are the newest candidate. Headquarters entry/officer stable IDs now apply to authored operation objects, and `Tab` opens a read-only live officer body-camera tablet inside the mission. Read `MILESTONE_6C_INSTALL.md`, `TACTICAL_HUD_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing deployment, cameras, input, squad selection, officer status, or gameplay UI.
 
 ## Project
 
@@ -25,6 +25,7 @@ Read in order:
 6. `UI_PRESENTATION_INSTALL.md`
 7. `TEMPORARY_CHARACTER_INSTALL.md`
 8. `MILESTONE_6A_INSTALL.md`
+9. `MILESTONE_6C_INSTALL.md`
 
 ## Non-negotiable invariants
 

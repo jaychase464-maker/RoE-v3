@@ -1,5 +1,17 @@
 # Changelog
 
+## Milestone 6C Deployment and In-Mission Operational Tablet — Integration Candidate — 2026-07-17
+
+- Added three authored operation entry anchors matching the headquarters planning IDs.
+- Added deployment coordination that places the player and assigned officers at the selected entry and removes unassigned officers from the live squad.
+- Generalized the operation squad configuration boundary to accept a valid one-officer deployment.
+- Added disabled-by-default, on-demand officer body-camera sources with temporary chest mounting.
+- Added a separate in-mission rugged tablet with Situation, Objectives, and Body Cameras pages.
+- Added one shared runtime body-camera RenderTexture and exclusive selected-feed rendering.
+- Added live officer identity, camera, signal, recording, mission-time, qualitative condition/ammunition, and current-order metadata.
+- Added `Tab` tablet control, `1–3` page shortcuts, `Q` / `E` feed switching, arrow/button alternatives, and gamepad support through the current Input System.
+- Added setup, validation, EditMode rules tests, and installation documentation.
+
 ## Milestone 6B Tactical HUD Visual Hotfix 3 — 2026-07-17
 
 - Replaced the large upper-left squad card with a narrow, low-profile tactical element readout inspired by field-command interfaces.

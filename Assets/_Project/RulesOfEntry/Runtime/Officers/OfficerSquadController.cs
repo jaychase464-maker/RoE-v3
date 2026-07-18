@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using RulesOfEntry.Actors;
 using RulesOfEntry.Core;
 using RulesOfEntry.Input;
@@ -50,9 +51,9 @@ namespace RulesOfEntry.Officers
                     problems.Add("command camera/view");
                 }
 
-                if (officers == null || officers.Length < 2)
+                if (officers == null || officers.Length < 1)
                 {
-                    problems.Add("squad array with at least two officers");
+                    problems.Add("squad array with at least one officer");
                 }
                 else
                 {
@@ -89,6 +90,22 @@ namespace RulesOfEntry.Officers
             commandMask = configuredMask;
             commandDistance = Mathf.Max(2f, configuredDistance);
             RefreshOfficerSelection();
+        }
+
+        /// <summary>
+        /// Replaces only the scene-owned officer roster after deployment while
+        /// preserving command input, view, marker, masks, and distances.
+        /// </summary>
+        public void SetDeployedOfficers(
+            TacticalOfficerController[] configuredOfficers)
+        {
+            officers = configuredOfficers?
+                .Where(officer => officer != null)
+                .ToArray() ?? Array.Empty<TacticalOfficerController>();
+            selectedOfficerIndex = -1;
+            Selection = OfficerSelection.Team;
+            RefreshOfficerSelection();
+            SelectionChanged?.Invoke();
         }
 
         public void Select(OfficerSelection selection)

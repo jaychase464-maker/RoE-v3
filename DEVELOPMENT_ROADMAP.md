@@ -29,13 +29,22 @@ First integration candidate implemented: approved in-operation Tactical HUD with
 
 Remaining planned work:
 
-1. Connect chosen entry IDs to authored operation spawn anchors.
-2. Build the first multi-room mission greybox and traversal graph.
-3. Add functioning PD loadout and shoot-house access points.
-4. Establish the officer-management data boundary without inventing career systems.
-5. Return completed operations to headquarters and preserve after-action context.
+1. Build the first multi-room mission greybox and traversal graph.
+2. Add functioning PD loadout and shoot-house access points.
+3. Establish the officer-management data boundary without inventing career systems.
+4. Return completed operations to headquarters and preserve after-action context.
+
+Chosen entry IDs were connected to authored operation anchors in Milestone 6C.
 
 No final environment models are required until scale, routes, doors, cover, AI navigation, and entry anchors pass in greybox.
+
+### Milestone 6C — Deployment and In-Mission Operational Tablet — Integration Candidate
+
+Implemented: stable-ID operation entry anchors; headquarters officer assignment applied to the scene-owned squad; one-officer deployment support; on-demand officer body-camera sources; and a separate operational rugged tablet with Situation, Objectives, and Body Cameras pages.
+
+Exit pending: Unity compilation; setup and validator; all tests; all three entry routes on baked NavMesh; one- and two-officer deployment; live-feed switching; tablet input/control restoration; AI continuity while viewing feeds; previous milestone regressions; clean Console; commit and push.
+
+The first mission-map greybox remains next. Current entry anchors and body-camera mounts are temporary gameplay-authoring points, not final art.
 
 ### Milestone 6 — First Tactical Vertical Slice
 

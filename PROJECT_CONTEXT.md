@@ -20,6 +20,9 @@ Current UI direction: the operation HUD must remain sparse and realistic. It exp
 - Campaign operation selection belongs inside the playable headquarters, never directly on the main menu.
 - The player physically selects an available operation, then uses the rugged tablet for briefing, personnel, support, entry selection, and ready-up.
 - Headquarters-to-operation state crosses scenes only through stable identifiers; it never retains scene object references.
+- Operation entry anchors resolve those identifiers only after the destination scene owns the player, NavMesh, and officers.
+- The in-mission tablet is separate from the headquarters planning controller and cannot clear or rewrite deployment state.
+- Live officer body-camera views are read-only, render one selected source at a time, and cannot expose hidden AI state or mutate officer commands.
 - Front-end panels are controlled by one explicit state machine: splash, warning, title, main menu, settings, credits, and loading.
 - Loading destinations come from the actual destination context: headquarters from the front end, and operation/location/entry data from the planning tablet.
 - UI navigation uses `InputSystemUIInputModule`; legacy `StandaloneInputModule` and legacy input calls are forbidden.

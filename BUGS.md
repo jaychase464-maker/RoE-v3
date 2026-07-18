@@ -61,6 +61,8 @@
 
 ## Existing realism debt
 
+- ROE-0051: officer body-camera feeds use temporary chest transforms and binary signal state; RF range/occlusion, interference, dropped frames, latency, battery drain, physical devices, first-person tablet animation, and evidence retention remain future production systems.
+- ROE-0052: the three operation entry anchors belong to the current single-room prototype and must be reauthored and traversal-validated for the first multi-room mission greybox.
 - Individual officer paths lack production formations, sectors, cover selection, pieing, and coordinated entry timing.
 - Custody lacks production animation, IK, handcuff props, search, and transport.
 - Ballistics lack time of flight, penetration, fragmentation, ricochet, armor, and validated physiology.
