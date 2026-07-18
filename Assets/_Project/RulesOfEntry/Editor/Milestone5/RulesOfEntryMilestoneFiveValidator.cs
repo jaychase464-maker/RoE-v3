@@ -114,10 +114,7 @@ namespace RulesOfEntry.Editor.Milestone5
                         StringComparison.Ordinal))
                 && objectives.Any(objective =>
                     objective.Type == MissionObjectiveType.VerifyRoomClear
-                    && string.Equals(
-                        objective.TargetRoomId,
-                        "prototype_north_training_room",
-                        StringComparison.Ordinal));
+                    && !string.IsNullOrWhiteSpace(objective.TargetRoomId));
             bool valid = definition != null
                 && definition.HasValidConfiguration
                 && policy != null
@@ -291,11 +288,15 @@ namespace RulesOfEntry.Editor.Milestone5
                         identity.ActorId,
                         "m3_civilian_01",
                         StringComparison.Ordinal));
+                string targetRoomId = controller?.Definition?.Objectives
+                    .FirstOrDefault(objective =>
+                        objective.Type == MissionObjectiveType.VerifyRoomClear)
+                    ?.TargetRoomId ?? string.Empty;
                 TacticalRoomVolume room = scene.GetRootGameObjects()
                     .SelectMany(root => root.GetComponentsInChildren<TacticalRoomVolume>(true))
                     .FirstOrDefault(value => string.Equals(
                         value.RoomId,
-                        "prototype_north_training_room",
+                        targetRoomId,
                         StringComparison.Ordinal));
                 bool valid = controller != null
                     && controller.HasCompleteConfiguration
@@ -313,7 +314,7 @@ namespace RulesOfEntry.Editor.Milestone5
                     AddError(
                         results,
                         "M5 Prototype Scene",
-                        "Saved scene requires a configured mission controller, debrief console, retained UI reference, target actors, and north-room evidence source.");
+                        "Saved scene requires a configured mission controller, debrief console, retained UI reference, target actors, and the mission-authored room evidence source.");
                     return;
                 }
 

@@ -15,8 +15,8 @@ MonoBehaviour:
   missionId: m6_pressure_point
   displayName: 'Operation: Pressure Point'
   briefing: Respond to an armed-subject incident at a municipal pumping annex. Establish
-    control, protect the reported employee, resolve the subject lawfully, and document
-    every use of force.
+    control, protect the reported employee, clear the pump hall, resolve the subject
+    lawfully, and document every use of force.
   objectives:
   - objectiveId: secure_primary_suspect
     displayName: Secure the primary suspect
@@ -34,12 +34,13 @@ MonoBehaviour:
     targetRoomId: 
     isRequired: 1
     failureDeduction: 25
-  - objectiveId: verify_process_room_clear
-    displayName: Verify the process room clear
-    briefing: Confirm that no active threat remains in the primary interior room.
+  - objectiveId: verify_pump_hall_clear
+    displayName: Verify the pump hall clear
+    briefing: Conduct a deliberate search and confirm that no active threat remains
+      in the primary process space.
     type: 2
     targetActorId: 
-    targetRoomId: prototype_north_training_room
+    targetRoomId: m7a_pump_hall
     isRequired: 1
     failureDeduction: 25
   - objectiveId: preserve_response_team

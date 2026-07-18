@@ -2,6 +2,28 @@
 
 ## Open
 
+### ROE-0053 — Pressure Point greybox requires live traversal validation
+
+- Priority: blocker for Milestone 7A closure
+- Status: integration candidate
+- Required evidence: clean compilation, Milestone 7A setup/validator, all tests, three entry deployments, seven door crossings in both directions, two open passages, room-clear/revocation behavior, scenario variation, prior regressions, and clean Console
+- Regression focus: full-team door traversal, automatic challenges/custody, mission objective completion, MMB commands, and operational-tablet body-camera continuity
+
+### ROE-0054 — Incident seed is logged but not yet campaign-persisted
+
+- Priority: medium replay/accountability debt
+- Status: explicit Milestone 7A boundary
+- Current behavior: each operation session derives and logs a seed used only for role-compatible placement.
+- Missing: save-record ownership, restart-with-same-seed, after-action seed display, and replay comparison.
+- Boundary: do not claim exact incident reproduction until the seed and relevant world state are persisted together.
+
+### ROE-0055 — Pressure Point uses gameplay greybox art
+
+- Priority: intentional presentation debt
+- Status: blocked on layout validation
+- Missing after layout lock: municipal/industrial shell, doors/windows, wet exterior yard, pumps/pipes/control equipment, fencing, office/maintenance props, decals, LODs, collision meshes, HDRP materials, lighting, audio, and optimization.
+- Boundary: do not purchase or integrate final environment art until routes, dimensions, door swings, sight lines, cover, spawn fairness, and navigation pass.
+
 ### ROE-0045 — Tactical HUD requires live Unity validation
 
 - Priority: blocker for Tactical HUD candidate closure
@@ -16,14 +38,6 @@
 - Current behavior: each officer exposes a qualitative magazine-condition component used by the roster.
 - Missing: authoritative NPC firearm consumption, reload choices, retained/dropped magazines, resupply, and AI low-ammunition decisions.
 - Boundary: the HUD never invents exact round counts; the qualitative feed must be driven by the eventual officer firearm simulation.
-
-### ROE-0038 — Entry plans are not yet connected to operation spawn anchors
-
-- Priority: blocker for Milestone 6B closure
-- Status: expected Milestone 6A boundary
-- Current behavior: the rugged tablet records the selected stable entry ID before loading the existing prototype scene.
-- Missing: authored entry-anchor components, spawn/formation placement, entry-specific exterior approaches, and validation that each route is traversable.
-- Boundary: do not fake entry selection by teleporting to guessed coordinates. Milestone 6B must create explicit scene anchors and validate them.
 
 ### ROE-0039 — Headquarters is functional greybox, not final police-station art
 
@@ -62,7 +76,6 @@
 ## Existing realism debt
 
 - ROE-0051: officer body-camera feeds use temporary chest transforms and binary signal state; RF range/occlusion, interference, dropped frames, latency, battery drain, physical devices, first-person tablet animation, and evidence retention remain future production systems.
-- ROE-0052: the three operation entry anchors belong to the current single-room prototype and must be reauthored and traversal-validated for the first multi-room mission greybox.
 - Individual officer paths lack production formations, sectors, cover selection, pieing, and coordinated entry timing.
 - Custody lacks production animation, IK, handcuff props, search, and transport.
 - Ballistics lack time of flight, penetration, fragmentation, ricochet, armor, and validated physiology.
@@ -70,6 +83,9 @@
 - Final campaign/menu sound, production motion, accessibility, localization, and complete brand typography review remain outstanding.
 
 ## Resolved
+
+- ROE-0052: the three temporary single-room entry anchors were reauthored as south, west, and north exterior approaches on the Pressure Point multi-room greybox; live traversal validation remains tracked by ROE-0053.
+- ROE-0038: headquarters entry plans now resolve through stable authored anchors, and Milestone 7A connects those anchors to validated operation topology and baked exterior formations.
 
 - ROE-0050: the first scalable squad roster still presented as a large dashboard card; it now uses a narrow transparent element list with compact two-line officer status, condition pips, and qualitative ammunition.
 - ROE-0049: the first functional body-camera overlay used generic rectangular uGUI chrome that did not reproduce the approved prototype; it now uses a rounded vector shell, shield-shaped RoE mark, divider, and authored recording/battery/camera icon layout.

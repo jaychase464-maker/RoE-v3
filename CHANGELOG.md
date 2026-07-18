@@ -1,5 +1,33 @@
 # Changelog
 
+## Milestone 7A — Pressure Point Multi-Room Mission Greybox — 2026-07-17
+
+### Added
+
+- Added a generated Calder City Municipal Pumping Annex greybox for Operation Pressure Point.
+- Added nine stable operation areas: three exterior staging zones, maintenance, reception, administration, central corridor, pump hall, and control room.
+- Added six bounded, independently revocable tactical-clearance evidence volumes.
+- Added a validated area/portal graph with route queries from all headquarters-selected entry IDs.
+- Added seven physical door portals with fixed bidirectional NavMesh links and two true open passages.
+- Reauthored south, west, and north deployment formations for the new exterior approaches and future squads up to eight officers.
+- Added twelve weighted, role-compatible incident spawn points and logged session-seed placement of the existing suspect and civilian.
+- Added persisted `M7A_PressurePointNavMesh.asset` generation through AI Navigation.
+- Added Milestone 7A setup, validator, installation guide, and EditMode topology/scenario tests.
+
+### Changed
+
+- Changed the required room-clear objective from `prototype_north_training_room` to the authored `m7a_pump_hall` evidence source.
+- Generalized Milestone 4 room validation for multi-room operations.
+- Generalized Milestone 5 scene validation to read the room target from the mission definition instead of a training-room constant.
+- Generalized Milestone 5 and Milestone 6A asset validation so later authored room IDs remain valid regression targets.
+- Preserved the old training/range geometry as inactive content while the first mission greybox is active.
+
+### Boundaries
+
+- No final environment model, new package, automatic tactical behavior, campaign persistence, or score mutation is introduced.
+- Scenario variation repositions existing authored actors only and does not change roles, inventories, objectives, AI decisions, custody state, or evidence ownership.
+- Live Unity compilation, setup, validation, regression, and route testing remain required before the milestone closes.
+
 ## Milestone 6C Deployment and In-Mission Operational Tablet — Integration Candidate — 2026-07-17
 
 - Added three authored operation entry anchors matching the headquarters planning IDs.

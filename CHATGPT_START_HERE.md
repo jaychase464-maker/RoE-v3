@@ -2,7 +2,7 @@
 
 ## Current integration task
 
-Milestone 6C deployment and the in-mission operational tablet are the newest candidate. Headquarters entry/officer stable IDs now apply to authored operation objects, and `Tab` opens a read-only live officer body-camera tablet inside the mission. Read `MILESTONE_6C_INSTALL.md`, `TACTICAL_HUD_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing deployment, cameras, input, squad selection, officer status, or gameplay UI.
+Milestone 7A Pressure Point is the newest candidate. The first operation now has nine connected areas, six clearance spaces, three reauthored deployment approaches, seven door links, two open passages, and seed-driven placement of the existing suspect/civilian. Read `MILESTONE_7A_INSTALL.md`, `MILESTONE_6C_INSTALL.md`, `TACTICAL_HUD_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing mission topology, navigation, deployment, scenario placement, cameras, squad behavior, or evidence.
 
 ## Project
 
@@ -11,9 +11,9 @@ Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation 
 ## Current state
 
 - Milestones 0–5 are the protected and pushed gameplay baseline.
-- The user confirmed and pushed the cinematic UI and temporary suspect baseline at commit `c62b09d`.
-- Milestone 6A headquarters and rugged operation planning are the current integration candidate.
-- Do not call Milestone 6A complete until live Unity evidence passes.
+- The user confirmed and pushed the Milestone 6C deployment and operational body-camera tablet checkpoint before Milestone 7A began.
+- Milestone 7A is the current integration candidate built on the user-confirmed Milestone 6C operation-tablet behavior.
+- Do not call Milestone 7A complete until live Unity evidence passes.
 
 Read in order:
 
@@ -26,6 +26,7 @@ Read in order:
 7. `TEMPORARY_CHARACTER_INSTALL.md`
 8. `MILESTONE_6A_INSTALL.md`
 9. `MILESTONE_6C_INSTALL.md`
+10. `MILESTONE_7A_INSTALL.md`
 
 ## Non-negotiable invariants
 
@@ -35,6 +36,9 @@ Read in order:
 - After selecting a mission, the rugged tablet owns briefing, officer assignment, future support planning, entry selection, and ready-up.
 - K9, drone, and other specialized units cannot become selectable until their gameplay systems actually exist.
 - Cross-scene deployment state stores stable IDs only.
+- Every operation area and portal uses a stable unique ID, and all authored areas must be reachable from a planning entry.
+- Physical-door navigation links activate only after actual door clearance; open passages do not invent door state.
+- Scenario placement may move existing actors to compatible authored points but cannot create actors, change roles, decide behavior, or mutate objectives/evidence.
 - Startup order is splash, blocking photosensitivity/legal warning, title, then menu.
 - Loading text must identify its actual destination from authoritative project data.
 - New Input System only; no legacy input or `StandaloneInputModule`.
@@ -48,4 +52,4 @@ Read in order:
 
 ## Next action
 
-Install the Milestone 6A replacement ZIP, run `Tools > Rules of Entry > Milestone 6A > Build Headquarters and Tablet Prototype`, execute all validation and tests, then smoke-test the complete front-end-to-headquarters-to-operation flow. Report the first Console error exactly if anything fails.
+Install the Milestone 7A replacement ZIP after the Milestone 6C setup passes. Run `Tools > Rules of Entry > Milestone 7A > Build Pressure Point Mission Greybox`, run its validator and all EditMode tests, then smoke-test all three entries and every threshold. Report the first Console error exactly if anything fails.

@@ -1,5 +1,16 @@
 # System Map
 
+## Milestone 7A mission topology and scenario authoring
+
+- `OperationRoomNode` — stable operational-area identity and optional authoritative clearance-volume binding.
+- `OperationPortal` — explicit two-area connection; identifies open passages versus physical interior/exterior doors and exposes actual traversal state.
+- `OperationTopology` — maps planning entry IDs to staging areas and exposes validated room routes without controlling AI.
+- `OperationTopologyRules` — pure graph validation, breadth-first routing, and deterministic weighted spawn selection.
+- `OperationSpawnPoint` — role-compatible authored pose, room membership, and selection weight.
+- `OperationScenarioDirector` — places existing incident actors before mission evaluation, logs the applied seed, and preserves stable actor identities.
+- `RulesOfEntryMilestoneSevenASetup` — builds the pumping-annex greybox, reauthors deployment anchors, updates the room objective, persists NavMesh data, and installs topology/scenario references.
+- `RulesOfEntryMilestoneSevenAValidator` — validates packages, graph connectivity, room evidence, doors/links, scenario variation, deployment formations, NavMesh data, and architecture boundaries.
+
 ## Milestone 6C deployment and operation tablet
 
 - `OperationEntryAnchor` — authored stable-ID player and officer spawn contract inside an operation scene.
@@ -40,7 +51,7 @@ flowchart TD
     Terminal --> Tablet[Rugged planning tablet]
     Tablet --> MissionLoad[Operation loading]
     MissionLoad --> Deploy[Apply entry and assigned team]
-    Deploy --> Prototype[Playable operation prototype]
+    Deploy --> Prototype[Pressure Point mission greybox]
     Prototype --> OpTablet[In-mission tablet and body cameras]
 ```
 
@@ -55,6 +66,9 @@ flowchart TD
 | `OperationPlanningRules` | pure selection wrapping and deployability checks | Unity scene or input state |
 | `OperationDeploymentContext` | stable cross-scene mission, entry, officer, and support identifiers | GameObjects, Transforms, ScriptableObject lifetimes, or score |
 | `OperationDeploymentCoordinator` | selected entry placement and scene-owned deployed roster | headquarters selections, mission scoring, or AI decisions |
+| `OperationTopology` | stable areas, portals, entry bindings, and route queries | AI behavior, door movement, room-clear truth, or mission scoring |
+| `OperationScenarioDirector` | seeded placement of existing suspect/civilian actors at compatible authored points | actor creation, AI decisions, objectives, custody, or evidence evaluation |
+| `TacticalRoomVolume` | timed, revocable no-threat clearance truth for one bounded interior space | map routing, scenario selection, or score |
 | `OfficerBodyCameraSource` | officer-mounted viewpoint and on-demand stream state | tablet navigation, commands, recording evidence, or hidden AI state |
 | `InMissionTabletController` | read-only situation/objective/body-camera presentation and tablet control transfer | deployment planning, mission mutation, officer control, or pausing the operation |
 | `MissionDefinition` | objectives and operation identity evaluated by the mission system | headquarters presentation or scene transition timing |
@@ -78,6 +92,11 @@ flowchart TD
 - Ready-up requires a valid operation, entry plan, and at least one available officer.
 - Cross-scene deployment state contains identifiers only.
 - Operational deployment resolves only through authored, unique scene entry anchors.
+- Every Milestone 7A interior area has a unique stable room ID; the mission objective consumes that ID rather than scene names or object references.
+- Every topology area is reachable from at least one authored entry, and planning entry IDs match topology bindings exactly.
+- Door portals become navigable only when physical door clearance activates their fixed link; open passages never invent door state.
+- Scenario variation repositions existing actors only; it cannot add threats, change roles, decide behavior, or mutate mission outcomes.
+- The applied incident seed is logged so a placement can be reproduced during debugging.
 - Unassigned officers are removed from the deployed squad before HUD and body-camera lists rebuild.
 - Raising the in-mission tablet disables player gameplay input but never pauses AI or mission time.
 - Only the selected officer camera may render; other officer cameras remain disabled with no target texture.

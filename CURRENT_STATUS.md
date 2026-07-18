@@ -2,9 +2,22 @@
 
 ## Active milestone
 
-**Milestone 6C — Deployment and In-Mission Operational Tablet: integration candidate; live Unity validation pending**
+**Milestone 7A — Pressure Point Multi-Room Mission Greybox: integration candidate; live Unity validation pending**
 
-Milestones 0–5 are the protected working gameplay baseline. The user confirmed the Milestone 5 gameplay sequence, cinematic UI, and temporary suspect presentation work and pushed commit `c62b09d` before Milestone 6A began.
+Milestones 0–5 are the protected working gameplay baseline. The user confirmed the Milestone 5 gameplay sequence, cinematic UI, and temporary suspect presentation work and pushed commit `c62b09d` before Milestone 6A began. The user subsequently confirmed the Milestone 6C deployment and in-mission body-camera tablet behavior and pushed a checkpoint before Milestone 7A began.
+
+## Milestone 7A candidate
+
+- Operation Pressure Point is now authored as a municipal pumping-annex greybox rather than the former single training room.
+- Nine topology nodes connect three exterior staging approaches, three south-side work areas, a central corridor, the pump hall, and the control room.
+- Six interior `TacticalRoomVolume` components provide independent clearance evidence.
+- Seven physical doors use fixed, bidirectional `NavMeshLink` objects gated by actual door clearance; two wide thresholds remain open passages.
+- Headquarters south, west, and north entry IDs are reauthored to exterior NavMesh formations sized for the current team and future squads up to eight officers.
+- The existing suspect and civilian retain stable actor/evidence IDs while a logged incident seed selects among twelve weighted, role-compatible locations.
+- The required room-clear objective now targets `m7a_pump_hall` rather than the deleted training-room placeholder.
+- The original training room and firing range remain preserved but inactive in the operation scene.
+- Mission topology, actor placement, AI behavior, custody, and after-action evaluation remain separate authorities.
+- Setup, validator, persisted NavMesh generation, and EditMode rules coverage are included.
 
 ## Milestone 6C candidate
 
@@ -74,6 +87,16 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Validation pending
 
+- Clean compilation after the Milestone 7A package is installed.
+- Run the Milestone 7A setup and validator, then all EditMode tests.
+- Deploy from headquarters through all three entries with one and two selected officers.
+- Verify every door can be opened, crossed by the full team, and crossed again in reverse.
+- Confirm both open passages require no invented door interaction.
+- Restart Play Mode several times and confirm suspect/civilian locations vary while their mission IDs and objectives remain correct.
+- Clear every interior area, reintroduce an active threat to a clear room, and confirm clear status is revoked.
+- Confirm automatic challenges/custody, MMB commands, body-camera tablet feeds, mission evidence, and debrief remain functional throughout the new layout.
+- Run Milestones 1–6C regression validators and verify a clean Console.
+
 - Clean compilation after the Milestone 6C package is installed.
 - Run the Milestone 6C setup and validator.
 - Verify all three selected entry IDs resolve to baked NavMesh positions.
@@ -99,4 +122,4 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Asset boundary
 
-No new 3D model is required for Milestone 6C. Officer cameras use temporary root-relative chest mounts and the in-mission interface reuses the transparent rugged-tablet cutout. Final presentation will require a modeled body-camera device attached to the officer vest, a separate-part rugged tablet/MDT model, emissive screen mesh, PBR materials, compatible first-person gloved arms, and tablet raise/idle/interact/lower animations. Entry anchors must be reauthored after the first mission greybox is locked.
+No new 3D model is required for Milestone 7A. Greybox dimensions, routes, doors, cover, sight lines, spawn fairness, and navigation must pass before environment art is integrated. After layout lock, the first environment-art request will be a modular municipal/industrial interior-exterior kit with functional separate-part doors, frames, windows, fencing, wet-service-yard surfaces, pumps/pipes/control equipment, office/maintenance props, collision meshes, LODs, and HDRP PBR materials. Officer body cameras, rugged tablet hardware, first-person gloved arms, and their animations remain separate future character/equipment needs.

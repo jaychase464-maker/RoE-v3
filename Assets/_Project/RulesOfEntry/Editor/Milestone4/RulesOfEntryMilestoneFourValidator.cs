@@ -360,30 +360,30 @@ namespace RulesOfEntry.Editor.Milestone4
                     "M4 Door Traversal",
                     "A fixed bidirectional NavMesh link opens only after the physical door clears the threshold.");
 
-                TacticalRoomVolume room = scene.GetRootGameObjects()
+                TacticalRoomVolume[] rooms = scene.GetRootGameObjects()
                     .SelectMany(root => root.GetComponentsInChildren<TacticalRoomVolume>(true))
-                    .FirstOrDefault();
+                    .ToArray();
                 HumanActorController suspect = scene.GetRootGameObjects()
                     .SelectMany(root => root.GetComponentsInChildren<HumanActorController>(true))
                     .FirstOrDefault(actor => actor.Identity != null
                         && actor.Identity.Role == ActorRole.Suspect);
-                bool validRoom = room != null
-                    && room.HasCompleteConfiguration
-                    && suspect != null
-                    && room.Contains(suspect.transform.position);
+                bool validRoom = suspect != null
+                    && rooms.Any(room => room != null
+                        && room.HasCompleteConfiguration
+                        && room.Contains(suspect.transform.position));
                 if (!validRoom)
                 {
                     AddError(
                         results,
                         "M4 Room Clearance",
-                        "The saved prototype scene requires a configured tactical room volume containing the training suspect.");
+                        "The saved operation scene requires at least one configured tactical room volume containing the suspect.");
                     return;
                 }
 
                 AddPass(
                     results,
                     "M4 Room Clearance",
-                    "The north training room requires two actionable officers and a timed no-threat verification before automatic custody.");
+                    "An authored tactical room contains the suspect and retains timed no-threat verification before automatic custody.");
             }
             finally
             {

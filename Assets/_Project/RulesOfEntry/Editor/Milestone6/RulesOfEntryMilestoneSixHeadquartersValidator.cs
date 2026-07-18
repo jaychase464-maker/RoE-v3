@@ -118,10 +118,7 @@ namespace RulesOfEntry.Editor.Milestone6
                         StringComparison.Ordinal))
                 && briefing.Mission.Objectives.Any(objective =>
                     objective.Type == MissionObjectiveType.VerifyRoomClear
-                    && string.Equals(
-                        objective.TargetRoomId,
-                        "prototype_north_training_room",
-                        StringComparison.Ordinal));
+                    && !string.IsNullOrWhiteSpace(objective.TargetRoomId));
             bool planningContentValid = briefing.EntryPoints.Length == 3
                 && briefing.Officers.Length >= 2
                 && briefing.Officers.Count(officer => officer.Available) >= 2
