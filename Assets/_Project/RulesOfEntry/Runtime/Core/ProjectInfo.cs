@@ -10,7 +10,7 @@ namespace RulesOfEntry.Core
         public const string ProjectCode = "ROE";
         public const string ExpectedUnityVersion = "6000.5.2f1";
         public const string CurrentMilestone =
-            "Milestone 5.5 / 6A - Front-End and Headquarters Planning";
+            "Milestone 5.5 / 6A / 6B - Front-End, Headquarters Planning, and Tactical HUD";
         public const int FoundationSchemaVersion = 1;
 
         public const string ProjectAssetRoot = "Assets/_Project/RulesOfEntry";

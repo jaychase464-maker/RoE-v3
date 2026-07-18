@@ -13,6 +13,14 @@ namespace RulesOfEntry.Officers
             statusText = configuredStatusText;
         }
 
+        public void SetWorldStatusVisible(bool visible)
+        {
+            if (statusText != null)
+            {
+                statusText.gameObject.SetActive(visible);
+            }
+        }
+
         public void SetPresentation(
             ActorIdentity identity,
             bool selected,

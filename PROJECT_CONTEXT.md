@@ -1,5 +1,7 @@
 # Project Context
 
+Current UI direction: the operation HUD must remain sparse and realistic. It exposes qualitative squad condition and ammunition, never player hit points or exact ammunition counts. Campaign identity and the mission clock drive the RoE body-camera overlay. Squad commands are contextual and appear while middle mouse is held.
+
 ## Identity
 
 - Title: Rules of Entry

@@ -25,7 +25,9 @@ Exit pending: Unity compilation, setup/validator, all tests, complete front-end-
 
 ### Milestone 6B — Headquarters Functional Expansion and Mission Greybox
 
-Planned:
+First integration candidate implemented: approved in-operation Tactical HUD with a scalable squad roster, qualitative health/ammunition reports, dynamic RoE body-camera metadata, contextual focus, and held-MMB numbered commands.
+
+Remaining planned work:
 
 1. Connect chosen entry IDs to authored operation spawn anchors.
 2. Build the first multi-room mission greybox and traversal graph.

@@ -24,11 +24,13 @@ namespace RulesOfEntry.Officers
         [SerializeField, Min(0.5f)] private float subjectApproachDistance = 0.9f;
 
         private long nextCommandSequence = 1;
+        private int selectedOfficerIndex = -1;
 
         public event Action SelectionChanged;
         public event Action CommandIssued;
 
         public OfficerSelection Selection { get; private set; } = OfficerSelection.Team;
+        public int SelectedOfficerIndex => selectedOfficerIndex;
         public IReadOnlyList<TacticalOfficerController> Officers =>
             officers ?? Array.Empty<TacticalOfficerController>();
         public string LastCommandSummary { get; private set; } = "No team command issued.";
@@ -48,20 +50,18 @@ namespace RulesOfEntry.Officers
                     problems.Add("command camera/view");
                 }
 
-                if (officers == null || officers.Length != 2)
+                if (officers == null || officers.Length < 2)
                 {
-                    problems.Add("two-officer array");
+                    problems.Add("squad array with at least two officers");
                 }
                 else
                 {
-                    if (officers[0] == null)
+                    for (int index = 0; index < officers.Length; index++)
                     {
-                        problems.Add("Officer Alpha reference");
-                    }
-
-                    if (officers[1] == null)
-                    {
-                        problems.Add("Officer Bravo reference");
+                        if (officers[index] == null)
+                        {
+                            problems.Add($"officer reference {index + 1}");
+                        }
                     }
                 }
 
@@ -94,18 +94,64 @@ namespace RulesOfEntry.Officers
         public void Select(OfficerSelection selection)
         {
             Selection = selection;
+            selectedOfficerIndex = selection switch
+            {
+                OfficerSelection.OfficerOne => 0,
+                OfficerSelection.OfficerTwo => 1,
+                _ => -1
+            };
             RefreshOfficerSelection();
             SelectionChanged?.Invoke();
         }
 
+        public bool SelectOfficer(int officerIndex)
+        {
+            if (officers == null
+                || officerIndex < 0
+                || officerIndex >= officers.Length
+                || officers[officerIndex] == null)
+            {
+                return false;
+            }
+
+            selectedOfficerIndex = officerIndex;
+            Selection = officerIndex switch
+            {
+                0 => OfficerSelection.OfficerOne,
+                1 => OfficerSelection.OfficerTwo,
+                _ => OfficerSelection.Individual
+            };
+            RefreshOfficerSelection();
+            SelectionChanged?.Invoke();
+            return true;
+        }
+
         public void CycleSelection()
         {
-            Select(Selection switch
+            if (officers == null || officers.Length == 0)
             {
-                OfficerSelection.OfficerOne => OfficerSelection.OfficerTwo,
-                OfficerSelection.OfficerTwo => OfficerSelection.Team,
-                _ => OfficerSelection.OfficerOne
-            });
+                Select(OfficerSelection.Team);
+                return;
+            }
+
+            int nextIndex = selectedOfficerIndex + 1;
+            if (selectedOfficerIndex < 0)
+            {
+                nextIndex = 0;
+            }
+
+            while (nextIndex < officers.Length && officers[nextIndex] == null)
+            {
+                nextIndex++;
+            }
+
+            if (nextIndex >= officers.Length)
+            {
+                Select(OfficerSelection.Team);
+                return;
+            }
+
+            SelectOfficer(nextIndex);
         }
 
         public int CancelSelectedOrders()
@@ -158,19 +204,20 @@ namespace RulesOfEntry.Officers
                 return;
             }
 
-            if (playerInput.SelectOfficerOnePressedThisFrame)
+            bool commandMenuHeld = playerInput.OfficerCommandMenuHeld;
+            if (!commandMenuHeld && playerInput.SelectOfficerOnePressedThisFrame)
             {
                 Select(OfficerSelection.OfficerOne);
             }
-            else if (playerInput.SelectOfficerTwoPressedThisFrame)
+            else if (!commandMenuHeld && playerInput.SelectOfficerTwoPressedThisFrame)
             {
                 Select(OfficerSelection.OfficerTwo);
             }
-            else if (playerInput.SelectOfficerTeamPressedThisFrame)
+            else if (!commandMenuHeld && playerInput.SelectOfficerTeamPressedThisFrame)
             {
                 Select(OfficerSelection.Team);
             }
-            else if (playerInput.CycleOfficerSelectionPressedThisFrame)
+            else if (!commandMenuHeld && playerInput.CycleOfficerSelectionPressedThisFrame)
             {
                 CycleSelection();
             }
@@ -179,34 +226,96 @@ namespace RulesOfEntry.Officers
             {
                 CancelSelectedOrders();
             }
-            else if (playerInput.OfficerHoldPressedThisFrame)
+            else if (!commandMenuHeld)
             {
-                IssueSimpleOrder(OfficerOrderType.HoldPosition, transform.position, gameObject);
+                if (playerInput.IssueOfficerContextOrderPressedThisFrame)
+                {
+                    IssueContextOrder();
+                }
+
+                return;
             }
-            else if (playerInput.OfficerFollowPressedThisFrame)
+            else
             {
-                IssueSimpleOrder(OfficerOrderType.Follow, transform.position, gameObject);
+                IssueCommandSlot(playerInput.OfficerCommandSlotPressedThisFrame);
             }
-            else if (playerInput.OfficerStackPressedThisFrame)
+        }
+
+        public bool IssueCommandSlot(int slot)
+        {
+            if (!OfficerCommandSlotRules.TryGetOrderType(slot, out OfficerOrderType orderType))
             {
-                IssueDoorOrder(OfficerOrderType.StackAtDoor);
+                return false;
             }
-            else if (playerInput.OfficerOpenPressedThisFrame)
+
+            switch (orderType)
             {
-                IssueDoorOrder(OfficerOrderType.OpenDoor);
+                case OfficerOrderType.MoveTo:
+                    IssueMoveOrder();
+                    return true;
+                case OfficerOrderType.HoldPosition:
+                    IssueSimpleOrder(
+                        OfficerOrderType.HoldPosition,
+                        transform.position,
+                        gameObject);
+                    return true;
+                case OfficerOrderType.StackAtDoor:
+                    IssueDoorOrder(OfficerOrderType.StackAtDoor);
+                    return true;
+                case OfficerOrderType.OpenDoor:
+                    IssueDoorOrder(OfficerOrderType.OpenDoor);
+                    return true;
+                case OfficerOrderType.Follow:
+                    IssueSimpleOrder(
+                        OfficerOrderType.Follow,
+                        transform.position,
+                        gameObject);
+                    return true;
+                case OfficerOrderType.RestrainSubject:
+                    IssueRestraintOrder();
+                    return true;
+                default:
+                    return false;
             }
-            else if (playerInput.OfficerRestrainPressedThisFrame)
+        }
+
+        public bool TryGetCurrentCommandContext(out OfficerCommandContext context)
+        {
+            context = default;
+            if (!TryGetCommandHit(out RaycastHit hit))
             {
-                IssueRestraintOrder();
+                return false;
             }
-            else if (playerInput.OfficerMovePressedThisFrame)
+
+            float distance = commandView != null
+                ? Vector3.Distance(commandView.position, hit.point)
+                : 0f;
+            CustodyComponent custody = hit.collider.GetComponentInParent<CustodyComponent>();
+            if (custody != null)
             {
-                IssueMoveOrder();
+                ActorIdentity identity = custody.GetComponent<ActorIdentity>();
+                context = new OfficerCommandContext(
+                    OfficerCommandTargetType.Subject,
+                    identity != null ? identity.DisplayName : "Subject",
+                    distance);
+                return true;
             }
-            else if (playerInput.IssueOfficerContextOrderPressedThisFrame)
+
+            PrototypeDoor door = hit.collider.GetComponentInParent<PrototypeDoor>();
+            if (door != null)
             {
-                IssueContextOrder();
+                context = new OfficerCommandContext(
+                    OfficerCommandTargetType.Door,
+                    "Door",
+                    distance);
+                return true;
             }
+
+            context = new OfficerCommandContext(
+                OfficerCommandTargetType.Position,
+                "Position",
+                distance);
+            return true;
         }
 
         private void IssueContextOrder()
@@ -414,22 +523,30 @@ namespace RulesOfEntry.Officers
 
         private List<TacticalOfficerController> GetSelectedOfficers()
         {
-            List<TacticalOfficerController> selected = new List<TacticalOfficerController>(2);
-            if (officers == null || officers.Length < 2)
+            List<TacticalOfficerController> selected = new List<TacticalOfficerController>(
+                officers?.Length ?? 0);
+            if (officers == null || officers.Length == 0)
             {
                 return selected;
             }
 
-            if ((Selection == OfficerSelection.OfficerOne || Selection == OfficerSelection.Team)
-                && officers[0] != null)
+            if (selectedOfficerIndex >= 0 && selectedOfficerIndex < officers.Length)
             {
-                selected.Add(officers[0]);
+                TacticalOfficerController officer = officers[selectedOfficerIndex];
+                if (officer != null)
+                {
+                    selected.Add(officer);
+                }
+
+                return selected;
             }
 
-            if ((Selection == OfficerSelection.OfficerTwo || Selection == OfficerSelection.Team)
-                && officers[1] != null)
+            foreach (TacticalOfficerController officer in officers)
             {
-                selected.Add(officers[1]);
+                if (officer != null)
+                {
+                    selected.Add(officer);
+                }
             }
 
             return selected;
@@ -450,9 +567,7 @@ namespace RulesOfEntry.Officers
                     continue;
                 }
 
-                bool isSelected = Selection == OfficerSelection.Team
-                    || (Selection == OfficerSelection.OfficerOne && index == 0)
-                    || (Selection == OfficerSelection.OfficerTwo && index == 1);
+                bool isSelected = selectedOfficerIndex < 0 || selectedOfficerIndex == index;
                 officer.SetSelected(isSelected);
             }
         }

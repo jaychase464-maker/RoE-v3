@@ -469,6 +469,8 @@ GameObject:
   - component: {fileID: 1472801666566579587}
   - component: {fileID: 1420474587585043024}
   - component: {fileID: 2003913926279210941}
+  - component: {fileID: 968127875344802317}
+  - component: {fileID: 8851533958889928741}
   m_Layer: 8
   m_Name: ROE_Player
   m_TagString: Untagged
@@ -722,6 +724,37 @@ MonoBehaviour:
   teamSpacing: 0.72
   doorApproachDistance: 1.05
   subjectApproachDistance: 0.9
+--- !u!114 &968127875344802317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678712671749742881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a48f141c374f508fcd5c4f51f03456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RulesOfEntry.Runtime::RulesOfEntry.UI.TacticalHud.BodyCameraIdentity
+  officerDisplayName: A. Carter
+  badgeIdentifier: A127
+  departmentName: Calder City Police Department
+  batteryPercent: 97
+  recording: 1
+--- !u!114 &8851533958889928741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678712671749742881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2a3f2059074679ac62b50b96075979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RulesOfEntry.Runtime::RulesOfEntry.UI.TacticalHud.MissionClock
+  initialTimestamp: 2026-07-17T22:41:00
+  gameSecondsPerRealSecond: 1
 --- !u!1 &4170269004708223699
 GameObject:
   m_ObjectHideFlags: 0

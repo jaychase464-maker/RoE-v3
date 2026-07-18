@@ -16,6 +16,7 @@ namespace RulesOfEntry.UI
         [SerializeField] private Text mechanicalStateText;
         [SerializeField] private Text statusMessageText;
         [SerializeField] private Image operationProgressFill;
+        [SerializeField] private bool showPersistentMechanicalState;
 
         public void ConfigureVisuals(
             CanvasGroup configuredCanvasGroup,
@@ -50,7 +51,6 @@ namespace RulesOfEntry.UI
                 return;
             }
 
-            SetVisible(true);
             FirearmSnapshot snapshot = firearmController.Snapshot;
             if (mechanicalStateText != null)
             {
@@ -81,6 +81,11 @@ namespace RulesOfEntry.UI
                 operationProgressFill.transform.parent.gameObject.SetActive(operationActive);
                 operationProgressFill.fillAmount = firearmController.OperationProgress;
             }
+
+            bool shouldShow = showPersistentMechanicalState
+                || firearmController.StatusMessageRemaining > 0f
+                || firearmController.Operation != FirearmOperation.Idle;
+            SetVisible(shouldShow);
         }
 
         private void SetVisible(bool visible)

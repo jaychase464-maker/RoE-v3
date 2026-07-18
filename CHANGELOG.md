@@ -1,5 +1,44 @@
 # Changelog
 
+## Milestone 6B Tactical HUD Visual Hotfix 3 — 2026-07-17
+
+- Replaced the large upper-left squad card with a narrow, low-profile tactical element readout inspired by field-command interfaces.
+- Reduced each officer to a compact two-line entry containing roster index, identity, colored condition pip, qualitative health, current order, and qualitative ammunition state.
+- Removed column headers, officer pictograms, heavy row fills, and the roster outline while adding restrained text shadows for legibility over the live scene.
+- Reduced the roster width and per-officer height so larger campaign elements can expand vertically without dominating the player's view.
+- Extended Tactical HUD validation to require the compact roster dimensions and complete condition-pip binding.
+
+## Milestone 6B Tactical HUD Visual Hotfix 2 — 2026-07-17
+
+- Rebuilt the body-camera overlay around a dedicated rounded translucent vector shell rather than a generic rectangular Image.
+- Added the approved internal divider, shield-shaped RoE mark, circular recording indicator, battery silhouette, and live-camera icon treatment.
+- Re-aligned the officer, department, timestamp, battery, and LIVE fields to the hierarchy and proportions of the approved prototype.
+- Added compact officer glyphs and retained the approved roster and command-panel composition.
+- Extended Tactical HUD validation to require the authored body-camera shell and RoE shield components.
+
+## Milestone 6B Tactical HUD Hotfix 1 — 2026-07-17
+
+- Raised the Tactical HUD to a dedicated sorting order so the squad roster cannot render behind the prototype mission Canvas.
+- Removed the old mission/officer HUD panels from normal operation presentation.
+- Disabled the enormous world-space officer, suspect, and civilian diagnostic labels responsible for the mirrored text across the screen.
+- Changed the idle weapon panel to remain hidden while preserving temporary check-magazine, reload, and operation feedback.
+- Replaced overlapping number-action command detection with an explicit current-Input-System MMB plus number-slot path.
+- Added public command-slot dispatch and strengthened validation for Canvas priority, hidden diagnostics, and command execution entry.
+- Added compact officer glyphs and corrected roster text spacing to more closely match the approved mockup.
+
+## Milestone 6B Tactical HUD — Integration Candidate — 2026-07-17
+
+- Added the approved upper-left scalable squad roster and upper-right RoE body-camera overlay.
+- Bound officer rows to live identity, selection, activity/order, injury condition, and qualitative ammunition data.
+- Added configurable campaign-facing officer name, badge, department, recording state, and battery fields.
+- Added a pause-aware in-game mission clock for the body-camera timestamp.
+- Added a held middle-mouse command interface with numbered Move, Hold, Stack, Open/Clear, Follow, and Restrain actions.
+- Added context focus and automatic command suggestion for world positions, doors, and custody subjects.
+- Generalized team selection and order dispatch beyond the original exactly-two-officer array while preserving current two-officer controls.
+- Disabled the superseded operation command debug panel after Tactical HUD setup.
+- Added a deterministic editor builder, validator, and EditMode rule tests.
+- Preserved the realism boundary: no player ammo counter, exact officer round count, player health bar, minimap, or automatic reload.
+
 ## Milestone 6A Hardware-Only Tablet Correction — 2026-07-17
 
 - Replaced the full cinematic concept plate with a purpose-built transparent rugged-tablet hardware cutout.

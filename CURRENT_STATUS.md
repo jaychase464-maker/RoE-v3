@@ -2,9 +2,23 @@
 
 ## Active milestone
 
-**Milestone 6A — Playable Headquarters, Physical Mission Selection, and Rugged Planning Tablet: integration candidate; live Unity validation pending**
+**Milestone 6B — Scalable Tactical HUD and MMB Squad Commands: integration candidate; live Unity validation pending**
 
 Milestones 0–5 are the protected working gameplay baseline. The user confirmed the Milestone 5 gameplay sequence, cinematic UI, and temporary suspect presentation work and pushed commit `c62b09d` before Milestone 6A began.
+
+## Tactical HUD candidate
+
+- Approved upper-left squad roster is now a narrow, transparent, low-profile element list that scales from the current two officers to larger configured squads.
+- Each compact two-line row reads live officer identity, selection, current order/activity, physiological condition pip/label, and qualitative ammunition state without health bars or large cards.
+- Injury labels are `FIT`, `WOUNDED`, `DOWN`, or `DECEASED`; no arcade hit-point value is exposed.
+- Ammunition labels are `GOOD`, `LOW`, or `CRITICAL`; precise hidden round counts remain unavailable to the player.
+- Upper-right `RoE Body Cam` block reads configurable campaign officer name, badge ID, Calder City Police Department identity, recording/battery state, and the in-game mission clock.
+- Holding middle mouse reveals the approved six-command panel; keys `1–6` issue Move, Hold, Stack, Open/Clear, Follow, and Restrain only while the menu is held.
+- Releasing middle mouse without a selection closes the panel without issuing an order.
+- Command focus is read from the authoritative squad raycast and suggests Move for positions, Stack for doors, and Restrain for custody subjects.
+- The squad controller no longer rejects arrays larger than two; team orders include every valid configured officer.
+- The old Milestone 4 command diagnostic panel is disabled in the operation scene but its prefab and data remain available for development.
+- Setup tool, validator, and EditMode rule coverage are included.
 
 ## Implemented in this candidate
 
@@ -48,6 +62,11 @@ Milestones 0–5 are the protected working gameplay baseline. The user confirmed
 
 ## Validation pending
 
+- Clean compilation after the Tactical HUD package is installed.
+- Run `Rules of Entry > Milestone 6B > Build Tactical HUD` and pass the Tactical HUD validator.
+- Confirm the roster, body-camera data, target focus, MMB visibility, and numbered commands at 1920×1080 and ultrawide-safe resolutions.
+- Confirm number keys still select the current prototype officers/team when MMB is not held.
+- Confirm prior direct team orders, autonomous challenges, room clearance, and custody behavior remain stable.
 - Clean Unity compilation after installation.
 - Milestone 6A setup, UI Presentation validation, and Milestone 6A validation pass.
 - All EditMode and PlayMode tests.

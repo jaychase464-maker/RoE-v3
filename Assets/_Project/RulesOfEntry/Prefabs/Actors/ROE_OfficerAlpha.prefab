@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6394379773364565495}
   - component: {fileID: 3300860294911819467}
   - component: {fileID: 5541645795829095652}
+  - component: {fileID: 7224513223002574045}
   m_Layer: 9
   m_Name: ROE_OfficerAlpha
   m_TagString: Untagged
@@ -198,12 +199,27 @@ MonoBehaviour:
   detectionDistance: 20
   fieldOfViewDegrees: 140
   challengeRepeatSeconds: 4
+  challengeFocusMemorySeconds: 20
   scanIntervalSeconds: 0.2
   visibilityMask:
     serializedVersion: 2
     m_Bits: 4294967295
   weaponPresentedDuringChallenge: 1
   custodyApproachDistance: 0.9
+--- !u!114 &7224513223002574045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090366616727314974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7639a1b6ab3244e995b3501d045d53c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RulesOfEntry.Runtime::RulesOfEntry.Officers.OfficerAmmunitionStatus
+  usableMagazineCount: 4
+  lowMagazineThreshold: 1
 --- !u!1 &1617538431124824308
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1820215000770753521
 Transform:
   m_ObjectHideFlags: 0

@@ -1,5 +1,18 @@
 # System Map
 
+## Milestone 6B tactical HUD
+
+- `TacticalHudController` — operation HUD coordinator; refreshes squad rows, body-camera metadata, command visibility, and command focus.
+- `TacticalHudOfficerRow` — reusable presentation row for any configured `TacticalOfficerController`.
+- `BodyCameraIdentity` — campaign-facing player identity, department, recording, and battery boundary.
+- `MissionClock` — authoritative operation timestamp source for the body-camera overlay.
+- `OfficerAmmunitionStatus` — qualitative NPC ammunition feed; never exposes precise round counts to the HUD.
+- `OfficerSquadController` — scalable team selection/order dispatch and authoritative command-target raycast.
+- `OfficerCommandSlotRules` — tested mapping from MMB number slots `1–6` to established officer order types.
+- `TacticalPlayerInput` — current Input System bridge; MMB holds the menu and number keys issue commands only while held.
+- `RulesOfEntryTacticalHudSetup` — creates the HUD prefab, adds data components, updates input bindings, and installs the operation-scene instance.
+- `RulesOfEntryTacticalHudValidator` — validates bindings, prefab feeds, HUD structure, and scene integration.
+
 ## Front-end flow
 
 ```mermaid

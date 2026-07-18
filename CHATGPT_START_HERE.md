@@ -1,5 +1,9 @@
 # ChatGPT Start Here
 
+## Current integration task
+
+Milestone 6B Tactical HUD is the newest candidate. Its approved screen layout is an upper-left narrow/transparent two-line element roster, upper-right RoE body-camera metadata, and a low-center command panel visible only while MMB is held. Read `TACTICAL_HUD_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing input, squad selection, officer status, or gameplay UI.
+
 ## Project
 
 Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation by Trooper Studios. GitHub repository `jaychase464-maker/RoE-v3`, branch `main`, is the source of truth.

@@ -2,6 +2,21 @@
 
 ## Open
 
+### ROE-0045 — Tactical HUD requires live Unity validation
+
+- Priority: blocker for Tactical HUD candidate closure
+- Status: integration candidate
+- Required evidence: clean compilation, successful Milestone 6B setup and validation, all EditMode tests, MMB/number-key smoke test, larger-squad roster test, resolution scaling check, and clean Console
+- Regression focus: number-key selection when MMB is released, team orders reaching every configured officer, and Milestone 4 initiative/custody behavior
+
+### ROE-0046 — NPC ammunition feed precedes full officer weapon simulation
+
+- Priority: medium simulation debt
+- Status: explicit prototype boundary
+- Current behavior: each officer exposes a qualitative magazine-condition component used by the roster.
+- Missing: authoritative NPC firearm consumption, reload choices, retained/dropped magazines, resupply, and AI low-ammunition decisions.
+- Boundary: the HUD never invents exact round counts; the qualitative feed must be driven by the eventual officer firearm simulation.
+
 ### ROE-0038 — Entry plans are not yet connected to operation spawn anchors
 
 - Priority: blocker for Milestone 6B closure
@@ -54,6 +69,10 @@
 
 ## Resolved
 
+- ROE-0050: the first scalable squad roster still presented as a large dashboard card; it now uses a narrow transparent element list with compact two-line officer status, condition pips, and qualitative ammunition.
+- ROE-0049: the first functional body-camera overlay used generic rectangular uGUI chrome that did not reproduce the approved prototype; it now uses a rounded vector shell, shield-shaped RoE mark, divider, and authored recording/battery/camera icon layout.
+- ROE-0048: MMB command numbers could fail to reach `OfficerSquadController` because command and selection Input Actions shared the same number controls; command slots now use explicit held-MMB current-Input-System detection and direct dispatch.
+- ROE-0047: the Tactical HUD roster rendered beneath the old mission Canvas while large world-space prototype labels covered the screen; the approved HUD now owns sorting order 200 and normal play hides the superseded panels and labels.
 - ROE-0044: the cinematic concept integration incorrectly included baked hands and a baked police-station background when only the rugged tablet design was requested; the current asset is a transparent hardware-only cutout over the player's real scene.
 - ROE-0043: the generated rectangle-and-panel tablet did not visually match the approved reference despite functional planning controls; the supplied cinematic concept now provides the temporary physical device and hands while an opaque live screen preserves truthful gameplay data.
 - ROE-0042: the planning tablet could only receive a briefing through the physical terminal, whose 0.35-second hold made an `E` tap appear unresponsive; the headquarters tablet now owns the authoritative briefing, toggles anywhere with `Tab`, and the terminal responds immediately to `E`.

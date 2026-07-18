@@ -31,6 +31,14 @@ namespace RulesOfEntry.AI
             rightArm = configuredRightArm;
         }
 
+        public void SetWorldStatusVisible(bool visible)
+        {
+            if (statusText != null)
+            {
+                statusText.gameObject.SetActive(visible);
+            }
+        }
+
         public void SetPresentation(
             ActorIdentity identity,
             HumanBehaviorState behaviorState,

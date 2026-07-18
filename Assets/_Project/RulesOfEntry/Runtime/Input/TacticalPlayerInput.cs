@@ -43,6 +43,7 @@ namespace RulesOfEntry.Input
         private InputAction officerOpenAction;
         private InputAction officerRestrainAction;
         private InputAction cancelOfficerOrderAction;
+        private InputAction officerCommandMenuAction;
         private InputAction toggleCursorAction;
         private bool actionsResolved;
         private bool inputConfigurationErrorLogged;
@@ -81,6 +82,62 @@ namespace RulesOfEntry.Input
         public bool OfficerRestrainPressedThisFrame => WasPressedThisFrame(officerRestrainAction);
         public bool CancelOfficerOrderPressedThisFrame =>
             WasPressedThisFrame(cancelOfficerOrderAction);
+        public bool OfficerCommandMenuHeld => IsActionPressed(officerCommandMenuAction)
+            || Mouse.current?.middleButton.isPressed == true;
+        public int OfficerCommandSlotPressedThisFrame
+        {
+            get
+            {
+                if (!OfficerCommandMenuHeld)
+                {
+                    return 0;
+                }
+
+                Keyboard keyboard = Keyboard.current;
+                if (keyboard == null)
+                {
+                    return 0;
+                }
+
+                if (keyboard.digit1Key.wasPressedThisFrame
+                    || keyboard.numpad1Key.wasPressedThisFrame)
+                {
+                    return 1;
+                }
+
+                if (keyboard.digit2Key.wasPressedThisFrame
+                    || keyboard.numpad2Key.wasPressedThisFrame)
+                {
+                    return 2;
+                }
+
+                if (keyboard.digit3Key.wasPressedThisFrame
+                    || keyboard.numpad3Key.wasPressedThisFrame)
+                {
+                    return 3;
+                }
+
+                if (keyboard.digit4Key.wasPressedThisFrame
+                    || keyboard.numpad4Key.wasPressedThisFrame)
+                {
+                    return 4;
+                }
+
+                if (keyboard.digit5Key.wasPressedThisFrame
+                    || keyboard.numpad5Key.wasPressedThisFrame)
+                {
+                    return 5;
+                }
+
+                if (keyboard.digit6Key.wasPressedThisFrame
+                    || keyboard.numpad6Key.wasPressedThisFrame)
+                {
+                    return 6;
+                }
+
+                return 0;
+            }
+        }
         public bool GameplayEnabled => playerMap != null && playerMap.enabled;
         public bool IsUsingGamepad => string.Equals(
             playerInput != null ? playerInput.currentControlScheme : null,
@@ -218,6 +275,7 @@ namespace RulesOfEntry.Input
             officerOpenAction = playerMap.FindAction("OfficerOpen", false);
             officerRestrainAction = playerMap.FindAction("OfficerRestrain", false);
             cancelOfficerOrderAction = playerMap.FindAction("CancelOfficerOrder", false);
+            officerCommandMenuAction = playerMap.FindAction("OfficerCommandMenu", false);
             toggleCursorAction = systemMap.FindAction("ToggleCursor", false);
 
             List<string> missingActions = new List<string>();
@@ -274,6 +332,10 @@ namespace RulesOfEntry.Input
                 missingActions,
                 cancelOfficerOrderAction,
                 "Player/CancelOfficerOrder");
+            AddMissingAction(
+                missingActions,
+                officerCommandMenuAction,
+                "Player/OfficerCommandMenu");
             AddMissingAction(missingActions, toggleCursorAction, "System/ToggleCursor");
             actionsResolved = missingActions.Count == 0;
 

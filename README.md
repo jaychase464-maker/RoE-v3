@@ -1,5 +1,7 @@
 # Rules of Entry
 
+Current integration candidate: Milestone 6B Tactical HUD. After Unity finishes compiling, run `Rules of Entry > Milestone 6B > Build Tactical HUD`, then `Tools > Rules of Entry > Milestone 6B > Validate Tactical HUD`. See `TACTICAL_HUD_INSTALL.md` for the complete test and rollback checklist.
+
 Unity `6000.5.2f1` HDRP tactical law-enforcement simulation by Trooper Studios.
 
 ## Current delivery
@@ -26,7 +28,8 @@ The current project includes the cinematic front end and temporary suspect prese
 - an F10 developer-diagnostics toggle to reduce normal HUD clutter;
 - front-end generation, validation, pre-build checks, and EditMode tests.
 - a reversible, presentation-only Humanoid bridge that applies the supplied sample FBX to the prototype suspect while preserving its AI, navigation, custody, injury, and hit-region systems.
+- the approved operation HUD with a scalable squad roster, qualitative officer health/ammunition, dynamic RoE body-camera metadata, and held-MMB numbered commands.
 
-Follow `MILESTONE_6A_INSTALL.md`. No Inspector wiring or new package is required.
+Follow `MILESTONE_6A_INSTALL.md` for headquarters and `TACTICAL_HUD_INSTALL.md` for the operation HUD. No manual Inspector wiring or new package is required.
 
 The main-menu Operations shortcut enters headquarters. Continue Campaign and New Campaign remain disabled until campaign/save ownership is implemented. The headquarters is intentionally greybox: final police-station architecture, furniture, lockers, armory assets, and a physical rugged-tablet model are not required for this milestone.

@@ -53,6 +53,7 @@ namespace RulesOfEntry.Officers
     {
         OfficerOne = 0,
         OfficerTwo = 1,
-        Team = 2
+        Team = 2,
+        Individual = 3
     }
 }
