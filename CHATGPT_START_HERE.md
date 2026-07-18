@@ -2,7 +2,7 @@
 
 ## Current integration task
 
-Milestone 7C operation closure and headquarters return is the newest candidate on the user-confirmed and pushed Milestone 7B baseline. Read `MILESTONE_7C_INSTALL.md`, `MILESTONE_7B_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing final report presentation, scene return, deployment cleanup, or completed-operation context.
+Milestone 7D campaign saves and operations archive is the newest candidate on the user-confirmed and pushed Milestone 7C baseline. Read `MILESTONE_7D_INSTALL.md`, `MILESTONE_7C_INSTALL.md`, `CURRENT_STATUS.md`, and `SYSTEM_MAP.md` before changing campaign identity, persistence, final-report return, or archive presentation.
 
 ## Project
 
@@ -14,8 +14,9 @@ Rules of Entry is a Unity `6000.5.2f1` HDRP tactical law-enforcement simulation 
 - The user confirmed and pushed the Milestone 6C deployment and operational body-camera tablet checkpoint before Milestone 7A began.
 - The user confirmed and pushed Milestone 7A after clean compilation, validation, tests, traversal, AI, tablet, and debrief checks.
 - The user confirmed and pushed Milestone 7B after compilation, validators, automated tests, automatic completion, and live factual report checks.
-- Milestone 7C is the current integration candidate.
-- Do not call Milestone 7C complete until live Unity operation-to-headquarters evidence passes.
+- The user confirmed and pushed Milestone 7C after compilation, validator/tests, operation return, and archive checks.
+- Milestone 7D is the current integration candidate.
+- Do not call Milestone 7D complete until live Unity persistence and restart evidence passes.
 
 Read in order:
 
@@ -31,6 +32,7 @@ Read in order:
 10. `MILESTONE_7A_INSTALL.md`
 11. `MILESTONE_7B_INSTALL.md`
 12. `MILESTONE_7C_INSTALL.md`
+13. `MILESTONE_7D_INSTALL.md`
 
 ## Non-negotiable invariants
 
@@ -42,6 +44,9 @@ Read in order:
 - Cross-scene deployment state stores stable IDs only.
 - Completed-operation session state stores the immutable final report and stable IDs only; it owns no Unity scene references.
 - Deployment context is cleared only after successful completed-operation capture.
+- With an active campaign, deployment context is not cleared and headquarters does not load until the final report is persisted successfully.
+- Campaign DTOs use an explicit schema and contain stable values only; public field changes require migration.
+- Persistence cannot invoke the evaluator or mutate saved mission facts.
 - Every operation area and portal uses a stable unique ID, and all authored areas must be reachable from a planning entry.
 - Physical-door navigation links activate only after actual door clearance; open passages do not invent door state.
 - Scenario placement may move existing actors to compatible authored points but cannot create actors, change roles, decide behavior, or mutate objectives/evidence.
@@ -60,4 +65,4 @@ Read in order:
 
 ## Next action
 
-Install the Milestone 7C replacement ZIP on the confirmed Milestone 7B checkpoint. Run `Tools > Rules of Entry > Milestone 7C > Build Operation Closure and Headquarters Return`, run its validator and all EditMode tests, then complete Pressure Point and verify Continue returns to headquarters with the same report. Report the first Console error exactly if anything fails.
+Install the Milestone 7D replacement ZIP on the confirmed Milestone 7C checkpoint. Run `Tools > Rules of Entry > Milestone 7D > Build Campaign Saves and Operations Archive`, run its validator and all EditMode tests, then create a campaign, complete two operations, restart, Continue Campaign, and verify the PD archive. Report the first Console error exactly if anything fails.

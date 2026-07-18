@@ -2,7 +2,7 @@
 
 Current UI direction: the operation HUD must remain sparse and realistic. It exposes qualitative squad condition and ammunition, never player hit points or exact ammunition counts. Campaign identity and the mission clock drive the RoE body-camera overlay. Squad commands are contextual and appear while middle mouse is held.
 
-Current mission direction: the confirmed Pressure Point topology and Milestone 7B final report feed Milestone 7C operation closure. Completion still requires factual objectives and all-room clearance; the final report is copied into a scene-reference-free session record before returning to headquarters for review.
+Current mission direction: confirmed Pressure Point completion produces one immutable report, Milestone 7C returns it to headquarters, and Milestone 7D appends it to a versioned active campaign before deployment state is consumed. Persistence copies facts; it never reruns evaluation.
 
 ## Identity
 
@@ -13,7 +13,7 @@ Current mission direction: the confirmed Pressure Point topology and Milestone 7
 - Input: Input System `1.19.0`, New Input System only
 - Navigation: AI Navigation `2.0.14`
 - Source of truth: `jaychase464-maker/RoE-v3`, branch `main`
-- Protected pushed baseline: user-confirmed Milestone 7B checkpoint on `main`; do not infer its hash without reading the repository.
+- Protected pushed baseline: user-confirmed Milestone 7C checkpoint on `main`; do not infer its hash without reading the repository.
 
 ## Architecture rules
 
@@ -39,6 +39,9 @@ Current mission direction: the confirmed Pressure Point topology and Milestone 7
 - Final tiers must expose category scores and score caps; they cannot hide casualty, ROE, incomplete-objective, evidence, or time deductions.
 - Cross-scene completed-operation state may retain immutable report data and stable IDs only; it cannot retain scene objects or recalculate the score.
 - Deployment state is consumed only after the completed-operation record is captured successfully.
+- When a campaign is active, headquarters return is blocked until the completed record is written successfully or explicitly retried.
+- Campaign files store versioned DTOs and stable IDs only; scenes, components, live AI, and UI objects are forbidden.
+- The body-camera identity is a projection of the active campaign profile and cannot mutate the save.
 - No automatic reload, exact ammunition HUD, navigation warp, instant arrest, or direct score mutation is allowed.
 - Unity object identity uses full 64-bit `EntityId` values.
 - Character art is a replaceable presentation layer. Actor AI, navigation, injury, custody, evidence, and hit regions remain on the protected actor prefab root.
@@ -54,7 +57,8 @@ Current mission direction: the confirmed Pressure Point topology and Milestone 7
 - Milestones 5.5–6C: cinematic UI, headquarters planning, scalable tactical HUD, deployment, operational tablet, and live officer body-camera feeds.
 - Milestone 7A confirmed: first multi-room mission topology, entry approaches, room evidence, door links, scenario variation, and persisted mission NavMesh.
 - Milestone 7B confirmed: automatic all-clear completion, factual category scoring, S-through-F tiers, casualty/policy caps, and final report presentation.
-- Milestone 7C candidate: safe operation closure, headquarters return, latest-report session record, and headquarters archive review.
+- Milestone 7C confirmed: safe operation closure, headquarters return, latest-report session record, and headquarters archive review.
+- Milestone 7D candidate: officer campaign identity, schema-1 local persistence, Continue Campaign, and multi-report PD archive browsing.
 
 ## Presentation boundary
 

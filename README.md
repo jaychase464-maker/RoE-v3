@@ -1,12 +1,12 @@
 # Rules of Entry
 
-Current integration candidate: Milestone 7C Operation Closure and Headquarters Return. On the user-confirmed and pushed Milestone 7B baseline, run `Tools > Rules of Entry > Milestone 7C > Build Operation Closure and Headquarters Return`, then its validator. See `MILESTONE_7C_INSTALL.md` for the complete test checklist.
+Current integration candidate: Milestone 7D Campaign Saves and Operations Archive. On the user-confirmed and pushed Milestone 7C baseline, run `Tools > Rules of Entry > Milestone 7D > Build Campaign Saves and Operations Archive`, then its validator. See `MILESTONE_7D_INSTALL.md` for the complete test checklist.
 
 Unity `6000.5.2f1` HDRP tactical law-enforcement simulation by Trooper Studios.
 
 ## Current delivery
 
-Milestone 7C closes the playable operation loop: the final report has a mouse/keyboard/gamepad Continue control, preserves its immutable result across the scene transition, returns to headquarters, and opens the latest report for review. An in-world archive terminal can reopen that session report.
+Milestone 7D adds player-created campaign identity, versioned local JSON saves, Continue Campaign, body-camera identity projection, accountable completed-operation persistence, and multi-report browsing at the PD archive terminal.
 
 The current project includes the cinematic front end, temporary suspect presentation, headquarters planning, tactical HUD, deployment, and operational tablet foundations. The cumulative delivery adds:
 
@@ -43,7 +43,10 @@ The current project includes the cinematic front end, temporary suspect presenta
 - a safe final-report Continue flow that captures the report and stable deployment IDs before clearing deployment state;
 - automatic return to the playable PD and a headquarters after-action archive terminal for reviewing the latest completed session;
 - Input System mouse, Enter/A, Tab/Escape/B review controls plus validator and EditMode coverage.
+- a functional New Campaign personnel record for officer name and badge number;
+- a versioned schema-1 campaign save with temporary-write and backup recovery behavior;
+- Continue Campaign, persistent body-camera identity, idempotent completed-operation appends, and full PD archive browsing.
 
-Follow `MILESTONE_6A_INSTALL.md` for headquarters, `TACTICAL_HUD_INSTALL.md` for the operation HUD, `MILESTONE_6C_INSTALL.md` for deployment/body cameras, `MILESTONE_7A_INSTALL.md` for the mission greybox, `MILESTONE_7B_INSTALL.md` for scoring, and `MILESTONE_7C_INSTALL.md` for operation closure and headquarters return. No manual Inspector wiring or new package is required.
+Follow `MILESTONE_6A_INSTALL.md` for headquarters, `TACTICAL_HUD_INSTALL.md` for the operation HUD, `MILESTONE_6C_INSTALL.md` for deployment/body cameras, `MILESTONE_7A_INSTALL.md` for the mission greybox, `MILESTONE_7B_INSTALL.md` for scoring, `MILESTONE_7C_INSTALL.md` for operation return, and `MILESTONE_7D_INSTALL.md` for campaign persistence. No manual Inspector wiring or new package is required.
 
-The main-menu Operations shortcut enters headquarters. Continue Campaign and New Campaign remain disabled until campaign/save ownership is implemented. The headquarters is intentionally greybox: final police-station architecture, furniture, lockers, armory assets, and a physical rugged-tablet model are not required for this milestone.
+New Campaign creates and activates a local officer record; Continue Campaign reloads the active record and enters headquarters. The main-menu Operations shortcut remains available as a non-campaign sandbox route. The headquarters is intentionally greybox: final police-station architecture, furniture, lockers, armory assets, and a physical rugged-tablet model are not required for this milestone.

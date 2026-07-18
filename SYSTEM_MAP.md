@@ -1,5 +1,17 @@
 # System Map
 
+## Milestone 7D campaign persistence and archive history
+
+- `CampaignDataRules` — pure officer-identity normalization, campaign-ID validation, and archive-index wrapping.
+- `CampaignSaveData` / record DTOs — schema-1 JSON fields for identity and immutable final report facts.
+- `CampaignSaveCodec` — schema validation, defensive normalization, serialization, deserialization, and deep cloning.
+- `CampaignSaveService` — local primary/temporary/backup file ownership, active marker, campaign creation/load, and idempotent operation append.
+- `CampaignSession` — active campaign application-session projection; owns no scene object.
+- `CampaignFrontEndController` — activates the existing New/Continue menu entries and owns personnel-entry presentation.
+- `CampaignBodyCameraIdentityBinder` — one-way active-profile projection into existing `BodyCameraIdentity`.
+- `HeadquartersAfterActionReviewController` — presents saved reports and wraps Previous/Next navigation without changing report data.
+- `RulesOfEntryMilestoneSevenDSetup` / `Validator` — installs campaign UI and identity bindings, rebuilds archive navigation, and validates saved scenes/prefab boundaries.
+
 ## Milestone 7C operation closure and headquarters review
 
 - `CompletedOperationRecord` — immutable final report plus stable operation, entry, officer, and support identifiers; owns no scene references.
@@ -78,6 +90,11 @@ flowchart TD
     FinalReport --> Record[Capture completed-operation record]
     Record --> HQReturn[Return to headquarters]
     HQReturn --> Archive[Latest report review and archive terminal]
+    Archive --> CampaignSave[Schema-1 campaign history]
+    Menu --> NewCampaign[New Campaign personnel record]
+    Menu --> ContinueCampaign[Continue active campaign]
+    NewCampaign --> HQ
+    ContinueCampaign --> HQ
 ```
 
 ## Responsibility map
@@ -103,6 +120,10 @@ flowchart TD
 | `CompletedOperationContext` | latest immutable final report and stable deployment identifiers across the return transition | Unity scene objects, report recalculation, disk persistence, or career progression |
 | `HeadquartersAfterActionReviewController` | latest-report rendering and review-time input ownership | mission evaluation, report mutation, or multi-operation history |
 | `HeadquartersAfterActionTerminalInteractable` | physical reopening of the current session's latest report | evidence ownership or campaign save data |
+| `CampaignSaveService` | validated local campaign files, backups, active campaign marker, and idempotent report append | scoring, AI, scene transitions, or unrestricted file paths |
+| `CampaignSession` | active validated profile projection for the running application | disk format, UI layout, or scene ownership |
+| `CampaignFrontEndController` | campaign creation/continue interaction and personnel-form presentation | mission selection, scoring, or file implementation details |
+| `CampaignBodyCameraIdentityBinder` | read-only profile-to-HUD identity projection | save mutation, body-camera telemetry, or mission evidence |
 | `FrontEndButtonVisual` | hover, selection, press, and focus response | input bindings or navigation policy |
 | `FrontEndMenuItemVisual` | restrained focus, divider, and label motion for flat main-menu navigation | button actions or scene transitions |
 | `FrontEndRules` | pure quality-index and loading-progress rules | Unity scene state |
@@ -132,7 +153,10 @@ flowchart TD
 - A required-objective failure or officer death caps the tier at D; a civilian death or critical ROE violation caps it at F.
 - Final report Continue captures the immutable result before consuming deployment state and loading headquarters.
 - Headquarters review renders the captured result unchanged; it never reruns evaluation.
-- The current archive is session-only and holds one latest report; persistence may not be inferred.
+- Without an active campaign, the direct-operation archive fallback remains session-only and holds one latest report.
+- With an active Milestone 7D campaign, every final report is appended by unique record ID before headquarters return.
+- Unsupported newer schemas and malformed/duplicate records fail closed instead of being silently rewritten.
+- Fresh Continue Campaign enters headquarters without automatically opening old history; the physical archive terminal owns browsing.
 - The applied incident seed is logged so a placement can be reproduced during debugging.
 - Unassigned officers are removed from the deployed squad before HUD and body-camera lists rebuild.
 - Raising the in-mission tablet disables player gameplay input but never pauses AI or mission time.

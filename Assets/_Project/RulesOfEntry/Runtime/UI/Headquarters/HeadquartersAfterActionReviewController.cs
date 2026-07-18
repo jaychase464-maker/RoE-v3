@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RulesOfEntry.Campaign;
 using RulesOfEntry.Input;
 using RulesOfEntry.Missions;
 using RulesOfEntry.Operations;
@@ -26,13 +28,21 @@ namespace RulesOfEntry.UI.Headquarters
         [SerializeField] private Text objectiveText;
         [SerializeField] private Text findingsText;
         [SerializeField] private Text metadataText;
+        [SerializeField] private Text navigationText;
+        [SerializeField] private Button previousButton;
+        [SerializeField] private Button nextButton;
         [SerializeField] private Button closeButton;
         [SerializeField] private bool openOnStartWhenAvailable = true;
 
         private readonly StringBuilder builder = new StringBuilder(2048);
+        private readonly List<CompletedOperationRecord> availableRecords =
+            new List<CompletedOperationRecord>(16);
+        private int currentRecordIndex = -1;
 
         public bool IsOpen { get; private set; }
         public bool OpenOnStartWhenAvailable => openOnStartWhenAvailable;
+        public bool HasAvailableReports => CompletedOperationContext.HasCompletedOperation
+            || CampaignSession.ActiveCampaign?.CompletedOperationCount > 0;
         public bool HasCompleteConfiguration => playerInput != null
             && cursorController != null
             && interfaceRoot != null
@@ -45,6 +55,9 @@ namespace RulesOfEntry.UI.Headquarters
             && objectiveText != null
             && findingsText != null
             && metadataText != null
+            && navigationText != null
+            && previousButton != null
+            && nextButton != null
             && closeButton != null;
 
         public void Configure(
@@ -60,6 +73,9 @@ namespace RulesOfEntry.UI.Headquarters
             Text configuredObjectiveText,
             Text configuredFindingsText,
             Text configuredMetadataText,
+            Text configuredNavigationText,
+            Button configuredPreviousButton,
+            Button configuredNextButton,
             Button configuredCloseButton,
             bool configuredOpenOnStart)
         {
@@ -76,6 +92,9 @@ namespace RulesOfEntry.UI.Headquarters
             objectiveText = configuredObjectiveText;
             findingsText = configuredFindingsText;
             metadataText = configuredMetadataText;
+            navigationText = configuredNavigationText;
+            previousButton = configuredPreviousButton;
+            nextButton = configuredNextButton;
             closeButton = configuredCloseButton;
             openOnStartWhenAvailable = configuredOpenOnStart;
             SetVisible(false);
@@ -84,13 +103,19 @@ namespace RulesOfEntry.UI.Headquarters
 
         public bool OpenLatest()
         {
-            if (!HasCompleteConfiguration
-                || !CompletedOperationContext.TryGetLatest(out CompletedOperationRecord record))
+            if (!HasCompleteConfiguration)
             {
                 return false;
             }
 
-            Render(record);
+            RebuildAvailableRecords();
+            if (availableRecords.Count == 0)
+            {
+                return false;
+            }
+
+            currentRecordIndex = availableRecords.Count - 1;
+            RenderCurrent();
             SetVisible(true);
             cursorController.SetCursorLocked(false);
             closeButton.Select();
@@ -108,6 +133,50 @@ namespace RulesOfEntry.UI.Headquarters
             cursorController.SetCursorLocked(true);
         }
 
+        public void ShowPreviousReport()
+        {
+            if (!IsOpen || availableRecords.Count <= 1)
+            {
+                return;
+            }
+
+            currentRecordIndex = CampaignDataRules.WrapArchiveIndex(
+                currentRecordIndex - 1,
+                availableRecords.Count);
+            RenderCurrent();
+        }
+
+        public void ShowNextReport()
+        {
+            if (!IsOpen || availableRecords.Count <= 1)
+            {
+                return;
+            }
+
+            currentRecordIndex = CampaignDataRules.WrapArchiveIndex(
+                currentRecordIndex + 1,
+                availableRecords.Count);
+            RenderCurrent();
+        }
+
+        public bool TryGetLatestSummary(
+            out string operationCode,
+            out MissionPerformanceTier tier)
+        {
+            RebuildAvailableRecords();
+            if (availableRecords.Count == 0)
+            {
+                operationCode = string.Empty;
+                tier = MissionPerformanceTier.NotRated;
+                return false;
+            }
+
+            CompletedOperationRecord latest = availableRecords[availableRecords.Count - 1];
+            operationCode = latest.OperationCode;
+            tier = latest.Report.Tier;
+            return true;
+        }
+
         private void Start()
         {
             if (!HasCompleteConfiguration)
@@ -115,7 +184,8 @@ namespace RulesOfEntry.UI.Headquarters
                 return;
             }
 
-            if (openOnStartWhenAvailable && CompletedOperationContext.HasCompletedOperation)
+            if (openOnStartWhenAvailable
+                && CompletedOperationContext.HasCompletedOperation)
             {
                 OpenLatest();
             }
@@ -150,10 +220,34 @@ namespace RulesOfEntry.UI.Headquarters
             {
                 CloseReview();
             }
+            else if (keyboard?.leftArrowKey.wasPressedThisFrame == true
+                || gamepad?.leftShoulder.wasPressedThisFrame == true
+                || gamepad?.dpad.left.wasPressedThisFrame == true)
+            {
+                ShowPreviousReport();
+            }
+            else if (keyboard?.rightArrowKey.wasPressedThisFrame == true
+                || gamepad?.rightShoulder.wasPressedThisFrame == true
+                || gamepad?.dpad.right.wasPressedThisFrame == true)
+            {
+                ShowNextReport();
+            }
         }
 
         private void Subscribe()
         {
+            if (previousButton != null)
+            {
+                previousButton.onClick.RemoveListener(ShowPreviousReport);
+                previousButton.onClick.AddListener(ShowPreviousReport);
+            }
+
+            if (nextButton != null)
+            {
+                nextButton.onClick.RemoveListener(ShowNextReport);
+                nextButton.onClick.AddListener(ShowNextReport);
+            }
+
             if (closeButton != null)
             {
                 closeButton.onClick.RemoveListener(CloseReview);
@@ -163,7 +257,54 @@ namespace RulesOfEntry.UI.Headquarters
 
         private void Unsubscribe()
         {
+            previousButton?.onClick.RemoveListener(ShowPreviousReport);
+            nextButton?.onClick.RemoveListener(ShowNextReport);
             closeButton?.onClick.RemoveListener(CloseReview);
+        }
+
+        private void RebuildAvailableRecords()
+        {
+            availableRecords.Clear();
+            CampaignSaveData campaign = CampaignSession.ActiveCampaign;
+            if (campaign?.completedOperations != null)
+            {
+                foreach (CampaignOperationRecordData saved in campaign.completedOperations)
+                {
+                    try
+                    {
+                        availableRecords.Add(saved.ToCompletedOperationRecord());
+                    }
+                    catch (Exception)
+                    {
+                        // The save codec validates records before the session accepts them.
+                    }
+                }
+            }
+
+            if (CompletedOperationContext.TryGetLatest(out CompletedOperationRecord latest)
+                && availableRecords.All(record => !string.Equals(
+                    record.RecordId,
+                    latest.RecordId,
+                    StringComparison.Ordinal)))
+            {
+                availableRecords.Add(latest);
+            }
+        }
+
+        private void RenderCurrent()
+        {
+            if (currentRecordIndex < 0 || currentRecordIndex >= availableRecords.Count)
+            {
+                return;
+            }
+
+            Render(availableRecords[currentRecordIndex]);
+            bool canBrowse = availableRecords.Count > 1;
+            previousButton.interactable = canBrowse;
+            nextButton.interactable = canBrowse;
+            navigationText.text =
+                $"OPERATION {currentRecordIndex + 1:00} / {availableRecords.Count:00}  //  "
+                + "LEFT / RIGHT OR LB / RB";
         }
 
         private void Render(CompletedOperationRecord record)
@@ -181,7 +322,7 @@ namespace RulesOfEntry.UI.Headquarters
                 + $"{DisplayOrUnknown(record.EntryPointId)}  //  "
                 + $"TEAM {record.AssignedOfficerIds.Count}  //  "
                 + $"ELAPSED {FormatDuration(report.ElapsedSeconds)}  //  "
-                + $"SESSION RECORD {record.SessionSequence:000}";
+                + $"ARCHIVE RECORD {record.SessionSequence:000}";
         }
 
         private string BuildCategories(AfterActionReport report)

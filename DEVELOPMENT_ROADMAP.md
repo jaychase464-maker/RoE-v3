@@ -62,11 +62,19 @@ Exit confirmed by the user: clean compilation, validators, automated tests, live
 
 No new 3D model or package is required.
 
-### Milestone 7C — Operation Closure and Headquarters Return — Integration Candidate
+### Milestone 7C — Operation Closure and Headquarters Return — Confirmed and Pushed
 
 Implemented: final-report Continue interaction; immutable cross-scene completed-operation record; safe deployment-context consumption; asynchronous headquarters return; automatic latest-report presentation; physical archive terminal; setup, validator, and EditMode tests.
 
-Exit pending: clean Unity compilation; Milestone 7C setup and validator; all EditMode tests; mouse/keyboard/gamepad Continue; same factual report after headquarters load; review close/control restoration; archive-terminal reopen; fresh-operation regression; clean Console; commit and push.
+Exit confirmed by the user: clean compilation, validator/tests, live operation return, headquarters review, archive reopen, clean behavior, commit, and GitHub push.
+
+No new 3D model or package is required.
+
+### Milestone 7D — Campaign Saves and Operations Archive — Integration Candidate
+
+Implemented: officer-name/badge campaign creation; Continue Campaign; schema-1 local JSON; primary/temporary/backup writes; active campaign session; persistent body-camera identity; idempotent final-report append; multi-report PD archive browsing; setup, validator, and EditMode tests.
+
+Exit pending: clean compilation; Milestone 7D setup and validator; all EditMode tests; invalid/new/continue campaign flows; two completed archived operations; body-camera identity; application restart persistence; archive wraparound; direct Operations sandbox; earlier regressions; clean Console; commit and push.
 
 No new 3D model or package is required.
 
@@ -74,9 +82,9 @@ No new 3D model or package is required.
 
 Goal: one short, replayable residence or storefront incident with multiple entry choices, incomplete intelligence, an uncertain armed suspect, a civilian, officer initiative, arrest/force outcomes, and complete after-action review.
 
-Remaining foundations after Milestone 7C:
+Remaining foundations after Milestone 7D:
 
-1. Objective/event persistence for restart and replay comparison.
+1. Incident-seed/world-state persistence for exact restart and replay comparison.
 2. Pause/options/restart and authorized early-return flow during an active operation.
 3. Functional loadout confirmation and deployment equipment.
 4. Door assessment, threshold sectors, coordinated entry timing, and cover selection.

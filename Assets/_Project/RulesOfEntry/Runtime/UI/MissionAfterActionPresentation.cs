@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
+using RulesOfEntry.Campaign;
 using RulesOfEntry.Core;
 using RulesOfEntry.Input;
 using RulesOfEntry.Missions;
@@ -42,6 +43,8 @@ namespace RulesOfEntry.UI
         private bool inputSuppressed;
         private bool returningToHeadquarters;
         private bool operationRecordCaptured;
+        private bool campaignRecordPersisted;
+        private bool deploymentContextConsumed;
         private AfterActionReport finalReport;
 
         public MissionController MissionController => missionController;
@@ -193,6 +196,8 @@ namespace RulesOfEntry.UI
                 if (!returningToHeadquarters)
                 {
                     operationRecordCaptured = false;
+                    campaignRecordPersisted = false;
+                    deploymentContextConsumed = false;
                 }
 
                 SetVisible(false);
@@ -254,9 +259,30 @@ namespace RulesOfEntry.UI
                     return;
                 }
 
-                // Deployment is consumed only after its stable IDs and final report are safe.
-                OperationDeploymentContext.Clear();
                 operationRecordCaptured = true;
+            }
+
+            if (!campaignRecordPersisted)
+            {
+                if (CampaignSession.HasActiveCampaign
+                    && !CampaignSaveService.TryAppendCompletedOperation(
+                        CompletedOperationContext.Latest,
+                        out _,
+                        out string saveError))
+                {
+                    returnStatusText.text =
+                        $"CAMPAIGN SAVE FAILED  //  {saveError.ToUpperInvariant()}";
+                    return;
+                }
+
+                campaignRecordPersisted = true;
+            }
+
+            if (!deploymentContextConsumed)
+            {
+                // Deployment is consumed only after the final report and campaign record are safe.
+                OperationDeploymentContext.Clear();
+                deploymentContextConsumed = true;
             }
 
             returningToHeadquarters = true;

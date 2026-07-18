@@ -187,6 +187,8 @@ namespace RulesOfEntry.Editor.UiPresentation
             try
             {
                 FrontEndFlowController controller = FindInScene<FrontEndFlowController>(scene);
+                CampaignFrontEndController campaignController =
+                    FindInScene<CampaignFrontEndController>(scene);
                 EventSystem eventSystem = FindInScene<EventSystem>(scene);
                 Canvas canvas = FindInScene<Canvas>(scene);
                 InputSystemUIInputModule inputModule = eventSystem != null
@@ -247,11 +249,16 @@ namespace RulesOfEntry.Editor.UiPresentation
                         button.name,
                         "TrainingButton",
                         StringComparison.Ordinal));
+                bool campaignMenuValid = continueCampaign != null
+                    && newCampaign != null
+                    && (campaignController == null
+                        ? !continueCampaign.interactable && !newCampaign.interactable
+                        : campaignController.HasCompleteConfiguration
+                            && newCampaign.interactable);
                 bool flatMenuValid = flatMenuItems.Length == 7
                     && continueCampaign != null
-                    && !continueCampaign.interactable
                     && newCampaign != null
-                    && !newCampaign.interactable
+                    && campaignMenuValid
                     && operations != null
                     && operations.interactable
                     && training != null
@@ -314,7 +321,7 @@ namespace RulesOfEntry.Editor.UiPresentation
                     AddError(
                         results,
                         "UI Front-End Scene",
-                        "Front-end scene requires saved artwork, visible large typography, the seven-item flat menu contract, the headquarters campaign destination, a complete flow controller, overlay canvas, Input System UI module, and no missing or legacy components.");
+                        "Front-end scene requires saved artwork, visible large typography, the seven-item flat menu/campaign contract, the headquarters campaign destination, a complete flow controller, overlay canvas, Input System UI module, and no missing or legacy components.");
                     return;
                 }
 

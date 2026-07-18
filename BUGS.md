@@ -2,13 +2,13 @@
 
 ## Open
 
-### ROE-0058 — Milestone 7C live operation-return validation pending
+### ROE-0059 — Milestone 7D campaign persistence validation pending
 
-- Priority: blocker for Milestone 7C closure
+- Priority: blocker for Milestone 7D closure
 - Status: integration candidate
-- Scope: final-report Continue control, record capture, deployment cleanup, headquarters scene return, automatic report review, archive-terminal reopening, and gameplay-control restoration
-- Required evidence: clean compilation; Milestone 7C validator; all EditMode tests; mouse/Enter/A return paths; identical report facts in headquarters; close/reopen behavior; new-operation regression; clean Console
-- No code defect is currently claimed; this record prevents unverified scene-transition behavior from being called complete.
+- Scope: New/Continue Campaign, identity normalization, schema-1 JSON, backup recovery, body-camera profile projection, idempotent report append, restart persistence, and multi-report archive browsing
+- Required evidence: clean compilation; Milestone 7D validator; all EditMode tests; two completed operations; Play Mode restart; identity/history restoration; archive controls; direct Operations sandbox; prior regressions; clean Console
+- No code defect is currently claimed; this record prevents unverified persistence behavior from being called complete.
 
 ### ROE-0054 — Incident seed is logged but not yet campaign-persisted
 
@@ -84,6 +84,10 @@
 - Final campaign/menu sound, production motion, accessibility, localization, and complete brand typography review remain outstanding.
 
 ## Resolved
+
+- ROE-0060: the New Campaign heading used stretched rectangles that crossed its input fields, while the final report rendered below the tactical HUD; fixed top-row anchors and final-report UI priority remove both collisions.
+
+- ROE-0058: the user confirmed Milestone 7C compilation, validator/tests, live operation return, headquarters review, archive reopening, clean behavior, and GitHub push.
 
 - ROE-0057: the legacy M3 validator now accepts the current scene's valid baked `NavMeshData`; the user confirmed the rerun passes.
 - ROE-0056: the user confirmed Milestone 7B compilation, validation, tests, automatic completion, factual report behavior, clean operation, and GitHub push.

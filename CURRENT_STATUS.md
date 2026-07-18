@@ -2,20 +2,29 @@
 
 ## Active milestone
 
-**Milestone 7C — Operation Closure and Headquarters Return: integration candidate; live Unity validation pending**
+**Milestone 7D — Campaign Saves and Operations Archive: integration candidate; live Unity validation pending**
 
-Milestones 0–7B are the protected working baseline. The user confirmed Milestone 7B compilation, validators, automated tests, automatic completion, factual tier presentation, and live behavior, then pushed the checkpoint before Milestone 7C began.
+Milestones 0–7C are the protected working baseline. The user confirmed Milestone 7C compilation, validator/tests, operation return, headquarters review, archive reopening, and clean behavior, then pushed the checkpoint before Milestone 7D began.
 
-## Milestone 7C candidate
+## Milestone 7D candidate
+
+- New Campaign and Continue Campaign now use the approved cinematic front end instead of remaining disabled placeholders.
+- New Campaign records officer full name and badge number; department remains Calder City Police Department.
+- Campaign schema 1 stores identity, timestamps, and complete immutable operation reports in local JSON.
+- Primary, temporary, and backup save behavior protects prior valid data during replacement writes.
+- Final reports append by unique record ID before deployment is consumed or headquarters loads.
+- Active campaign identity projects into the RoE body-camera HUD without making HUD code a save authority.
+- The PD archive browses every saved operation with buttons, arrow keys, or controller shoulders.
+- The campaign personnel sheet uses non-overlapping fixed rows, and the final report renders above all live tactical HUD layers.
+- Newer unsupported schemas, malformed IDs, invalid timestamps, and duplicate operation records are rejected.
+- Profile selection, deletion, cloud sync, encryption, career consequences, and future migrations remain explicit boundaries.
+
+## Milestone 7C confirmed baseline
 
 - The final report exposes one functional Continue control for mouse, Enter/numpad Enter, or gamepad South/A.
 - Continue captures the immutable final report plus stable operation, entry, officer, and support IDs before deployment state is cleared.
-- The operation asynchronously returns to the enabled headquarters scene and reports load progress.
-- Headquarters automatically opens the most recently completed operation report and restores player control when the review closes.
-- An in-world After-Action Archive terminal reopens the latest completed report during the current application session.
-- The cross-scene record owns no GameObject, Component, Transform, or ScriptableObject reference.
-- Session history and disk/campaign persistence remain explicitly deferred.
-- Setup, validator, and EditMode record-boundary tests are included.
+- The operation asynchronously returns to headquarters and opens the just-completed report.
+- The cross-scene record owns no scene-object references.
 
 ## Milestone 7B confirmed baseline
 
@@ -95,7 +104,7 @@ Milestones 0–7B are the protected working baseline. The user confirmed Milesto
 - Original 1672×941 moonlit Calder City overlook behind the title and menus, with no baked-in UI text.
 - Licensed Latin Modern Sans Demi Condensed typography with the GUST Font License included.
 - Keyboard, mouse, and gamepad-compatible uGUI navigation through Input System `1.19.0` defaults.
-- Flat, left-aligned main-menu navigation with disabled future campaign entries and functional Operations, Training, Settings, Credits, and Quit entries.
+- Flat, left-aligned main-menu navigation with functional campaign, Operations, Training, Settings, Credits, and Quit entries.
 - Front-end Operations loading identifies `Calder City Police Department`; Training identifies the tactical training prototype.
 - Persistent master-volume, fullscreen, and quality selections.
 - Trooper Studios company identity while preserving the validated `RoE v3` product name.
@@ -110,13 +119,11 @@ Milestones 0–7B are the protected working baseline. The user confirmed Milesto
 
 ## Validation pending
 
-- Clean compilation after the Milestone 7C package is installed.
-- Run the Milestone 7C setup and validator, then all EditMode tests.
-- Complete Pressure Point and use the report's Continue button, Enter, and gamepad A routes.
-- Confirm headquarters loads, the same operation name/tier/score/facts open automatically, and player control is suppressed only while review is open.
-- Close with mouse, Tab, Escape, and gamepad B; then use `E` at the archive terminal to reopen the same report.
-- Start a new operation and confirm old deployment IDs were cleared while the latest completed report remains reviewable.
-- Run the Milestone 7B validator and prior gameplay regressions with a clean Console.
+- Clean compilation after the Milestone 7D package is installed.
+- Run the Milestone 7D setup and validator, then all EditMode tests.
+- Create a campaign, verify body-camera identity, complete two operations, and browse both saved reports.
+- Restart Play Mode, use Continue Campaign, and verify identity/history persistence without forced old-report presentation.
+- Verify invalid identity, backup-load, duplicate-prevention, direct Operations sandbox, and earlier regressions with a clean Console.
 
 ## Historical regression checklist
 
@@ -155,4 +162,4 @@ Milestones 0–7B are the protected working baseline. The user confirmed Milesto
 
 ## Asset boundary
 
-No new 3D model or package is required for Milestone 7C. The operation-return and headquarters-review systems use existing scenes and generated uGUI. The first environment-art request remains a modular municipal/industrial interior-exterior kit after greybox layout lock.
+No new 3D model or package is required for Milestone 7D. Campaign creation and archive navigation use generated uGUI and existing scenes. The first environment-art request remains a modular municipal/industrial interior-exterior kit after greybox layout lock.

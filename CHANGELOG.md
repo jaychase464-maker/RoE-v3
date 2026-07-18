@@ -1,5 +1,34 @@
 # Changelog
 
+## Milestone 7D — Campaign Saves and Operations Archive — 2026-07-18
+
+### Added
+
+- Added schema-1 local campaign JSON with officer identity, timestamps, and complete final operation records.
+- Added temporary-write, primary, and backup file handling plus active-campaign selection metadata.
+- Activated New Campaign and Continue Campaign in the existing cinematic main menu.
+- Added officer-name and badge-number personnel creation with normalization and validation.
+- Added active campaign identity projection into the RoE body-camera HUD.
+- Added idempotent completed-operation persistence before headquarters return.
+- Expanded the PD archive to browse all campaign reports with buttons, arrows, and controller shoulders.
+- Added Milestone 7D setup, validator, and EditMode serialization/rules coverage.
+
+### Changed
+
+- Completed operation records now own a stable GUID used to reject duplicate archive writes.
+- Deployment context is consumed only after an active campaign operation is safely written.
+- Continue Campaign loads headquarters without forcing an old report open; history remains available at the archive terminal.
+- UI Presentation validation accepts the new functional campaign menu while preserving the seven-item cinematic layout.
+- Corrected the New Campaign personnel sheet to use fixed top-left layout rows instead of full-height stretched title blocks.
+- Raised the final after-action report above the tactical HUD and made Milestone 7D rebuild that corrected operation presentation automatically.
+
+### Boundaries
+
+- One active campaign marker is exposed; profile selection and deletion UI remain future work.
+- Saves are local and human-readable, not encrypted, signed, cloud-synchronized, or anti-tamper protected.
+- Saved reports remain factual snapshots; persistence and UI never recalculate score.
+- No new Unity package, input action, project setting, or 3D model is required.
+
 ## Milestone 7C — Operation Closure and Headquarters Return — 2026-07-17
 
 ### Added

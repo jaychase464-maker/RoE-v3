@@ -143,7 +143,10 @@ namespace RulesOfEntry.Editor.Milestone7B
                 typeof(MissionAfterActionPresentation));
             Canvas canvas = root.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 125;
+            // The final evidence lock must cover the live tactical HUD and tablet layers.
+            // Leaving it below the HUD causes the roster/body-camera text to collide with
+            // the report header and exposes command hints over the final screen.
+            canvas.sortingOrder = 500;
             CanvasScaler scaler = root.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1920f, 1080f);

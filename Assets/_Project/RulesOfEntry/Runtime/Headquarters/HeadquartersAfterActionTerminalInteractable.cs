@@ -1,5 +1,5 @@
 using RulesOfEntry.Interaction;
-using RulesOfEntry.Operations;
+using RulesOfEntry.Missions;
 using RulesOfEntry.UI.Headquarters;
 using UnityEngine;
 
@@ -38,15 +38,17 @@ namespace RulesOfEntry.Headquarters
                     "Close the current report first.");
             }
 
-            if (!CompletedOperationContext.TryGetLatest(out CompletedOperationRecord record))
+            if (!reviewController.TryGetLatestSummary(
+                    out string operationCode,
+                    out MissionPerformanceTier tier))
             {
                 return InteractionPrompt.Unavailable(
                     "Review Last Operation",
-                    "No completed operation is recorded in this session.");
+                    "No completed operation is recorded in the active campaign.");
             }
 
             return InteractionPrompt.Available(
-                $"Review {record.OperationCode}: Tier {record.Report.Tier}",
+                $"Review {operationCode}: Tier {tier}",
                 reviewHoldSeconds);
         }
 

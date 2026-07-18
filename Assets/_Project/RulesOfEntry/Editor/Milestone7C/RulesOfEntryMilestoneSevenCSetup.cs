@@ -85,7 +85,7 @@ namespace RulesOfEntry.Editor.Milestone7C
             }
         }
 
-        private static void ConfigureOperationScene(GameObject reportPrefab)
+        internal static void ConfigureOperationScene(GameObject reportPrefab)
         {
             Scene scene = EditorSceneManager.OpenScene(
                 ProjectInfo.PrototypeScenePath,
@@ -132,7 +132,7 @@ namespace RulesOfEntry.Editor.Milestone7C
             }
         }
 
-        private static void ConfigureHeadquartersScene()
+        internal static void ConfigureHeadquartersScene()
         {
             Scene scene = EditorSceneManager.OpenScene(
                 ProjectInfo.HeadquartersScenePath,
@@ -278,7 +278,37 @@ namespace RulesOfEntry.Editor.Milestone7C
                 TextAnchor.MiddleLeft,
                 Secondary,
                 "SESSION RECORD");
-            Anchor(metadata.rectTransform, new Vector2(0.06f, 0.055f), new Vector2(0.68f, 0.1f));
+            Anchor(metadata.rectTransform, new Vector2(0.06f, 0.055f), new Vector2(0.46f, 0.1f));
+            Text navigation = CreateText(
+                "Navigation",
+                interfaceImage.transform,
+                font,
+                13,
+                FontStyle.Bold,
+                TextAnchor.MiddleRight,
+                Secondary,
+                "OPERATION 01 / 01  //  LEFT / RIGHT OR LB / RB");
+            Anchor(navigation.rectTransform, new Vector2(0.46f, 0.105f), new Vector2(0.94f, 0.135f));
+            Button previous = CreateButton(
+                "PreviousReport",
+                interfaceImage.transform,
+                font,
+                "←  PREVIOUS",
+                out _);
+            Anchor(
+                previous.GetComponent<RectTransform>(),
+                new Vector2(0.48f, 0.045f),
+                new Vector2(0.59f, 0.1f));
+            Button next = CreateButton(
+                "NextReport",
+                interfaceImage.transform,
+                font,
+                "NEXT  →",
+                out _);
+            Anchor(
+                next.GetComponent<RectTransform>(),
+                new Vector2(0.60f, 0.045f),
+                new Vector2(0.71f, 0.1f));
             Button close = CreateButton(
                 "CloseReport",
                 interfaceImage.transform,
@@ -287,7 +317,7 @@ namespace RulesOfEntry.Editor.Milestone7C
                 out _);
             Anchor(
                 close.GetComponent<RectTransform>(),
-                new Vector2(0.72f, 0.045f),
+                new Vector2(0.74f, 0.045f),
                 new Vector2(0.94f, 0.11f));
 
             HeadquartersAfterActionReviewController controller =
@@ -305,6 +335,9 @@ namespace RulesOfEntry.Editor.Milestone7C
                 objectives,
                 findings,
                 metadata,
+                navigation,
+                previous,
+                next,
                 close,
                 true);
             return controller;

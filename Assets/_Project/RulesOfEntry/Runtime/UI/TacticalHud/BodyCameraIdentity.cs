@@ -4,8 +4,8 @@ using UnityEngine;
 namespace RulesOfEntry.UI.TacticalHud
 {
     /// <summary>
-    /// Scene-facing projection of campaign identity. The future campaign profile
-    /// service can configure this component without coupling the HUD to save data.
+    /// Scene-facing projection of officer identity. Campaign persistence configures
+    /// this component through a binder so the HUD never becomes a save-data authority.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class BodyCameraIdentity : MonoBehaviour

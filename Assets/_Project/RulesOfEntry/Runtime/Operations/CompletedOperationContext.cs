@@ -6,8 +6,8 @@ using RulesOfEntry.Missions;
 namespace RulesOfEntry.Operations
 {
     /// <summary>
-    /// Immutable, scene-reference-free record of one completed operation. This is a
-    /// session boundary only; disk save ownership remains a future campaign milestone.
+    /// Immutable, scene-reference-free record of one completed operation. Campaign
+    /// persistence converts this record into a versioned data-transfer object.
     /// </summary>
     public sealed class CompletedOperationRecord
     {
@@ -17,7 +17,8 @@ namespace RulesOfEntry.Operations
             string operationCode,
             string entryPointId,
             IEnumerable<string> assignedOfficerIds,
-            IEnumerable<string> supportAssetIds)
+            IEnumerable<string> supportAssetIds,
+            string recordId = null)
         {
             if (report == null)
             {
@@ -32,6 +33,9 @@ namespace RulesOfEntry.Operations
             }
 
             SessionSequence = Math.Max(1, sessionSequence);
+            RecordId = string.IsNullOrWhiteSpace(recordId)
+                ? Guid.NewGuid().ToString("N")
+                : recordId.Trim();
             Report = report;
             OperationCode = string.IsNullOrWhiteSpace(operationCode)
                 ? report.MissionId.Trim()
@@ -42,6 +46,7 @@ namespace RulesOfEntry.Operations
         }
 
         public int SessionSequence { get; }
+        public string RecordId { get; }
         public AfterActionReport Report { get; }
         public string MissionId => Report.MissionId;
         public string MissionName => Report.MissionName;
@@ -61,8 +66,9 @@ namespace RulesOfEntry.Operations
     }
 
     /// <summary>
-    /// Carries the most recent final report from an operation scene back to headquarters.
-    /// It deliberately owns no GameObject, Component, Transform, or ScriptableObject.
+    /// Carries the most recent final report across the operation-to-headquarters scene
+    /// transition. It deliberately owns no GameObject, Component, Transform, or
+    /// ScriptableObject; long-term history belongs to the campaign save service.
     /// </summary>
     public static class CompletedOperationContext
     {
